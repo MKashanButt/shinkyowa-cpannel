@@ -1,0 +1,49 @@
+.container {
+    width: 98%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: relative;
+}
+
+form .item {
+    width: calc(100% * (1/2) - 10px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+form .item label {
+    width: 30%;
+}
+
+form .item input {
+    width: 70%;
+    padding: 5px;
+    outline: none;
+}
+
+form button {
+    padding: 10px 30px;
+    background-color: var(--blue);
+    color: white;
+    border: 1px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 10px;
+    bottom: -20px;
+    cursor: pointer;
+}
+
+form button:hover {
+    filter: brightness(0.9);
+}

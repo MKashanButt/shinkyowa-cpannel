@@ -1,0 +1,114 @@
+.single-customer-account {
+    width: 98%;
+    height: 78vh;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+}
+
+.single-customer-account p {
+    font-size: 18px;
+}
+
+.single-customer-account p span {
+    font-weight: bold;
+}
+
+.single-customer-account .tab {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.single-customer-account .tab button {
+    border: 1px solid;
+    padding: 10px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.single-customer-account .tab button .icon {
+    width: 20px;
+    position: absolute;
+    right: 10px;
+}
+
+.single-customer-account .customer-vehicle,
+.single-customer-account .customer-payments {
+    width: 100%;
+}
+
+.single-customer-account .customer-vehicle thead,
+.single-customer-account .customer-payments thead {
+    background-color: lightgray;
+}
+
+.single-customer-account .customer-vehicle th,
+.single-customer-account .customer-vehicle td,
+.single-customer-account .customer-payments th,
+.single-customer-account .customer-payments td {
+    border: 1px solid;
+    padding: 5px;
+}
+
+.single-customer-account .customer-vehicle button {
+    font-size: 14px;
+    margin: auto;
+}
+
+.single-customer-account .customer-vehicle .sno {
+    width: 5%;
+}
+
+.single-customer-account .customer-vehicle .stockId {
+    width: 10%;
+}
+
+.single-customer-account .customer-vehicle .vehicle {
+    width: 40%;
+}
+
+.single-customer-account .customer-vehicle .chassis {
+    width: 10%;
+}
+
+.single-customer-account .customer-vehicle .fob {
+    width: 10%;
+}
+
+.single-customer-account .customer-vehicle .actions {
+    width: 10%;
+}
+
+.single-customer-account .customer-payments .sno {
+    width: 5%;
+}
+
+.single-customer-account .customer-payments .stockId {
+    width: 10%;
+}
+
+.single-customer-account .customer-payments .vehicle {
+    width: 30%;
+}
+
+.single-customer-account .customer-payments .cemail {
+    width: 10%;
+}
+
+.single-customer-account .customer-payments .paymentDate {
+    width: 10%;
+}
+
+.single-customer-account .customer-payments .payment {
+    width: 10%;
+}
+
+.single-customer-account .customer-payments .paymentRecievedDate {
+    width: 10%;
+}

@@ -1,0 +1,32 @@
+.topbar {
+    width: 100%;
+}
+
+.topbar .options {
+    display: flex;
+    justify-content: end;
+    padding: 10px;
+}
+
+.topbar .options .account {
+    padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbar .options .logout {
+    padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue);
+    border: 2px solid var(--blue);
+    color: white;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.topbar .options .logout:hover {
+    filter: brightness(0.8);
+}

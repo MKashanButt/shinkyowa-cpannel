@@ -1,0 +1,61 @@
+.main-customer-accounts {
+    width: 100%;
+}
+
+.main-customer-accounts .new-customer {
+    width: 98%;
+    margin: 20px auto;
+    padding: 20px 10px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.main-customer-accounts .container {
+    width: 98%;
+    height: 75vh;
+    margin: 10px auto;
+    overflow-y: scroll;
+}
+
+.main-customer-accounts table {
+    width: 100%;
+}
+
+.main-customer-accounts table th,
+.main-customer-accounts table td {
+    padding: 1%;
+    border: 1px solid;
+}
+
+.main-customer-accounts table .actions button {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.main-customer-accounts table .sno {
+    width: 5%;
+}
+
+.main-customer-accounts table .cname {
+    width: 20%;
+}
+
+.main-customer-accounts table .ccompany {
+    width: 30%;
+}
+
+.main-customer-accounts table .buying {
+    width: 10%;
+}
+
+.main-customer-accounts table .deposit {
+    width: 10%;
+}
+
+.main-customer-accounts table .remaining {
+    width: 10%;
+}

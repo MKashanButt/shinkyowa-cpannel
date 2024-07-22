@@ -1,0 +1,7 @@
+models:
+  customer_vehicles:
+    id: integer:10 autoincrement
+    stock_id: string:15
+    vehicle: string:100
+    customer_email: string:100
+    status: string:15

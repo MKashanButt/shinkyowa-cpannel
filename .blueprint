@@ -1,0 +1,10 @@
+created:
+    - database/factories/CustomerVehiclesFactory.php
+    - database/migrations/2024_06_28_170742_create_customer_vehicles_table.php
+    - app/Models/customer_vehicles.php
+models:
+    CustomerAccounts: { customer_id: 'string:100', customer_name: 'string:100', customer_company: 'string:200', customer_phone: 'string:15', description: 'text nullable default:NULL', buying: 'text nullable default:NULL', deposit: 'text nullable default:NULL', remaining: 'text nullable default:NULL', customer_email: 'string:100 nullable default:NULL' }
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
+    customer_accounts: { id: 'integer:10 autoincrement', customer_id: 'string:100', customer_name: 'string:100', customer_company: 'string:200', customer_phone: 'string:15', description: 'text nullable', buying: 'text nullable', deposit: 'text nullable', remaining: 'text nullable', agent_manager: 'string:100', agent_id: 'integer:10 nullable', customer_email: 'string:100 nullable' }
+    customer_payments: { id: 'integer:10 autoincrement', stock_id: 'string:15', vehicle: 'string:100', customer_email: 'string:100', payment_date: date, payment: 'string:15', payment_recieved_date: date }
+    customer_vehicles: { id: 'integer:10 autoincrement', stock_id: 'string:15', vehicle: 'string:100', customer_email: 'string:100', status: 'string:15' }
