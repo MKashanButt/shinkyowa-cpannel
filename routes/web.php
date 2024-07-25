@@ -1,16 +1,14 @@
 <?php
 
 use App\Http\Controllers\CustomerAccountController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index', [
-        "title" => "Shinkyowa Cpannel",
-    ]);
-});
 
-Route::controller(CustomerAccountController::class)->group(function () {
-    Route::get('/customer-account', 'index')->name('customer-account');
+Route::controller(CustomerAccountController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', 'dashboard')->name('dashboard');
+
+    Route::get('/customer-account', 'index')->name('customer-accounts');
     Route::post('/add-customer/post', 'store')->name('add-customer-account');
 
     Route::get('/add-customer-account', 'render_add_customer_form')->name('add-customer-form');
@@ -25,7 +23,13 @@ Route::controller(CustomerAccountController::class)->group(function () {
     // AJAX ROUTES START
     Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
     Route::get('/find-email', 'findEmail')->name('find-email');
-    Route::get('/vehicle/find-stock-id', 'findStockIdForVehicle')->name('vehicle.find-stock-id');
-    Route::get('/payment/find-stock-id', 'findStockIdForPayment')->name('payment.find-stock-id');
-    // AJAX ROUTES END
+    Route::get('find-stock-id', 'findStockId')->name('find-stock-id');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';

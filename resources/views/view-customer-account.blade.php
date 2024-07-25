@@ -31,6 +31,9 @@
                             <th class="vehicle">Vehicle</th>
                             <th class="chassis">Chassis</th>
                             <th class="fob">FOB</th>
+                            <th class="fob">Payment</th>
+                            <th class="fob">Remaining</th>
+                            <th class="fob">Status</th>
                             <th class="actions">Actions</th>
                         </tr>
                     </thead>
@@ -46,6 +49,14 @@
                                 <td>{{ $customerVehicle->vehicle }}</td>
                                 <td>{{ $customerVehicle->chassis }}</td>
                                 <td>{{ $customerAccount->currency . $customerVehicle->amount }}</td>
+                                <td>{{ $customerAccount->currency . $customerVehicle->payment }}</td>
+                                <td>{{ $customerAccount->currency . (string) ($customerVehicle->amount - $customerVehicle->payment) }}
+                                </td>
+                                @if ($customerVehicle->amount - $customerVehicle->payment == 0)
+                                    <td><button class="done">Cleared</button></td>
+                                @else
+                                    <td><button class="progress">Awaiting</button></td>
+                                @endif
                                 <td><button>View Images</button></td>
                             </tr>
                         @endforeach
@@ -85,13 +96,18 @@
                                 <td>{{ $customerPayment->vehicle }}</td>
                                 <td>{{ $customerPayment->customer_email }}</td>
                                 <td>{{ $customerPayment->payment_date }}</td>
-                                <td>{{ $customerAccount->currency . number_format($customerPayment->payment) }}</td>
+                                <td>{{ $customerAccount->currency . $customerPayment->payment }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+        </div>
+    </section>
+    <section class="dialog">
+        <div class="stage">
+            <img src="" alt="">
         </div>
     </section>
 @endsection

@@ -24,7 +24,12 @@ class CustomerAccountController extends Controller
         $id =  str_replace('SKC-', '', $id) + 1;
         return $code . $seperator . $id;
     }
-
+    public function dashboard()
+    {
+        return view('index', [
+            "title" => 'Dashboard',
+        ]);
+    }
     public function index()
     {
         $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->get();
@@ -69,12 +74,15 @@ class CustomerAccountController extends Controller
         $customerPayments = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
         $customerVehicles = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
 
+        $images = Stocks::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
+
         return view('view-customer-account', [
             "title" => "Customer Account",
             "stylesheet" => "single-customer-account.css",
             "customerAccount" => $customerAccount,
             "customerPayments" => $customerPayments,
             "customerVehicles" => $customerVehicles,
+            "images" => $images
         ]);
     }
 
@@ -93,7 +101,7 @@ class CustomerAccountController extends Controller
         $customer_payment->vehicle = $request->input('vehicle');
         $customer_payment->customer_email = $request->input('cemail');
         $customer_payment->payment_date = $request->input('paymentDate');
-        $customer_payment->payment = $request->input('payment');
+        $customer_payment->payment = str_replace(['$', ','], '', $request->input('payment'));
         $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
 
         $customer_payment->save();
@@ -127,7 +135,7 @@ class CustomerAccountController extends Controller
         $customerVehicles->vehicle = $request->input('vehicle');
         $customerVehicles->chassis = $request->input('chassis');
         $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
-        $customerVehicles->amount = $request->input('amount');
+        $customerVehicles->amount = str_replace('', '$,', $request->input('amount'));
         $customerVehicles->customer_email = $request->input('cemail');
         $customerVehicles->status = $request->input('status');
 
@@ -136,6 +144,7 @@ class CustomerAccountController extends Controller
         $stocks = Stocks::where('chassis', $request->input('chassis'))->first();
         if ($stocks) {
             $stocks->status = 'reserved';
+            $stocks->customer_email = $request->input('cemail');
             $stocks->save();
         }
 
@@ -163,19 +172,7 @@ class CustomerAccountController extends Controller
         ]);
     }
 
-    public function findStockIdForVehicle(Request $request)
-    {
-        $stockId = $request->input('stockId');
-
-        $availableStock = DB::table('stocks')->where('stock_id', $stockId)
-            ->whereNotIn('status', ['reserved', 'not_available'])
-            ->exists();
-
-        return response()->json([
-            'available' => $availableStock
-        ]);
-    }
-    public function findStockIdForPayment(Request $request)
+    public function findStockId(Request $request)
     {
         $stockId = $request->input('stockId');
 

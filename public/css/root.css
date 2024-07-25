@@ -74,3 +74,11 @@ button {
     letter-spacing: 1px;
     font-weight: bold;
 }
+
+.done {
+    background-color: #2E9264;
+}
+
+.progress {
+    background-color: #E16B16;
+}

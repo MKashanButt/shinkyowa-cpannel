@@ -1,3 +1,13 @@
+function toggleSubMenu() {
+    let topbarMenu = document.getElementById("topbar_submenu");
+
+    if (topbarMenu.style.display == 'none') {
+        topbarMenu.style.display = 'flex'
+    } else {
+        topbarMenu.style.display = 'none'
+    }
+}
+
 function toggleTab(item) {
     document.getElementById(item).classList.toggle('hidden');
 }

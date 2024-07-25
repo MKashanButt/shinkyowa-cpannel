@@ -1,5 +1,6 @@
 .main-customer-accounts {
-    width: 100%;
+    width: 90%;
+    margin: 20px auto;
 }
 
 .main-customer-accounts .new-customer {
@@ -13,7 +14,7 @@
 
 .main-customer-accounts .container {
     width: 98%;
-    height: 75vh;
+    height: 70vh;
     margin: 10px auto;
     overflow-y: scroll;
 }

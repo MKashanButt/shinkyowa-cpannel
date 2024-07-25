@@ -2,7 +2,7 @@
     <img src="/images/logo.png" alt="">
     <nav>
         <ul>
-            <a href="/dashboard">
+            <a href="/">
                 <li>Dashboard</li>
             </a>
             {{-- <a href="/customer-account">
