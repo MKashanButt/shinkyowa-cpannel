@@ -7,6 +7,7 @@ use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\Stocks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CustomerAccountController extends Controller
@@ -32,7 +33,7 @@ class CustomerAccountController extends Controller
     }
     public function index()
     {
-        $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->get();
+        $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get();
         $buying = CustomerPayments::sum('payment');
         return view('customer-account', [
             "title" => 'Customer Account',
@@ -49,10 +50,13 @@ class CustomerAccountController extends Controller
         $customerAccount->customer_name = $request->input('cname');
         $customerAccount->customer_company = $request->input('ccompany');
         $customerAccount->customer_phone = $request->input('cphone');
+        $customerAccount->customer_whatsapp = $request->input('cwhatsapp');
         $customerAccount->customer_email = $request->input('cemail');
         $customerAccount->agent_manager = $request->input('cmanager');
         $customerAccount->currency = $request->input('ccurrency');
         $customerAccount->description = $request->input('cdescription');
+        $customerAccount->location = $request->input('clocation');
+        $customerAccount->agent = $request->input('agent');
 
         $customerAccount->save();
         return redirect('/customer-account');

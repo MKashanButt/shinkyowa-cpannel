@@ -22,9 +22,12 @@
                 <input type="text" name="cphone" id="cphone" required>
             </div>
             <div class="item">
+                <label for="cwhatsapp">Whatsapp No:</label>
+                <input type="text" name="cwhatsapp" id="cwhatsapp" required>
+            </div>
+            <div class="item">
                 <label for="cemail">Email:</label>
-                <input type="email" name="cemail" id="cemail"
-                    onblur="checkEmailAvailability($('#cemail', '/vehicle/find-stock-id').val())">
+                <input type="email" name="cemail" id="cemail" onblur="checkEmailAvailability($('#cemail').val())">
                 <p id="email-availability-message"></p>
             </div>
             <div class="item">
@@ -37,11 +40,20 @@
                     <option value="" disabled selected>Currency</option>
                     <option value="$">$</option>
                     <option value="€">€</option>
+                    <option value="¥">¥</option>
                 </select>
             </div>
-            <div class="item">
+            <div class="item" style="align-items:baseline;">
                 <label for="cdescription">Description:</label>
                 <textarea name="cdescription" id="cdescription" cols="30" rows="2"></textarea>
+            </div>
+            <div class="item" style="align-items:baseline;">
+                <label for="clocation">Location:</label>
+                <textarea name="clocation" id="clocation" cols="30" rows="2"></textarea>
+            </div>
+            <div class="item">
+                <label for="cdescription">Agent:</label>
+                <input type="text" name="agent" id="agent" value="{{ Auth::user()->name }}" readonly>
             </div>
             <button>Add</button>
         </form>

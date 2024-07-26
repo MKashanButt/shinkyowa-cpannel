@@ -14,7 +14,9 @@ class CustomerAccounts extends Model
         'customer_name',
         'customer_company',
         'customer_phone',
+        'customer_whatsapp',
         'description',
+        'address',
         'buying',
         'deposit',
         'remaining',
@@ -22,5 +24,6 @@ class CustomerAccounts extends Model
         'agent_id',
         'customer_email',
         'currency',
+        'agent'
     ];
 }

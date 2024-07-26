@@ -11,10 +11,15 @@
         <p><span>Customer Company:</span> {{ $customerAccount->customer_company }}</p>
         <p><span>Customer Email:</span> {{ $customerAccount->customer_email }}</p>
         <p><span>Phone No:</span> {{ $customerAccount->customer_phone }}</p>
+        <p><span>Whatsapp No:</span> {{ $customerAccount->customer_whatsapp }}</p>
         <p><span>Description:</span> {{ $customerAccount->description }}</p>
-        <p><span>Buying:</span> {{ $customerAccount->currency . $customerAccount->buying }}</p>
-        <p><span>Deposit:</span> {{ $customerAccount->currency . $customerAccount->deposit }}</p>
-        <p><span>Remaining:</span> {{ $customerAccount->currency . $customerAccount->remaining }}</p>
+        <p><span>Location:</span> {{ $customerAccount->location }}</p>
+        <p><span>Buying:</span> {{ $customerAccount->buying ? $customerAccount->currency . $customerAccount->buying : '' }}
+        </p>
+        <p><span>Deposit:</span>
+            {{ $customerAccount->buying ? $customerAccount->currency . $customerAccount->deposit : '' }}</p>
+        <p><span>Remaining:</span>
+            {{ $customerAccount->buying ? $customerAccount->currency . $customerAccount->remaining : '' }}</p>
         <div class="tab">
             <button onclick="toggleTab('customer-vehicle-tab')">Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
