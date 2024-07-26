@@ -10,10 +10,10 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link rel="stylesheet" href="{{ asset('css/root.css') }}">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="font-sans antialiased">
