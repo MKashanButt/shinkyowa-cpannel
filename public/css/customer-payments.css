@@ -25,10 +25,12 @@ form .item label {
     width: 30%;
 }
 
-form .item input {
+form .item input,
+form .item textarea {
     width: 70%;
     padding: 5px;
     outline: none;
+    resize: none;
 }
 
 form button {

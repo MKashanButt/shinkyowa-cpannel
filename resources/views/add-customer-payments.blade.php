@@ -16,10 +16,6 @@
                 <p id="stockid-find-message"></p>
             </div>
             <div class="item">
-                <label for="vehicle">Vehicle:</label>
-                <input type="text" name="vehicle" id="vehicle" required>
-            </div>
-            <div class="item">
                 <label for="cemail">Customer Email:</label>
                 <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required>
                 <p id="email-find-message"></p>
@@ -32,13 +28,13 @@
                 <label for="payment">Payment:</label>
                 <input type="text" name="payment" id="payment" required>
             </div>
-            <div class="item">
+            <div class="item" style="align-items: baseline">
                 <label for="paymentReceivedDate">Received Date:</label>
                 <input type="date" name="paymentReceivedDate" id="paymentReceivedDate" required>
             </div>
-            <div class="item">
-                <label for="account">Account:</label>
-                <input type="text" name="account" id="account" value="{{ Auth::user()->name }}" readonly>
+            <div class="item" style="align-items: baseline">
+                <label for="description">Description:</label>
+                <textarea type="text" name="description" id="description" required rows="5"> </textarea>
             </div>
             <button>Submit</button>
         </form>

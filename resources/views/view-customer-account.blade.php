@@ -85,7 +85,7 @@
                         <tr>
                             <th class="sno">S.No</th>
                             <th class="stockId">Stock Id</th>
-                            <th class="vehicle">Vehicle</th>
+                            <th class="vehicle">Description</th>
                             <th class="cemail">Customer Email</th>
                             <th class="paymentDate">Payment Date</th>
                             <th class="payment">Payment</th>
@@ -101,7 +101,7 @@
                                     <td>{{ $paymentCount++ }}.</td>
                                 @endif
                                 <td>{{ $customerPayment->stock_id }}</td>
-                                <td>{{ $customerPayment->vehicle }}</td>
+                                <td>{{ $customerPayment->description }}</td>
                                 <td>{{ $customerPayment->customer_email }}</td>
                                 <td>{{ $customerPayment->payment_date }}</td>
                                 <td>{{ $customerAccount->currency . $customerPayment->payment }}</td>

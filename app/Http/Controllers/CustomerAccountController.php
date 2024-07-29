@@ -107,11 +107,10 @@ class CustomerAccountController extends Controller
 
         $customer_payment = new CustomerPayments;
         $customer_payment->stock_id = $request->input('stockId');
-        $customer_payment->vehicle = $request->input('vehicle');
+        $customer_payment->description = $request->input('description');
         $customer_payment->customer_email = $request->input('cemail');
         $customer_payment->payment_date = $request->input('paymentDate');
         $customer_payment->payment = $FILTERED_AMMOUNT;
-        $customer_payment->account = $request->input('account');
         $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
 
         $customer_payment->save();
