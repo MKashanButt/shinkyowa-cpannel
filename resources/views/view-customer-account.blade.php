@@ -14,12 +14,14 @@
         <p><span>Whatsapp No:</span> {{ $customerAccount->customer_whatsapp }}</p>
         <p><span>Description:</span> {{ $customerAccount->description }}</p>
         <p><span>Location:</span> {{ $customerAccount->location }}</p>
-        <p><span>Buying:</span> {{ $customerAccount->buying ? $customerAccount->currency . $customerAccount->buying : '' }}
+        <p><span>Buying:</span>
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
         </p>
         <p><span>Deposit:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . $customerAccount->deposit : '' }}</p>
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->deposit) : '' }}</p>
         <p><span>Remaining:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . $customerAccount->remaining : '' }}</p>
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - $customerAccount->deposit) : '' }}
+        </p>
         <div class="tab">
             <button onclick="toggleTab('customer-vehicle-tab')">Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -53,9 +55,10 @@
                                 <td>{{ $customerVehicle->stock_id }}</td>
                                 <td>{{ $customerVehicle->vehicle }}</td>
                                 <td>{{ $customerVehicle->chassis }}</td>
-                                <td>{{ $customerAccount->currency . $customerVehicle->amount }}</td>
-                                <td>{{ $customerAccount->currency . $customerVehicle->payment }}</td>
-                                <td>{{ $customerAccount->currency . (string) ($customerVehicle->amount - $customerVehicle->payment) }}
+                                <td>{{ $customerAccount->currency . number_format($customerVehicle->amount) }}</td>
+                                <td>{{ $customerVehicle->payment ? $customerAccount->currency . number_format($customerVehicle->payment) : '' }}
+                                </td>
+                                <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
                                 </td>
                                 @if ($customerVehicle->amount - $customerVehicle->payment == 0)
                                     <td><button class="done">Cleared</button></td>

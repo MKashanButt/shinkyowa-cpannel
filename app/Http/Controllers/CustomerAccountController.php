@@ -25,12 +25,14 @@ class CustomerAccountController extends Controller
         $id =  str_replace('SKC-', '', $id) + 1;
         return $code . $seperator . $id;
     }
+
     public function dashboard()
     {
         return view('index', [
             "title" => 'Dashboard',
         ]);
     }
+
     public function index()
     {
         $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get();
@@ -100,25 +102,30 @@ class CustomerAccountController extends Controller
 
     public function add_customer_payment(Request $request)
     {
+        $FILTERED_AMMOUNT = ltrim($request->input('payment'), "$");
+        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
+
         $customer_payment = new CustomerPayments;
         $customer_payment->stock_id = $request->input('stockId');
         $customer_payment->vehicle = $request->input('vehicle');
         $customer_payment->customer_email = $request->input('cemail');
         $customer_payment->payment_date = $request->input('paymentDate');
-        $customer_payment->payment = str_replace(['$', ','], '', $request->input('payment'));
+        $customer_payment->payment = $FILTERED_AMMOUNT;
+        $customer_payment->account = $request->input('account');
         $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
 
         $customer_payment->save();
 
         $customerData = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
 
-        $buying = $customerData->buying;
-        $deposit = $customerData->deposit + $request->input('payment');
-        $remaining = $buying - $deposit;
-
         CustomerAccounts::where('customer_email', $request->input('cemail'))->update([
-            "deposit" =>  $deposit,
-            "remaining" =>  $remaining,
+            "deposit" =>  $customerData->deposit + $FILTERED_AMMOUNT,
+        ]);
+
+        $customerPayment = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
+
+        CustomerVehicles::where('stock_id', $request->input('stockId'))->update([
+            "payment" => $customerPayment->payment + $FILTERED_AMMOUNT
         ]);
 
         return redirect()->back()->with('success', 'Customer Payment Added');
@@ -134,22 +141,32 @@ class CustomerAccountController extends Controller
 
     public function add_customer_vehicle(Request $request)
     {
+        $FILTERED_AMMOUNT = ltrim($request->input('amount'), "$");
+        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
+
         $customerVehicles = new CustomerVehicles;
         $customerVehicles->stock_id = $request->input('stockId');
         $customerVehicles->vehicle = $request->input('vehicle');
         $customerVehicles->chassis = $request->input('chassis');
         $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
-        $customerVehicles->amount = str_replace('', '$,', $request->input('amount'));
+        $customerVehicles->amount = $FILTERED_AMMOUNT;
         $customerVehicles->customer_email = $request->input('cemail');
         $customerVehicles->status = $request->input('status');
 
         $customerVehicles->save();
 
-        $stocks = Stocks::where('chassis', $request->input('chassis'))->first();
+        $stocks = Stocks::where('stock_id', $request->input('stockId'))->first();
         if ($stocks) {
             $stocks->status = 'reserved';
             $stocks->customer_email = $request->input('cemail');
             $stocks->save();
+        }
+
+        $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
+        $customerBuying = $customerAccount->buying;
+        if ($customerAccount) {
+            $customerAccount->buying = $customerBuying + $FILTERED_AMMOUNT;
+            $customerAccount->save();
         }
 
         return redirect()->back()->with('success', 'Vehicle Uploaded');

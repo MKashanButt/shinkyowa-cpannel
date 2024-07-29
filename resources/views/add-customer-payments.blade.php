@@ -36,6 +36,10 @@
                 <label for="paymentReceivedDate">Received Date:</label>
                 <input type="date" name="paymentReceivedDate" id="paymentReceivedDate" required>
             </div>
+            <div class="item">
+                <label for="account">Account:</label>
+                <input type="text" name="account" id="account" value="{{ Auth::user()->name }}" readonly>
+            </div>
             <button>Submit</button>
         </form>
     </div>

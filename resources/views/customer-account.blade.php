@@ -30,9 +30,10 @@
                             @endif
                             <td>{{ $accounts->customer_name }}</td>
                             <td>{{ $accounts->customer_company }}</td>
-                            <td>{{ $accounts->currency . number_format($accounts->buying) }}</td>
-                            <td>{{ $accounts->currency . number_format($accounts->deposit) }}</td>
-                            <td>{{ $accounts->currency . number_format($accounts->remaining) }}</td>
+                            <td>{{ $accounts->buying ? $accounts->currency . number_format($accounts->buying) : '' }}</td>
+                            <td>{{ $accounts->deposit ? $accounts->currency . number_format($accounts->deposit) : '' }}</td>
+                            <td>{{ $accounts->buying ? $accounts->currency . number_format($accounts->buying - $accounts->deposit) : '' }}
+                            </td>
                             <td class="actions"><a href="/customer-account/{{ $accounts->customer_id }}"><button>View
                                         Account</button></a></td>
                         </tr>
