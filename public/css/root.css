@@ -83,3 +83,9 @@ button {
 .progress {
     background-color: #E16B16;
 }
+
+.danger {
+    background-color: var(--red);
+    border: 1px solid var(--red);
+    color: white;
+}

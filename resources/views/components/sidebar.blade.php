@@ -11,6 +11,11 @@
             <a href="/customer-account">
                 <li>Customer Accounts</li>
             </a>
+            {{-- @if (Auth::user()->role == 'admin')
+                <a href="/users">
+                    <li>Users</li>
+                </a>
+            @endif --}}
         </ul>
     </nav>
 </aside>

@@ -1,3 +1,6 @@
+@php
+    $roles = ['agent', 'manager'];
+@endphp
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -33,6 +36,14 @@
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full p-2 bg-gray-200" type="password"
                 name="password_confirmation" required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('User Role')" />
+
+            <x-select-box :roles="$roles" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>

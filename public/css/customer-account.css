@@ -1,5 +1,5 @@
 .main-customer-accounts {
-    width: 90%;
+    width: 98%;
     margin: 20px auto;
 }
 
@@ -29,7 +29,7 @@
     border: 1px solid;
 }
 
-.main-customer-accounts table .actions button {
+.main-customer-accounts table button {
     padding: 5px 10px;
     display: flex;
     align-items: center;
@@ -46,7 +46,7 @@
 }
 
 .main-customer-accounts table .ccompany {
-    width: 30%;
+    width: 25%;
 }
 
 .main-customer-accounts table .buying {
@@ -58,5 +58,9 @@
 }
 
 .main-customer-accounts table .remaining {
+    width: 10%;
+}
+
+.main-customer-accounts table .agent {
     width: 10%;
 }

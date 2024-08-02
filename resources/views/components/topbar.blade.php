@@ -1,4 +1,7 @@
 <section class="topbar">
+    <button class="role">
+        User Role: {{ ucwords(Auth::user()->role) }}
+    </button>
     <div class="options">
         <div class="account">
             <div class="user">
@@ -24,6 +27,7 @@
                         {{ __('Log Out') }}
                     </x-dropdown-link>
                 </form>
+
             </div>
         </div>
         {{-- <div class="hidden sm:flex sm:items-center sm:ms-6">

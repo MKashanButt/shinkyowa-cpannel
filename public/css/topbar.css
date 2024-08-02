@@ -1,5 +1,19 @@
 .topbar {
     width: 100%;
+    position: relative;
+}
+
+.topbar>.role {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    text-transform: uppercase;
 }
 
 .topbar .options {

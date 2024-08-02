@@ -6,6 +6,8 @@ use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\Stocks;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +37,18 @@ class CustomerAccountController extends Controller
 
     public function index()
     {
-        $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get();
+        if (Auth::user()->role == 'admin') {
+            $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->get()->toArray();
+        } else if (Auth::user()->role == 'manager') {
+            $user_account = Auth::user()->name;
+            $users = User::where('manager', $user_account)->get();
+            $customerAccounts = array();
+            foreach ($users as $user) {
+                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
+            }
+        } else {
+            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get()->toArray();
+        }
         $buying = CustomerPayments::sum('payment');
         return view('customer-account', [
             "title" => 'Customer Account',
@@ -169,6 +182,31 @@ class CustomerAccountController extends Controller
         }
 
         return redirect()->back()->with('success', 'Vehicle Uploaded');
+    }
+
+    public function agent_customers_account(string $name)
+    {
+        $agent_customers_account = CustomerAccounts::where('agent', $name)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+
+        return view('agent-customers-account', [
+            'title' => $name . ' | Customer Account',
+            'stylesheet' => 'customer-account.css',
+            'customerAccounts' => $agent_customers_account,
+            'agent' => $name
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $email = CustomerAccounts::where('customer_id', $id)->pluck('customer_email');
+        CustomerAccounts::where('customer_id', $id)->delete();
+        CustomerPayments::where('customer_email', $email)->delete();
+        CustomerVehicles::where('customer_email', $email)->delete();
+
+        return redirect()->back()->with('success', 'Account Deleted');
     }
 
     // AJAX APIS

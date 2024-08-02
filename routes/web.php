@@ -9,6 +9,9 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/', 'dashboard')->name('dashboard');
 
     Route::get('/customer-account', 'index')->name('customer-accounts');
+    Route::get('/agent-customers-account/{agent}', 'agent_customers_account')
+        ->name('agent.customer-accounts');
+    Route::get('customer-account/destroy/{id}', 'destroy');
     Route::post('/add-customer/post', 'store')->name('add-customer-account');
 
     Route::get('/add-customer-account', 'render_add_customer_form')->name('add-customer-form');

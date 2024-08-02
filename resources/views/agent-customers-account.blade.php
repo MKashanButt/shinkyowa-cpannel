@@ -5,7 +5,7 @@
 @extends('template')
 @section('content')
     <section class="main-customer-accounts">
-        <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" />
+        <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :subpage="$agent" />
         <x-customer-options />
         @if (session('success'))
             <div class="alert" style="margin: 20px 0">
@@ -46,9 +46,7 @@
                             </td>
                             @if (Auth::user()->user != 'agent')
                                 <td>
-                                    <a href="/agent-customers-account/{{ $accounts['agent'] }}">
-                                        <button>{{ $accounts['agent'] }}</button>
-                                    </a>
+                                    {{ $accounts['agent'] }}
                                 </td>
                             @endif
                             <td class="actions">
