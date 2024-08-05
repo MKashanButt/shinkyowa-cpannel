@@ -1,0 +1,54 @@
+.user-accounts {
+    width: 98%;
+    margin: 20px auto;
+}
+
+.user-accounts .new-customer {
+    width: 98%;
+    margin: 20px auto;
+    padding: 20px 10px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.user-accounts .container {
+    width: 98%;
+    height: 68vh;
+    margin: 10px auto;
+    overflow-y: scroll;
+}
+
+.user-accounts table {
+    width: 100%;
+}
+
+.user-accounts table th,
+.user-accounts table td {
+    padding: 1%;
+    border: 1px solid;
+}
+
+.user-accounts table button {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.user-accounts table .sno {
+    width: 5%;
+}
+
+.user-accounts table .username {
+    width: 60%;
+}
+
+.user-accounts table .role {
+    width: 15%;
+}
+
+.user-accounts table .actions {
+    width: 25%;
+}

@@ -89,3 +89,12 @@ button {
     border: 1px solid var(--red);
     color: white;
 }
+
+.primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--blue);
+    background-color: var(--blue);
+    color: white;
+}

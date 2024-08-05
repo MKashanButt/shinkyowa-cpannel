@@ -199,12 +199,53 @@ class CustomerAccountController extends Controller
         ]);
     }
 
+    public function render_users()
+    {
+        if (Auth::user()->role == 'admin') {
+            $users = User::where('role', '=', 'manager')
+                ->where('name', '!=', Auth::user()->name)
+                ->orderBy('id', 'DESC')
+                ->get();
+        } else {
+            $users = User::where('manager', '=', Auth::user()->name)
+                ->orderBy('id', 'DESC')
+                ->get();
+        }
+
+
+        return view('users', [
+            "title" => "User Accounts",
+            "stylesheet" => "users.css",
+            "users" => $users
+        ]);
+    }
+
+    public function team_members($manager)
+    {
+        $users = User::where('manager', $manager)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return view('users', [
+            "title" => "User Accounts",
+            "stylesheet" => "users.css",
+            "users" => $users
+        ]);
+    }
+
     public function destroy($id)
     {
         $email = CustomerAccounts::where('customer_id', $id)->pluck('customer_email');
         CustomerAccounts::where('customer_id', $id)->delete();
         CustomerPayments::where('customer_email', $email)->delete();
         CustomerVehicles::where('customer_email', $email)->delete();
+
+        return redirect()->back()->with('success', 'Account Deleted');
+    }
+
+    public function destroy_user($id)
+    {
+        User::where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Account Deleted');
     }

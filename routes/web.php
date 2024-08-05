@@ -23,6 +23,10 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/add-customer-vehicle', 'render_customer_vehicle_form')->name('customer-vehicle-form');
     Route::post('/add-customer-vehicle/post', 'add_customer_vehicle')->name('add-customer-vehicle');
 
+    Route::get('/users', 'render_users');
+    Route::get('/user/destroy/{id}', 'destroy_user');
+    Route::get('/user/members/{manager}', 'team_members');
+
     // AJAX ROUTES START
     Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
     Route::get('/find-email', 'findEmail')->name('find-email');
