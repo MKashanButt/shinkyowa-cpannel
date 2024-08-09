@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerAccountController extends Controller
 {
@@ -212,7 +213,6 @@ class CustomerAccountController extends Controller
                 ->get();
         }
 
-
         return view('users', [
             "title" => "User Accounts",
             "stylesheet" => "users.css",
@@ -231,6 +231,48 @@ class CustomerAccountController extends Controller
             "stylesheet" => "users.css",
             "users" => $users
         ]);
+    }
+
+    public function user_credentials($id)
+    {
+        $user = User::where('id', $id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $managers = User::where('role', 'manager')
+            ->get();
+
+        return view('user-credentials', [
+            "title" => "User Accounts",
+            "stylesheet" => "users.css",
+            "user" => $user,
+            "managers" => $managers,
+            "stylesheet" => "add-customer-vehicle.css",
+            "name" => $user["name"]
+        ]);
+    }
+
+    public function update_user_credentials(Request $request)
+    {
+        $id = $request->input('id');
+        $user = User::findOrFail($id);
+        $name = $request->input('name');
+        $password = $request->input('password');
+
+        if ($name) {
+            $user->update([
+                'name' => $name,
+            ]);
+        }
+        if ($password) {
+            $user->update([
+                'password' => Hash::make($password)
+            ]);
+        }
+
+        $user->save();
+
+        return redirect('users');
     }
 
     public function destroy($id)

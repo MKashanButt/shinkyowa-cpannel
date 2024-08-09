@@ -33,7 +33,7 @@
                             <td>{{ $user['name'] }}</td>
                             <td>{{ $user['role'] }}</td>
                             <td class="actions">
-                                <a href="/user/credentials{{ $user['id'] }}">
+                                <a href="/user/credentials/{{ $user['id'] }}">
                                     <button>Credentials</button>
                                 </a>
                                 @if (Auth::user()->role == 'admin')

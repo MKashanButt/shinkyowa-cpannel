@@ -23,9 +23,11 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/add-customer-vehicle', 'render_customer_vehicle_form')->name('customer-vehicle-form');
     Route::post('/add-customer-vehicle/post', 'add_customer_vehicle')->name('add-customer-vehicle');
 
-    Route::get('/users', 'render_users');
-    Route::get('/user/destroy/{id}', 'destroy_user');
-    Route::get('/user/members/{manager}', 'team_members');
+    Route::get('/users', 'render_users')->name('users');
+    Route::get('/user/destroy/{id}', 'destroy_user')->name('users.destory');
+    Route::get('/user/members/{manager}', 'team_members')->name('users.team-members');
+    Route::get('/user/credentials/{id}', 'user_credentials')->name('user-credentails');
+    Route::post('/user/update/', 'update_user_credentials')->name('users.update');
 
     // AJAX ROUTES START
     Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
