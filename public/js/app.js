@@ -45,6 +45,7 @@ function checkEmailAvailability(email) {
         }
     });
 }
+
 function findEmail(email) {
     $.ajax({
         url: "/find-email",
@@ -97,4 +98,15 @@ function findStockId(stockId) {
             $('#stockid-find-message').css('color', 'red');
         }
     });
+}
+
+function optToggle() {
+    let val = document.getElementById('manager').value;
+    let option = document.getElementById('managerName').classList;
+    if (val) {
+        option.add('none')
+    } else {
+        option.remove('none')
+    }
+    console.log(val)
 }

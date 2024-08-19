@@ -106,6 +106,27 @@ class CustomerAccountController extends Controller
         ]);
     }
 
+    public function findImages($stockid)
+    {
+        $stock = Stocks::where('stock_id', $stockid)->pluck('stock_images');
+
+        return view('vehicle-images', [
+            "title" => $stockid . " | Vehicle Images",
+            "images" => explode(',', $stock[0]),
+            "stylesheet" => 'single-customer-account.css',
+        ]);
+    }
+
+    public function edit_customer_vehicle($stockid)
+    {
+        $vehicle = CustomerVehicles::where('stock_id', $stockid)->first();
+        return view('add-customer-vehicle', [
+            "title" => "Customer Vehicle Edit",
+            "stylesheet" => "add-customer-vehicle.css",
+            "vehicle" => $vehicle
+        ]);
+    }
+
     public function render_customer_payment_form()
     {
         return view('add-customer-payments', [
@@ -247,7 +268,7 @@ class CustomerAccountController extends Controller
             "stylesheet" => "users.css",
             "user" => $user,
             "managers" => $managers,
-            "stylesheet" => "add-customer-vehicle.css",
+            "stylesheet" => "user-credentials.css",
             "name" => $user["name"]
         ]);
     }
@@ -257,6 +278,8 @@ class CustomerAccountController extends Controller
         $id = $request->input('id');
         $user = User::findOrFail($id);
         $name = $request->input('name');
+        $manager = $request->input('manager');
+        $managerName = $request->input('managerName');
         $password = $request->input('password');
 
         if ($name) {
@@ -264,9 +287,26 @@ class CustomerAccountController extends Controller
                 'name' => $name,
             ]);
         }
+
         if ($password) {
             $user->update([
                 'password' => Hash::make($password)
+            ]);
+        }
+
+        if (!$manager) {
+            $user->update([
+                'role' => 'manager'
+            ]);
+        } else {
+            $user->update([
+                'role' => 'agent'
+            ]);
+        }
+
+        if ($managerName) {
+            $user->update([
+                'manager' => $managerName
             ]);
         }
 
@@ -290,6 +330,35 @@ class CustomerAccountController extends Controller
         User::where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Account Deleted');
+    }
+
+    public function destroy_customer_vehicle($id)
+    {
+        $stockid = CustomerVehicles::where('id', $id)->pluck('stock_id');
+        $email = CustomerVehicles::where('id', $id)->pluck('customer_email');
+
+        CustomerVehicles::where('id', $id)->delete();
+
+        $removalbuying = CustomerPayments::where('stock_id', $stockid)->pluck('payment');
+        $sumOfRemovalBuying = $removalbuying->sum();
+        $previousbuying = CustomerAccounts::where('customer_email', $email)->pluck('buying');
+        $sumOfPreviousBuying = $previousbuying->sum();
+
+        $buying = $sumOfPreviousBuying - $sumOfRemovalBuying;
+
+        CustomerPayments::where('stock_id', $stockid)->update([
+            'stock_id' => 'not allocated'
+        ]);
+
+        Stocks::where('stock_id', $stockid)->update([
+            'status' => 'available'
+        ]);
+
+        CustomerAccounts::where('customer_email', $email)->update([
+            "buying" => $buying
+        ]);
+
+        return redirect()->back();
     }
 
     // AJAX APIS

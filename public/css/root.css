@@ -98,3 +98,7 @@ button {
     background-color: var(--blue);
     color: white;
 }
+
+.none {
+    display: none;
+}

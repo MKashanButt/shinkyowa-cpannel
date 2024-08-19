@@ -40,7 +40,8 @@
 
 .single-customer-account .customer-vehicle,
 .single-customer-account .customer-payments {
-    width: 100%;
+    width: 120%;
+    overflow-x: scroll;
 }
 
 .single-customer-account .customer-vehicle thead,
@@ -70,7 +71,7 @@
 }
 
 .single-customer-account .customer-vehicle .vehicle {
-    width: 40%;
+    width: 20%;
 }
 
 .single-customer-account .customer-vehicle .chassis {
@@ -82,7 +83,16 @@
 }
 
 .single-customer-account .customer-vehicle .actions {
-    width: 10%;
+    width: 30%;
+}
+
+.single-customer-account .customer-vehicle .action-btns {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.single-customer-account .customer-vehicle .action-btns button {
+    margin: 0;
 }
 
 .single-customer-account .customer-payments .sno {
@@ -111,4 +121,47 @@
 
 .single-customer-account .customer-payments .paymentRecievedDate {
     width: 10%;
+}
+
+.imageContent {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.imageContent img {
+    width: 19%;
+    cursor: pointer;
+}
+
+.modal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.modal .container {
+    position: relative;
+}
+
+.modal .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: var(--black);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.modal .stage {
+    width: 50%;
+    height: 80%;
+    background-color: white;
 }

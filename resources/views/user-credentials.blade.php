@@ -14,18 +14,22 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password">
             </div>
-            <div class="item">
-                <label for="account">Manager:</label>
-                <select name="manager" id="manager">
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-                <select name="managerName" id="managerName">
-                    @foreach ($managers as $manager)
-                        <option value="{{ $manager->name }}">{{ $managers->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            @if (Auth::user()->role == 'admin')
+                <div class="item">
+                    <label for="account">Manager:</label>
+                    <select name="manager" id="manager" onchange="optToggle()">
+                        <option value={{ Auth::user()->role == 'manager' ? false : true }} selected>
+                            {{ Auth::user()->role == 'manager' ? 'False' : 'True' }}</option>
+                        <option value=true>True</option>
+                        <option value=false>False</option>
+                    </select>
+                    <select name="managerName" id="managerName">
+                        @foreach ($managers as $manager)
+                            <option value="{{ $manager['name'] }}">{{ $manager['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
             <button>Update</button>
         </form>
     </div>

@@ -32,7 +32,7 @@
             </div>
             <div class="item">
                 <label for="cmanager">Manager:</label>
-                <input type="text" name="cmanager" id="cmanager" value="ABC" readonly>
+                <input type="text" name="cmanager" id="cmanager" value="{{ Auth::user()->manager }}" readonly>
             </div>
             <div class="item">
                 <label for="ccurrency">Currency:</label>

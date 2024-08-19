@@ -65,7 +65,17 @@
                                 @else
                                     <td><button class="progress">Awaiting</button></td>
                                 @endif
-                                <td><button>View Images</button></td>
+                                <td class="action-btns">
+                                    <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button>View
+                                            Images</button></a>
+                                    <button>View Docs</button>
+                                    @if (Auth::user()->role == 'admin')
+                                        <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
+                                                class="danger">Delete</button></a>
+                                        <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
+                                                class="primary">Edit</button></a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -111,11 +121,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </section>
-    <section class="dialog">
-        <div class="stage">
-            <img src="" alt="">
         </div>
     </section>
 @endsection
