@@ -21,7 +21,7 @@
         <p><span>Deposit:</span>
             {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->deposit) : '' }}</p>
         <p><span>Remaining:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - $customerAccount->deposit) : '' }}
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format((int) $customerAccount->buying - (int) $customerAccount->deposit) : '' }}
         </p>
         <div class="tab">
             <button onclick="toggleTab('customer-vehicle-tab')">Customer Vehicles
