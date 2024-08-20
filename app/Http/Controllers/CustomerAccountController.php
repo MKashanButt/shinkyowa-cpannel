@@ -238,7 +238,7 @@ class CustomerAccountController extends Controller
         $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
         $customerBuying = $customerAccount->buying;
         if ($customerAccount) {
-            $customerAccount->buying = $customerBuying + $FILTERED_AMMOUNT;
+            $customerAccount->buying = (int) $customerBuying + (int) $FILTERED_AMMOUNT;
             $customerAccount->save();
         }
 
