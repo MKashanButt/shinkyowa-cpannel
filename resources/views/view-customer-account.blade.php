@@ -100,6 +100,7 @@
                             <th class="paymentDate">Payment Date</th>
                             <th class="payment">Payment</th>
                             <th class="paymentRecievedDate">Recieved Date</th>
+                            <th class="action">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,6 +117,12 @@
                                 <td>{{ $customerPayment->payment_date }}</td>
                                 <td>{{ $customerAccount->currency . $customerPayment->payment }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
+                                <td>
+                                    <a href="/customer-payment/edit/{{ $customerPayment->id }}"><button
+                                            class="primary">Edit</button></a>
+                                    <a href="/customer-payment/destroy/{{ $customerPayment->id }}"><button
+                                            class="danger">Delete</button></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

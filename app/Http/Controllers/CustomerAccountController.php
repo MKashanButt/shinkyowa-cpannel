@@ -117,7 +117,7 @@ class CustomerAccountController extends Controller
         ]);
     }
 
-    public function edit_customer_vehicle($stockid)
+    public function fetch_customer_vehicle($stockid)
     {
         $vehicle = CustomerVehicles::where('stock_id', $stockid)->first();
         return view('add-customer-vehicle', [
@@ -125,6 +125,35 @@ class CustomerAccountController extends Controller
             "stylesheet" => "add-customer-vehicle.css",
             "vehicle" => $vehicle
         ]);
+    }
+
+    public function edit_customer_vehicle(Request $request)
+    {
+
+        $PREVIOUS_PAYMENT = CustomerVehicles::where('stock_id', $request->input('stockId'))->pluck('payment');
+
+        $FILTERED_AMMOUNT = ltrim($request->input('amount'), "$");
+        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT) - $PREVIOUS_PAYMENT;
+
+        $customerVehicles = new CustomerVehicles;
+        $customerVehicles->stock_id = $request->input('stockId');
+        $customerVehicles->vehicle = $request->input('vehicle');
+        $customerVehicles->chassis = $request->input('chassis');
+        $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
+        $customerVehicles->amount = $FILTERED_AMMOUNT;
+        $customerVehicles->customer_email = $request->input('cemail');
+        $customerVehicles->status = $request->input('status');
+
+        $customerVehicles->save();
+
+        $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
+        $customerBuying = $customerAccount->buying;
+        if ($customerAccount) {
+            $customerAccount->buying = $customerBuying + $FILTERED_AMMOUNT;
+            $customerAccount->save();
+        }
+
+        return redirect()->back()->with('success', 'Vehicle Uploaded');
     }
 
     public function render_customer_payment_form()
@@ -163,6 +192,16 @@ class CustomerAccountController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Customer Payment Added');
+    }
+
+    public function fetch_customer_payment($id)
+    {
+        $payment = CustomerPayments::findOrFail($id);
+        return view('add-customer-payment', [
+            "title" => "Edit Client Payment",
+            "stylesheet" => "customer-payments",
+            "payment" => $payment
+        ]);
     }
 
     public function render_customer_vehicle_form()
@@ -358,6 +397,12 @@ class CustomerAccountController extends Controller
             "buying" => $buying
         ]);
 
+        return redirect()->back();
+    }
+
+    public function destroy_customer_payment($id)
+    {
+        CustomerPayments::findOrFail($id)->delete();
         return redirect()->back();
     }
 

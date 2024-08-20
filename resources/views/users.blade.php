@@ -6,7 +6,6 @@
 @section('content')
     <section class="user-accounts">
         <x-breadcrumbs :page="'Users'" />
-        <x-customer-options />
         @if (session('success'))
             <div class="alert" style="margin: 20px 0">
                 <p>{{ session('success') }}</p>
