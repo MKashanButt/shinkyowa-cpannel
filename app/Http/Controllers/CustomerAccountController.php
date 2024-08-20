@@ -94,15 +94,12 @@ class CustomerAccountController extends Controller
         $customerPayments = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
         $customerVehicles = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
 
-        $images = Stocks::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
-
         return view('view-customer-account', [
             "title" => "Customer Account",
             "stylesheet" => "single-customer-account.css",
             "customerAccount" => $customerAccount,
             "customerPayments" => $customerPayments,
             "customerVehicles" => $customerVehicles,
-            "images" => $images
         ]);
     }
 

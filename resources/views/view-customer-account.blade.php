@@ -5,6 +5,7 @@
 @extends('template')
 @section('content')
     <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
+    <x-customer-options />
     <section class="single-customer-account">
         <p><span>Customer Id:</span> {{ $customerAccount->customer_id }}</p>
         <p><span>Customer Name:</span> {{ $customerAccount->customer_name }}</p>
