@@ -21,7 +21,7 @@
         <p><span>Deposit:</span>
             {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->deposit) : '' }}</p>
         <p><span>Remaining:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format((int) $customerAccount->buying - (int) $customerAccount->deposit) : '' }}
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - $customerAccount->deposit) : '' }}
         </p>
         <div class="tab">
             <button onclick="toggleTab('customer-vehicle-tab')">Customer Vehicles
@@ -59,7 +59,7 @@
                                 <td>{{ $customerAccount->currency . number_format($customerVehicle->amount) }}</td>
                                 <td>{{ $customerVehicle->payment ? $customerAccount->currency . number_format($customerVehicle->payment) : '' }}
                                 </td>
-                                <td>{{ $customerAccount->currency . number_format((int) $customerVehicle->amount - (int) $customerVehicle->payment) }}
+                                <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
                                 </td>
                                 @if ($customerVehicle->amount - $customerVehicle->payment == 0)
                                     <td><button class="done">Cleared</button></td>
