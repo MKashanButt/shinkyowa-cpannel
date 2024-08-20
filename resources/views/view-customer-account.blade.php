@@ -59,7 +59,7 @@
                                 <td>{{ $customerAccount->currency . number_format($customerVehicle->amount) }}</td>
                                 <td>{{ $customerVehicle->payment ? $customerAccount->currency . number_format($customerVehicle->payment) : '' }}
                                 </td>
-                                <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
+                                <td>{{ $customerAccount->currency . number_format((int) $customerVehicle->amount - (int) $customerVehicle->payment) }}
                                 </td>
                                 @if ($customerVehicle->amount - $customerVehicle->payment == 0)
                                     <td><button class="done">Cleared</button></td>
