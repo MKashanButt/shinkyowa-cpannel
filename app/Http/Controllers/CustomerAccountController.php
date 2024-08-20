@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\Foreach_;
+use SebastianBergmann\CodeCoverage\Report\Html\CustomCssFile;
 
 class CustomerAccountController extends Controller
 {
@@ -47,6 +49,7 @@ class CustomerAccountController extends Controller
             foreach ($users as $user) {
                 $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
             }
+            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account)->get()->toArray());
         } else {
             $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get()->toArray();
         }

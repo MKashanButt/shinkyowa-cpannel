@@ -37,7 +37,7 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     // AJAX ROUTES START
     Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
     Route::get('/find-email', 'findEmail')->name('find-email');
-    Route::get('find-stock-id', 'findStockId')->name('find-stock-id');
+    Route::get('/find-stock-id', 'findStockId')->name('find-stock-id');
 });
 
 Route::middleware('auth')->group(function () {
