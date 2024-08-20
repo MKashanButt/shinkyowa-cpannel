@@ -42,7 +42,7 @@
                             </td>
                             <td>{{ $accounts['deposit'] ? $accounts['currency'] . number_format($accounts['deposit']) : '' }}
                             </td>
-                            <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying'] - $accounts['deposit']) : '' }}
+                            <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format((int) $accounts['buying'] - (int) $accounts['deposit']) : '' }}
                             </td>
                             @if (Auth::user()->user != 'agent')
                                 <td>
