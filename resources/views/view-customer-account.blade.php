@@ -16,10 +16,11 @@
         <p><span>Description:</span> {{ $customerAccount->description }}</p>
         <p><span>Location:</span> {{ $customerAccount->location }}</p>
         <p><span>Buying:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format(intval($customerAccount->buying)) : '' }}
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
         </p>
         <p><span>Deposit:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->deposit) : '' }}</p>
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format(intval($customerAccount->deposit)) : '' }}
+        </p>
         <p><span>Remaining:</span>
             {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - $customerAccount->deposit) : '' }}
         </p>
