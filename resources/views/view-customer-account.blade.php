@@ -16,7 +16,7 @@
         <p><span>Description:</span> {{ $customerAccount->description }}</p>
         <p><span>Location:</span> {{ $customerAccount->location }}</p>
         <p><span>Buying:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
+            {{ $customerAccount->buying ? $customerAccount->currency . number_format(intval($customerAccount->buying)) : '' }}
         </p>
         <p><span>Deposit:</span>
             {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->deposit) : '' }}</p>
