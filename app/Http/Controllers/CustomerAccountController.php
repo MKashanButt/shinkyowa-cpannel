@@ -123,34 +123,41 @@ class CustomerAccountController extends Controller
         return view('add-customer-vehicle', [
             "title" => "Customer Vehicle Edit",
             "stylesheet" => "add-customer-vehicle.css",
-            "vehicle" => $vehicle
+            "vehicle" => $vehicle,
+            "actionUrl" => "/customer-vehicle/update/"
         ]);
     }
 
     public function edit_customer_vehicle(Request $request)
     {
-
-        $PREVIOUS_PAYMENT = CustomerVehicles::where('stock_id', $request->input('stockId'))->pluck('payment');
-
+        $PREVIOUS_BUYING = CustomerAccounts::where('customer_email', $request->input('cemail'))->pluck('buying');
         $FILTERED_AMMOUNT = ltrim($request->input('amount'), "$");
-        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT) - $PREVIOUS_PAYMENT;
+        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
 
+        // dd($FILTERED_AMMOUNT);
         $customerVehicles = new CustomerVehicles;
-        $customerVehicles->stock_id = $request->input('stockId');
-        $customerVehicles->vehicle = $request->input('vehicle');
-        $customerVehicles->chassis = $request->input('chassis');
-        $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
-        $customerVehicles->amount = $FILTERED_AMMOUNT;
-        $customerVehicles->customer_email = $request->input('cemail');
-        $customerVehicles->status = $request->input('status');
 
-        $customerVehicles->save();
+        $customerVehicles->where('stock_id', $request->input('stockId'))->update([
+            "stock_id" => $request->input('stockId'),
+            "vehicle" => $request->input('vehicle'),
+            "chassis" => $request->input('chassis'),
+            "fob_or_cnf" => $request->input('fob-cnf'),
+            "amount" => $FILTERED_AMMOUNT,
+            "customer_email" => $request->input('cemail'),
+            "status" => $request->input('status'),
+        ]);
 
         $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
         $customerBuying = $customerAccount->buying;
-        if ($customerAccount) {
-            $customerAccount->buying = $customerBuying + $FILTERED_AMMOUNT;
-            $customerAccount->save();
+
+        if ($PREVIOUS_BUYING[0] < ($customerBuying + $FILTERED_AMMOUNT)) {
+            $customerAccount->update([
+                'buying' => $customerBuying + ($FILTERED_AMMOUNT - $PREVIOUS_BUYING[0])
+            ]);
+        } elseif ($PREVIOUS_BUYING[0] > ($customerBuying + $FILTERED_AMMOUNT)) {
+            $customerAccount->update([
+                'buying' => $customerBuying - ($PREVIOUS_BUYING[0] - $FILTERED_AMMOUNT)
+            ]);
         }
 
         return redirect()->back()->with('success', 'Vehicle Uploaded');
@@ -208,7 +215,8 @@ class CustomerAccountController extends Controller
     {
         return view('add-customer-vehicle', [
             "title" => "Add Customer Vehicle",
-            "stylesheet" => "add-customer-vehicle.css"
+            "stylesheet" => "add-customer-vehicle.css",
+            "actionUrl" => "/add-customer-vehicle/post"
         ]);
     }
 

@@ -18,6 +18,7 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/customer-account/{id}', 'find')->name('find-customer-account');
     Route::get('/customer-account/images/{stockid}', 'findImages')->name('customer-account.images');
     Route::get('/customer-vehicle/edit/{stockid}', 'fetch_customer_vehicle')->name('customer-vehicle.edit');
+    Route::post('/customer-vehicle/update', 'edit_customer_vehicle')->name('customer-vehicle.edit');
     Route::get('/customer-vehicle/destroy/{id}', 'destroy_customer_vehicle')->name('customer-vehicle.destroy');
 
     Route::get('/add-customer-payments', 'render_customer_payment_form')->name('customer-payment-form');

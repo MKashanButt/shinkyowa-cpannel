@@ -8,7 +8,7 @@
                 <p>{{ session('success') }}</p>
             </div>
         @endif
-        <form action="/add-customer-vehicle/post" method="POST">
+        <form action="{{ $actionUrl }}" method="POST">
             @csrf
             <div class="item">
                 <label for="stockId">Stock Id:</label>
@@ -28,7 +28,7 @@
                 <label for="amount">Amount:</label>
                 <select name="fob-cnf" id="fob-cnf">
                     @isset($vehicle->status)
-                        <option disabled selected value="{{ isset($vehicle) ? $vehicle->fob_or_cnf : '' }}">
+                        <option selected value="{{ isset($vehicle) ? $vehicle->fob_or_cnf : '' }}">
                             {{ $vehicle->fob_or_cnf }}</option>
                     @endisset
                     <option value="FOB">FOB</option>
@@ -46,7 +46,7 @@
                 <label for="status">Status:</label>
                 <select name="status" id="status">
                     @if (isset($vehicle->status))
-                        <option disabled selected value="{{ isset($vehicle) ? $vehicle->status : '' }}">
+                        <option selected value="{{ isset($vehicle) ? $vehicle->status : '' }}">
                             {{ ucwords($vehicle->status) }}</option>
                     @else
                         <option disabled selected>Select Status</option>
