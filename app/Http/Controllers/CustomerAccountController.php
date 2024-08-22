@@ -159,7 +159,7 @@ class CustomerAccountController extends Controller
             "title" => "Customer Vehicle Edit",
             "stylesheet" => "add-customer-vehicle.css",
             "vehicle" => $vehicle,
-            "actionUrl" => "/customer-vehicle/update/"
+            "actionUrl" => "/customer-vehicle/update"
         ]);
     }
 
