@@ -74,6 +74,8 @@
                                     @if (Auth::user()->role == 'admin')
                                         <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
                                                 class="danger">Delete</button></a>
+                                    @endif
+                                    @if (Auth::user()->role != 'agent')
                                         <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
                                                 class="primary">Edit</button></a>
                                     @endif
@@ -102,7 +104,7 @@
                             <th class="paymentDate">Payment Date</th>
                             <th class="payment">Payment</th>
                             <th class="paymentRecievedDate">Recieved Date</th>
-                            @if (Auth::user()->role == 'admin')
+                            @if (Auth::user()->role != 'agent')
                                 <th class="action">Action</th>
                             @endif
                         </tr>
@@ -121,14 +123,16 @@
                                 <td>{{ $customerPayment->payment_date }}</td>
                                 <td>{{ $customerAccount->currency . $customerPayment->payment }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
-                                @if (Auth::user()->role == 'admin')
-                                    <td>
+                                <td>
+                                    @if (Auth::user()->role != 'agent')
                                         <a href="/customer-payment/edit/{{ $customerPayment->id }}"><button
                                                 class="primary">Edit</button></a>
+                                    @endif
+                                    @if (Auth::user()->role == 'admin')
                                         <a href="/customer-payment/destroy/{{ $customerPayment->id }}"><button
                                                 class="danger">Delete</button></a>
-                                    </td>
-                                @endif
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

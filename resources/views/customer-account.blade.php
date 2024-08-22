@@ -59,6 +59,8 @@
                                     <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
                                         <button class="danger">Delete</button>
                                     </a>
+                                @endif
+                                @if (Auth::user()->role != 'agent')
                                     <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
                                         <button class="primary">Edit</button>
                                     </a>
