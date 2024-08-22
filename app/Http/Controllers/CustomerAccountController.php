@@ -81,6 +81,19 @@ class CustomerAccountController extends Controller
         return redirect('/customer-account');
     }
 
+    public function fetch_customer_account($id)
+    {
+        $customerAccount = CustomerAccounts::where('customer_id', $id)->first();
+
+        return view('add-customer-account', [
+            "title" => $customerAccount["customer_name"] . ' | Customer Account',
+            "stylesheet" => "add-customer.css",
+            "customerAccount" => $customerAccount,
+            "id" => $customerAccount->customer_id,
+            "actionUrl" => "/customer-account/update"
+        ]);
+    }
+
     public function render_add_customer_form()
     {
         $id = $this->generateId();
@@ -88,7 +101,29 @@ class CustomerAccountController extends Controller
             "title" => "Add Customer Customer",
             "stylesheet" => "add-customer.css",
             "id" => $id,
+            "actionUrl" => "/add-customer/post"
         ]);
+    }
+
+    public function update_customer_account(Request $request)
+    {
+        $customerAccount = CustomerAccounts::where('customer_id', $request->input('cid'))->first();
+
+        $customerAccount->update([
+            'customer_id' => $request->input('cid'),
+            'customer_name' => $request->input('cname'),
+            'customer_company' => $request->input('ccompany'),
+            'customer_phone' => $request->input('cphone'),
+            'customer_whatsapp' => $request->input('cwhatsapp'),
+            'customer_email' => $request->input('cemail'),
+            'agent_manager' => $request->input('cmanager'),
+            'currency' => $request->input('ccurrency'),
+            'description' => $request->input('cdescription'),
+            'location' => $request->input('clocation'),
+            'agent' => $request->input('agent')
+        ]);
+
+        return redirect()->back();
     }
 
     public function find($id)
@@ -167,7 +202,8 @@ class CustomerAccountController extends Controller
     {
         return view('add-customer-payments', [
             "title" => "Customer Payments",
-            "stylesheet" => "customer-payments.css"
+            "stylesheet" => "customer-payments.css",
+            "actionUrl" => "/add-customer-payment"
         ]);
     }
 
@@ -204,11 +240,46 @@ class CustomerAccountController extends Controller
     public function fetch_customer_payment($id)
     {
         $payment = CustomerPayments::findOrFail($id);
-        return view('add-customer-payment', [
+        return view('add-customer-payments', [
             "title" => "Edit Client Payment",
-            "stylesheet" => "customer-payments",
-            "payment" => $payment
+            "stylesheet" => "customer-payments.css",
+            "payment" => $payment,
+            "actionUrl" => "/customer-payment/update"
         ]);
+    }
+
+    public function edit_customer_payment(Request $request)
+    {
+        $PREVIOUS_DEPOSIT = CustomerAccounts::where('customer_email', $request->input('cemail'))->pluck('deposit');
+        $FILTERED_AMMOUNT = ltrim($request->input('payment'), "$");
+        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
+
+        // dd($FILTERED_AMMOUNT);
+        $customerPayments = new CustomerPayments;
+
+        $customerPayments->where('stock_id', $request->input('stockId'))->update([
+            "stock_id" => $request->input('stockId'),
+            "description" => $request->input('description'),
+            "customer_email" => $request->input('cemail'),
+            "payment_date" => $request->input('paymentDate'),
+            "payment" => $FILTERED_AMMOUNT,
+            "payment_recieved_date" => $request->input('paymentReceivedDate'),
+        ]);
+
+        $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
+        $customerDeposit = $customerAccount->deposit;
+
+        if ($PREVIOUS_DEPOSIT[0] < ($customerDeposit + $FILTERED_AMMOUNT)) {
+            $customerAccount->update([
+                'deposit' => $customerDeposit + ($FILTERED_AMMOUNT - $PREVIOUS_DEPOSIT[0])
+            ]);
+        } elseif ($PREVIOUS_DEPOSIT[0] > ($customerDeposit + $FILTERED_AMMOUNT)) {
+            $customerAccount->update([
+                'deposit' => $customerDeposit - ($PREVIOUS_DEPOSIT[0] - $FILTERED_AMMOUNT)
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Vehicle Uploaded');
     }
 
     public function render_customer_vehicle_form()

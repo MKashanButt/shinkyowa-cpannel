@@ -59,6 +59,9 @@
                                     <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
                                         <button class="danger">Delete</button>
                                     </a>
+                                    <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
+                                        <button class="primary">Edit</button>
+                                    </a>
                                 @endif
                             </td>
                         </tr>

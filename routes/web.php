@@ -9,6 +9,8 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/', 'dashboard')->name('dashboard');
 
     Route::get('/customer-account', 'index')->name('customer-accounts');
+    Route::get('/customer-account/edit/{id}', 'fetch_customer_account')->name('customer-accounts.edit-form');
+    Route::post('/customer-account/update', 'update_customer_account')->name('customer-accounts.update');
     Route::get('/agent-customers-account/{agent}', 'agent_customers_account')
         ->name('agent.customer-accounts');
     Route::get('customer-account/destroy/{id}', 'destroy');
@@ -23,7 +25,8 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
 
     Route::get('/add-customer-payments', 'render_customer_payment_form')->name('customer-payment-form');
     Route::post('/add-customer-payment', 'add_customer_payment')->name('add-customer-payment');
-    Route::get('/customer-payment/edit/{id}', 'fetch_customer_payment')->name('customer-payment.edit');
+    Route::get('/customer-payment/edit/{id}', 'fetch_customer_payment')->name('customer-payment.edit-form');
+    Route::post('/customer-payment/update', 'edit_customer_payment')->name('customer-payment.update');
     Route::get('/customer-payment/destroy/{id}', 'destroy_customer_payment')->name('customer-payment.destroy');
 
     Route::get('/add-customer-vehicle', 'render_customer_vehicle_form')->name('customer-vehicle-form');
