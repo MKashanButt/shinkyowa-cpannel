@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Managers;
+use App\Models\Roles;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +21,16 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        if (Auth::user()->role == 'admin') {
+            $roles = ['Admin', 'Operational Manager', 'Manager', 'Agent'];
+        } else {
+            $roles = ['Manager', 'Agent'];
+        }
+        $managers = Managers::all();
+        return view('auth.register', [
+            "roles" => $roles,
+            "managers" => $managers,
+        ]);
     }
 
     /**
@@ -33,14 +44,16 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string']
+            'role' => ['required', 'string'],
+            'manager' => ['string', 'nullable']
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role
+            'role' => $request->role,
+            'manager' => $request->manager
         ]);
 
         event(new Registered($user));

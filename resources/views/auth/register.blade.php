@@ -1,6 +1,3 @@
-@php
-    $roles = ['agent', 'manager'];
-@endphp
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -43,9 +40,15 @@
         <div class="mt-4">
             <x-input-label for="role" :value="__('User Role')" />
 
-            <x-select-box :roles="$roles" />
+            <x-select-box :placeholder="'Select Role'" :data="$roles" :id="'role'" :name="'roles'"
+                onchange="toggleManager()" :column="'none'" />
+        </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="mt-4 hidden" id="managers">
+            <x-input-label for="manager" :value="__('Manager')" />
+
+            <x-select-box :placeholder="'Select Manager'" :data="$managers" :id="'manager'" :name="'manager'"
+                :column="'manager'" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -59,4 +62,15 @@
             </x-primary-button>
         </div>
     </form>
+    <script>
+        document.getElementById('role').addEventListener('change', function() {
+            const role = document.getElementById('role').value
+            const managerField = document.getElementById('managers')
+            if (role == 'Agent') {
+                managerField.classList.remove('hidden');
+            } else {
+                managerField.classList.add('hidden');
+            }
+        })
+    </script>
 </x-guest-layout>

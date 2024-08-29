@@ -110,3 +110,14 @@ function optToggle() {
     }
     console.log(val)
 }
+
+// function toggleManager() {
+//     const role = document.getElementById('role').value
+//     const managerField = document.getElementById('managers')
+
+//     if (role == 'agent') {
+//         managerField.classList.remove('hidden');
+//     } else {
+//         managerField.classList.add('hidden');
+//     }
+// }

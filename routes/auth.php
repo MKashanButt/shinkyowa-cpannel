@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     Route::get('register', [RegisteredUserController::class, 'create'])
-        // ->middleware('admin')
+        ->middleware('App\Http\Middleware\admin')
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);

@@ -1,8 +1,12 @@
 <select
     class="block mt-1 w-full p-2 bg-gray-200 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-    id="role" name="role" required>
-    <option value="" disabled>Select Role</option>
-    @foreach ($roles as $role)
-        <option value="{{ $role }}">{{ ucwords($role) }}</option>
+    id="{{ $id }}" name="{{ $name }}" required>
+    <option value="" selected>{{ $placeholder }}</option>
+    @foreach ($data as $item)
+        @if ($column != 'none')
+            <option value="{{ $item->column }}">{{ ucwords($item->$column) }}</option>
+        @else
+            <option value="{{ $item }}">{{ ucwords($item) }}</option>
+        @endif
     @endforeach
 </select>

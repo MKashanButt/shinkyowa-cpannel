@@ -165,3 +165,61 @@
     height: 80%;
     background-color: white;
 }
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.docContent {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.docContent img {
+    width: 19%;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+}
+
+form .field {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+form .field label {
+    width: 30%;
+}
+
+form .field input {
+    width: 70%;
+    height: 30px;
+    padding: 0 10px;
+}
+
+form .field:nth-of-type(2) label {
+    border: 1px solid grey;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(239, 239, 240, 1);
+}
+
+form .field input[type="file"] {
+    display: none;
+}

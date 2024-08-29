@@ -19,6 +19,12 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/add-customer-account', 'render_add_customer_form')->name('add-customer-form');
     Route::get('/customer-account/{id}', 'find')->name('find-customer-account');
     Route::get('/customer-account/images/{stockid}', 'findImages')->name('customer-account.images');
+    Route::get('/customer-account/docs/{stockid}', 'findDocs')->name('customer-account.docs');
+    Route::get('/customer-account/docs/{stockid}/add', function ($stockid) {
+        return view('add-docs', [
+            'id' => $stockid
+        ]);
+    })->name('customer-account.add-docs');
     Route::get('/customer-vehicle/edit/{stockid}', 'fetch_customer_vehicle')->name('customer-vehicle.edit-form');
     Route::post('/customer-vehicle/update', 'edit_customer_vehicle')->name('customer-vehicle.edit');
     Route::get('/customer-vehicle/destroy/{id}', 'destroy_customer_vehicle')->name('customer-vehicle.destroy');

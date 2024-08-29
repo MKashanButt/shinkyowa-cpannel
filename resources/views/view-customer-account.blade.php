@@ -70,7 +70,8 @@
                                 <td class="action-btns">
                                     <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button>View
                                             Images</button></a>
-                                    <button>View Docs</button>
+                                    <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button>View
+                                            Docs</button></a>
                                     @if (Auth::user()->role == 'admin')
                                         <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
                                                 class="danger">Delete</button></a>

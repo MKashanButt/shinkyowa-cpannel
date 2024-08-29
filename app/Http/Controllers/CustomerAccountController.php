@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
+use App\Models\Docs;
+use App\Models\Managers;
 use App\Models\Stocks;
 use App\Models\User;
 use Exception;
@@ -42,6 +44,14 @@ class CustomerAccountController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->get()->toArray();
+        } else if (Auth::user()->role == 'operational manager') {
+            $user_account = Auth::user()->name;
+            $users = User::where('name', '!=', $user_account)->orderBy('id', 'DESC')->get();
+            $customerAccounts = array();
+            foreach ($users as $user) {
+                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
+            }
+            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account)->get()->toArray());
         } else if (Auth::user()->role == 'manager') {
             $user_account = Auth::user()->name;
             $users = User::where('manager', $user_account)->get();
@@ -53,7 +63,9 @@ class CustomerAccountController extends Controller
         } else {
             $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get()->toArray();
         }
+
         $buying = CustomerPayments::sum('payment');
+
         return view('customer-account', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
@@ -148,6 +160,31 @@ class CustomerAccountController extends Controller
         return view('vehicle-images', [
             "title" => $stockid . " | Vehicle Images",
             "images" => explode(',', $stock[0]),
+            "stylesheet" => 'single-customer-account.css',
+        ]);
+    }
+
+    public function uploadDocs(Request $request)
+    {
+        $request->validate([
+            'stock_id' => 'required|string|max:10',
+            'documents' => 'required|files|multiple',
+        ]);
+
+        $docs = new Docs;
+        $docs->stock_id = $request->input('stockid');
+        $docs->documents = $request->input('documents');
+        $docs->save();
+
+        return redirect()->back()->with('success', 'Documents Uploaded');
+    }
+    public function findDocs($stockid)
+    {
+        $documents = Docs::where('stock_id', $stockid)->pluck('documents')->get();
+        return view('vehicle-docs', [
+            "title" => $stockid . " | Vehicle Documents",
+            "documents" => $documents,
+            "stockid" => $stockid,
             "stylesheet" => 'single-customer-account.css',
         ]);
     }
@@ -346,6 +383,9 @@ class CustomerAccountController extends Controller
                 ->where('name', '!=', Auth::user()->name)
                 ->orderBy('id', 'DESC')
                 ->get();
+            if ($users) {
+                $users = User::all();
+            }
         } else {
             $users = User::where('manager', '=', Auth::user()->name)
                 ->orderBy('id', 'DESC')
@@ -378,8 +418,7 @@ class CustomerAccountController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-        $managers = User::where('role', 'manager')
-            ->get();
+        $managers = Managers::all()->toArray();
 
         return view('user-credentials', [
             "title" => "User Accounts",

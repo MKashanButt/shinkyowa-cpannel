@@ -11,6 +11,9 @@
                 <p>{{ session('success') }}</p>
             </div>
         @endif
+        <section class="header">
+            <a href="/register"><button class="primary">Add User</button></a>
+        </section>
         <div class="container">
             <table cellspacing="0">
                 <thead>
@@ -29,17 +32,17 @@
                             @else
                                 <td>{{ $count++ }}.</td>
                             @endif
-                            <td>{{ $user['name'] }}</td>
-                            <td>{{ $user['role'] }}</td>
+                            <td>{{ ucwords($user['name']) }}</td>
+                            <td>{{ ucwords($user['role']) }}</td>
                             <td class="actions">
                                 <a href="/user/credentials/{{ $user['id'] }}">
                                     <button>Credentials</button>
                                 </a>
-                                @if (Auth::user()->role == 'admin')
+                                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'operational manager')
                                     <a href="/user/destroy/{{ $user['id'] }}">
                                         <button class="danger">Delete</button>
                                     </a>
-                                    @if ($user['role'] != 'agent')
+                                    @if ($user['role'] == 'manager')
                                         <a href="/user/members/{{ $user['name'] }}">
                                             <button class="primary">Team Members</button>
                                         </a>

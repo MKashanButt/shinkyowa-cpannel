@@ -1,3 +1,14 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.header button {
+    display: flex;
+    padding: 10px;
+}
+
 .user-accounts {
     width: 98%;
     margin: 20px auto;
