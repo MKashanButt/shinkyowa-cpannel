@@ -6,9 +6,9 @@
             <a href="/customer-account/docs/{{ $stockid }}/add"><button class="primary">Add Doc</button></a>
         </div>
     @endif
-    <div class="imageContent">
+    <div class="docContent">
         @foreach ($documents as $docs)
-            <img src="{{ env('VEHICLE_IMG_API') . trim($image, '[]"\/') }}" alt="" class="vehicle-image">
+            <img src="/storage/{{ trim($docs, '[]"\/') }}" alt="" class="vehicle-image">
         @endforeach
     </div>
     <section class="modal">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +26,7 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
             'id' => $stockid
         ]);
     })->name('customer-account.add-docs');
+    Route::post('/customer-account/docs/upload', 'uploadDocs')->name('customer-account.upload-docs');
     Route::get('/customer-vehicle/edit/{stockid}', 'fetch_customer_vehicle')->name('customer-vehicle.edit-form');
     Route::post('/customer-vehicle/update', 'edit_customer_vehicle')->name('customer-vehicle.edit');
     Route::get('/customer-vehicle/destroy/{id}', 'destroy_customer_vehicle')->name('customer-vehicle.destroy');

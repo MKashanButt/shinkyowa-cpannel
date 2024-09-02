@@ -166,21 +166,35 @@ class CustomerAccountController extends Controller
 
     public function uploadDocs(Request $request)
     {
+        // dd([
+        //     'stock_id' => $request->input('stock_id'),
+        //     'documents' => $request->file('documents')
+        // ]);
         $request->validate([
             'stock_id' => 'required|string|max:10',
-            'documents' => 'required|files|multiple',
+            'documents' => 'required|file|mimes:jpg,png,pdf',
         ]);
 
         $docs = new Docs;
-        $docs->stock_id = $request->input('stockid');
-        $docs->documents = $request->input('documents');
+        $docs->stock_id = $request->input('stock_id');
+        $original_file_names = [];
+
+        foreach ($request->file('documents') as $file) {
+            $filename = $file->getClientOriginalName();
+            $file->storeAs('public/', $filename);
+
+            $original_file_names[] = $filename;
+        }
+        $docs->documents = implode(',', $original_file_names);
         $docs->save();
 
         return redirect()->back()->with('success', 'Documents Uploaded');
     }
+
     public function findDocs($stockid)
     {
-        $documents = Docs::where('stock_id', $stockid)->pluck('documents')->get();
+        $documents = Docs::where('stock_id', $stockid)->get()->pluck('documents');
+        $documents = explode(',', $documents);
         return view('vehicle-docs', [
             "title" => $stockid . " | Vehicle Documents",
             "documents" => $documents,

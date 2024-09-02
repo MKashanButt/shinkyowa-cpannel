@@ -127,6 +127,7 @@
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    padding: 1%;
 }
 
 .imageContent img {
@@ -187,6 +188,7 @@
 
 .docContent img {
     width: 19%;
+    padding: 1%;
     cursor: pointer;
 }
 
@@ -221,5 +223,5 @@ form .field:nth-of-type(2) label {
 }
 
 form .field input[type="file"] {
-    display: none;
+    /* display: none; */
 }

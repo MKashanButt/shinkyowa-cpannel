@@ -7,15 +7,17 @@
 @section('content')
     <x-breadcrumbs :page="'Sales'" :subpage="'Documents'" :category="'Add Document'" />
     <section>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="/customer-account/docs/upload" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="field">
                 <label for="stockid">Stock Id</label>
-                <input type="text" name="stockid" id="stockid" value="{{ $id }}">
+                <input type="text" name="stock_id" id="stockid" value="{{ $id }}">
             </div>
             <div class="field">
-                <label for="docs">Upload Docs</label>
-                <input type="file" name="docs" id="docs" multiple>
+                <label for="documents">Upload Document</label>
+                <input type="file" name="documents[]" id="documents" multiple>
             </div>
+            <button class="primary">Add</button>
         </form>
     </section>
 @endsection
