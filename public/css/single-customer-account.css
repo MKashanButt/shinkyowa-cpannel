@@ -194,6 +194,7 @@
 
 form {
     display: flex;
+    position: relative;
 }
 
 form .field {
@@ -224,4 +225,11 @@ form .field:nth-of-type(2) label {
 
 form .field input[type="file"] {
     /* display: none; */
+}
+
+form button {
+    right: 20px;
+    bottom: -20px;
+    position: absolute;
+    padding: 5px 20px;
 }
