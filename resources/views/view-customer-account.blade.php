@@ -39,7 +39,7 @@
                             <th class="stockId">Stock Id</th>
                             <th class="vehicle">Vehicle</th>
                             <th class="chassis">Chassis</th>
-                            <th class="fob">FOB</th>
+                            <th class="fob">CNF</th>
                             <th class="fob">Payment</th>
                             <th class="fob">Remaining</th>
                             <th class="fob">Status</th>
@@ -65,7 +65,7 @@
                                 @if ($customerVehicle->amount - $customerVehicle->payment == 0)
                                     <td><button class="done">Cleared</button></td>
                                 @else
-                                    <td><button class="progress">Awaiting</button></td>
+                                    <td><button class="progress">Pending</button></td>
                                 @endif
                                 <td class="action-btns">
                                     <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button>View

@@ -1,15 +1,16 @@
 .single-customer-account {
     width: 98%;
-    height: 75vh;
+    height: 64vh;
     margin: 20px auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
     overflow-y: scroll;
+    font-size: 13px;
 }
 
 .single-customer-account p {
-    font-size: 18px;
+    /* font-size: 18px; */
 }
 
 .single-customer-account p span {
@@ -40,55 +41,54 @@
 
 .single-customer-account .customer-vehicle,
 .single-customer-account .customer-payments {
-    width: 120%;
+    width: 100%;
     overflow-x: scroll;
-}
-
-.single-customer-account .customer-vehicle thead,
-.single-customer-account .customer-payments thead {
-    background-color: lightgray;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .single-customer-account .customer-vehicle th,
+.single-customer-account .customer-payments th {
+    background-color: var(--blue);
+    color: white;
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
 .single-customer-account .customer-vehicle td,
-.single-customer-account .customer-payments th,
 .single-customer-account .customer-payments td {
     border: 1px solid;
     padding: 5px;
 }
 
 .single-customer-account .customer-vehicle button {
-    font-size: 14px;
     margin: auto;
 }
 
 .single-customer-account .customer-vehicle .sno {
-    width: 5%;
+    width: 50px;
 }
 
 .single-customer-account .customer-vehicle .stockId {
-    width: 10%;
+    width: 80px;
 }
 
 .single-customer-account .customer-vehicle .vehicle {
-    width: 20%;
+    width: 120px;
 }
 
 .single-customer-account .customer-vehicle .chassis {
-    width: 10%;
+    width: 120px;
 }
 
 .single-customer-account .customer-vehicle .fob {
-    width: 10%;
-}
-
-.single-customer-account .customer-vehicle .actions {
-    width: 30%;
+    width: 70px;
 }
 
 .single-customer-account .customer-vehicle .action-btns {
     display: flex;
-    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .single-customer-account .customer-vehicle .action-btns button {
@@ -96,31 +96,31 @@
 }
 
 .single-customer-account .customer-payments .sno {
-    width: 5%;
+    width: 50px;
 }
 
 .single-customer-account .customer-payments .stockId {
-    width: 10%;
+    width: 80px;
 }
 
 .single-customer-account .customer-payments .vehicle {
-    width: 30%;
+    width: 250px;
 }
 
 .single-customer-account .customer-payments .cemail {
-    width: 10%;
+    width: 200px;
 }
 
 .single-customer-account .customer-payments .paymentDate {
-    width: 10%;
+    width: 120px;
 }
 
 .single-customer-account .customer-payments .payment {
-    width: 10%;
+    width: 70px;
 }
 
 .single-customer-account .customer-payments .paymentRecievedDate {
-    width: 10%;
+    width: 120px;
 }
 
 .imageContent {
