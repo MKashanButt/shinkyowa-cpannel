@@ -86,7 +86,8 @@
     width: 70px;
 }
 
-.single-customer-account .customer-vehicle .action-btns {
+.single-customer-account .customer-vehicle .action-btns,
+.single-customer-account .customer-payments .action-btns {
     display: flex;
     gap: 5px;
 }

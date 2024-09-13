@@ -124,7 +124,7 @@
                                 <td>{{ $customerPayment->payment_date }}</td>
                                 <td>{{ $customerAccount->currency . $customerPayment->payment }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
-                                <td>
+                                <td class="action-btns">
                                     @if (Auth::user()->role != 'agent')
                                         <a href="/customer-payment/edit/{{ $customerPayment->id }}"><button
                                                 class="primary">Edit</button></a>
