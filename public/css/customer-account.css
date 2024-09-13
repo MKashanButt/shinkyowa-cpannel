@@ -14,7 +14,7 @@
 
 .main-customer-accounts .container {
     width: 98%;
-    height: 68vh;
+    height: 62vh;
     margin: 10px auto;
     overflow-y: scroll;
 }
@@ -27,40 +27,60 @@
 .main-customer-accounts table td {
     padding: 1%;
     border: 1px solid;
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.main-customer-accounts table th {
+    background-color: var(--blue);
+    color: white;
+    border: 1px solid black;
 }
 
 .main-customer-accounts table button {
+    width: 100%;
     padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-size: 13px;
+    border: 1px solid;
+    border-radius: 0;
+    margin: auto;
 }
 
 .main-customer-accounts table .sno {
-    width: 5%;
+    width: 50px;
 }
 
 .main-customer-accounts table .cname {
-    width: 20%;
+    width: 150px;
 }
 
 .main-customer-accounts table .ccompany {
-    width: 25%;
+    width: 200px
 }
 
 .main-customer-accounts table .buying {
-    width: 10%;
+    width: 70px
 }
 
 .main-customer-accounts table .deposit {
-    width: 10%;
+    width: 70px
 }
 
 .main-customer-accounts table .remaining {
-    width: 10%;
+    width: 90px
 }
 
 .main-customer-accounts table .agent {
-    width: 10%;
+    width: 140px
+}
+
+.main-customer-accounts table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
 }

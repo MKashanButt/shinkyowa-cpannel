@@ -52,19 +52,21 @@
                                 </td>
                             @endif
                             <td class="actions">
-                                <a href="/customer-account/{{ $accounts['customer_id'] }}">
-                                    <button>View Account</button>
-                                </a>
-                                @if (Auth::user()->role == 'admin')
-                                    <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
-                                        <button class="danger">Delete</button>
+                                <div class="stage">
+                                    <a href="/customer-account/{{ $accounts['customer_id'] }}">
+                                        <button>View Account</button>
                                     </a>
-                                @endif
-                                @if (Auth::user()->role != 'agent')
-                                    <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
-                                        <button class="primary">Edit</button>
-                                    </a>
-                                @endif
+                                    @if (Auth::user()->role == 'admin')
+                                        <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
+                                            <button class="danger">Delete</button>
+                                        </a>
+                                    @endif
+                                    @if (Auth::user()->role != 'agent')
+                                        <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
+                                            <button class="primary">Edit</button>
+                                        </a>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach

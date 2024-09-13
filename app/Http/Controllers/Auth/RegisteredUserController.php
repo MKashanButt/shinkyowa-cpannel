@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Managers;
 use App\Models\Roles;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class RegisteredUserController extends Controller
         } else {
             $roles = ['Manager', 'Agent'];
         }
-        $managers = Managers::all();
+        $managers = User::where('role', 'manager')->pluck('manager');
         return view('auth.register', [
             "roles" => $roles,
             "managers" => $managers,
@@ -38,26 +39,40 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string'],
-            'manager' => ['string', 'nullable']
-        ]);
+        try {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'roles' => ['required', 'string'],
+                'manager' => ['string', 'nullable']
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'manager' => $request->manager
-        ]);
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->role = $request->roles;
 
-        event(new Registered($user));
+            if ($request->manager) {
+                $user->manager = $request->manager;
+            }
 
-        return redirect(route('dashboard', absolute: false));
+            $user->save();
+
+            if ($request->role == 'manager') {
+                $managers = Managers::create([
+                    'manager' => $request->name
+                ]);
+                $managers->save();
+            }
+            event(new Registered($user));
+
+            return redirect(route('dashboard', absolute: false));
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

@@ -166,10 +166,6 @@ class CustomerAccountController extends Controller
 
     public function uploadDocs(Request $request)
     {
-        // dd([
-        //     'stock_id' => $request->input('stock_id'),
-        //     'documents' => $request->file('documents')
-        // ]);
         $request->validate([
             'stock_id' => 'required|string|max:10',
             'documents' => 'required|file|mimes:jpg,png,pdf',

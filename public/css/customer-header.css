@@ -1,8 +1,26 @@
 .customer-options {
     width: 98%;
     display: flex;
+    flex-direction: column;
     gap: 10px;
     margin: auto;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.customer-options h3 {
+    width: 245px;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: flex;
+    margin-top: -24px;
+    padding: 5px 5px;
+    background-color: white;
+}
+
+.customer-options .stage {
+    display: flex;
+    gap: 10px;
 }
 
 .customer-options .customer-account,
