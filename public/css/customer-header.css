@@ -19,8 +19,32 @@
 }
 
 .customer-options .stage {
-    display: flex;
+    width: 95%;
+    display: inline-flex;
     gap: 10px;
+    margin: auto;
+}
+
+.customer-options .stage form {
+    width: 40%;
+    display: flex;
+    border: 1px solid;
+}
+
+.customer-options .stage input {
+    all: unset;
+    width: 90%;
+    padding: 5px;
+    font-size: 13px;
+    border-right: 1px solid;
+}
+
+.customer-options .stage form button {
+    all: unset;
+    width: 9%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .customer-options .customer-account,

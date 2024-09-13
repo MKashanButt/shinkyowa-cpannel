@@ -567,4 +567,43 @@ class CustomerAccountController extends Controller
             'available' => $availableStock
         ]);
     }
+
+    // SEARCH
+    public function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'required|string|max:150'
+        ]);
+
+        if (Auth::user()->role == 'admin') {
+            $customerAccounts = CustomerAccounts::where('customer_name', 'LIKE', '%' . $request->input('search') . '%')->orderBy('id', 'DESC')->get()->toArray();
+        } else if (Auth::user()->role == 'operational manager') {
+            $user_account = Auth::user()->name;
+            $users = User::where('name', '!=', $user_account, 'AND', 'customer_name', 'LIKE', '%' . $request->input('search') . '%')->orderBy('id', 'DESC')->get();
+            $customerAccounts = array();
+            foreach ($users as $user) {
+                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
+            }
+            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account)->get()->toArray());
+        } else if (Auth::user()->role == 'manager') {
+            $user_account = Auth::user()->name;
+            $users = User::where('manager', $user_account)->get();
+            $customerAccounts = array();
+            foreach ($users as $user) {
+                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name, 'AND', 'customer_name', 'LIKE', '%' . $request->input('search') . '%')->get()->toArray());
+            }
+            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account, 'AND', 'customer_name', 'LIKE', '%' . $request->input('search') . '%')->get()->toArray());
+        } else {
+            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name, 'AND', 'customer_name', 'LIKE', '%' . $request->input('search') . '%')->orderBy('id', 'DESC')->get()->toArray();
+        }
+
+        $buying = CustomerPayments::sum('payment');
+
+        return view('customer-account', [
+            "title" => 'Customer Account',
+            "stylesheet" => "customer-account.css",
+            "customerAccounts" => $customerAccounts,
+            "buying" => $buying
+        ]);
+    }
 }
