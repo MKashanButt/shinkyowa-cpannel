@@ -120,6 +120,80 @@
     width: 120px;
 }
 
+.total-row {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.total-row td {
+    padding: 5px;
+}
+
+.total-row .sno {
+    width: 50px;
+    border: none;
+}
+
+.total-row .stockId {
+    width: 80px;
+    border: none;
+}
+
+.total-row .vehicle {
+    width: 120px;
+}
+
+.total-row .chassis {
+    width: 120px;
+    border: 1px solid;
+}
+
+.total-row .fob {
+    width: 70px;
+    border: 1px solid;
+}
+
+.total-row-2 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.total-row-2 td {
+    padding: 5px;
+}
+
+.total-row-2 .sno {
+    width: 50px;
+    border: none;
+}
+
+.total-row-2 .stockId {
+    width: 80px;
+    border: none;
+}
+
+.total-row-2 .vehicle {
+    width: 250px;
+}
+
+.total-row-2 .cemail {
+    width: 200px;
+}
+
+.total-row-2 .paymentDate {
+    width: 120px;
+    border: 1px solid;
+}
+
+.total-row-2 .payment {
+    width: 70px;
+    border: 1px solid;
+}
+
+.total-row-2 .paymentRecievedDate {
+    width: 120px;
+}
+
 .imageContent {
     display: flex;
     gap: 10px;

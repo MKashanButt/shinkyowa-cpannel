@@ -84,3 +84,43 @@
     display: flex;
     gap: 5px;
 }
+
+.total-row {
+    margin-top: 20px;
+}
+
+.total-row .sno {
+    width: 50px;
+    border: none;
+}
+
+.total-row .cname {
+    width: 150px;
+    border: none;
+}
+
+.total-row .ccompany {
+    width: 200px;
+    border: none;
+}
+
+.total-row .buying {
+    width: 70px
+}
+
+.total-row .deposit {
+    width: 70px
+}
+
+.total-row .remaining {
+    width: 90px
+}
+
+.total-row .agent {
+    width: 140px;
+    border: none;
+}
+
+.total-row .actions {
+    border: none;
+}

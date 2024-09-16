@@ -85,6 +85,25 @@
                         @endforeach
                     </tbody>
                 </table>
+                <table class="total-row" cellspacing="0">
+                    <tr>
+                        <td class="sno"></td>
+                        <td class="stockId"></td>
+                        <td class="vehicle"></td>
+                        <td class="chassis">Total</td>
+                        <td class="fob">
+                            {{ '$' . number_format($cnf) }}
+                        </td>
+                        <td class="fob">
+                            {{ '$' . number_format($payment) }}
+                        </td>
+                        <td class="fob">
+                            {{ '$' . number_format($cnf - $payment) }}
+                        </td>
+                        <td></td>
+                        <td class="action-btns"></td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="tab">
@@ -137,6 +156,25 @@
                             </tr>
                         @endforeach
                     </tbody>
+                </table>
+                {{-- <x-table-total-row :buying="'$' . number_format($buying)" :deposit="'$' . number_format($deposit)" :remaining="'$' . number_format($buying - $deposit)" /> --}}
+                <table class="total-row-2" cellspacing="0">
+                    <tr>
+                        <td class="sno"></td>
+                        <td class="stockId"></td>
+                        <td class="vehicle">
+                        </td>
+                        <td class="cemail">
+                        </td>
+                        <td class="paymentDate">
+                            Total
+                        </td>
+                        <td class="payment">
+                            {{ '$' . number_format($totalCustomerPayments) }}
+                        </td>
+                        <td class="paymentRecievedDate"></td>
+                        <td class="action"></td>
+                    </tr>
                 </table>
             </div>
         </div>

@@ -64,13 +64,17 @@ class CustomerAccountController extends Controller
             $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get()->toArray();
         }
 
-        $buying = CustomerPayments::sum('payment');
+        $customerAccountIds = array_column($customerAccounts, 'id');
+        // Sum up payments related to the filtered customer accounts
+        $buying = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('buying');
+        $deposit = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('deposit');
 
         return view('customer-account', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
             "customerAccounts" => $customerAccounts,
-            "buying" => $buying
+            "buying" => $buying,
+            "deposit" => $deposit,
         ]);
     }
 
@@ -142,7 +146,17 @@ class CustomerAccountController extends Controller
     {
         $customerAccount = CustomerAccounts::where('customer_id', $id)->first();
         $customerPayments = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
+        $customerPaymentsArray = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get()->toArray();
         $customerVehicles = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
+        $customerVehiclesArray = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get()->toArray();
+
+        $customerVehicleIds = array_column($customerVehiclesArray, 'id');
+        $customerPaymentsIds = array_column($customerPaymentsArray, 'id');
+
+        $cnf = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('amount');
+        $payment = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('payment');
+
+        $totalCustomerPayments = CustomerPayments::whereIn('id', $customerPaymentsIds)->sum('payment');
 
         return view('view-customer-account', [
             "title" => "Customer Account",
@@ -150,6 +164,9 @@ class CustomerAccountController extends Controller
             "customerAccount" => $customerAccount,
             "customerPayments" => $customerPayments,
             "customerVehicles" => $customerVehicles,
+            "cnf" => $cnf,
+            "payment" => $payment,
+            "totalCustomerPayments" => $totalCustomerPayments
         ]);
     }
 
@@ -599,13 +616,17 @@ class CustomerAccountController extends Controller
             $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name, 'AND', 'customer_email', 'LIKE', '%' . $search . '%')->orderBy('id', 'DESC')->get()->toArray();
         }
 
-        $buying = CustomerPayments::sum('payment');
+        $customerAccountIds = array_column($customerAccounts, 'id');
+        // Sum up payments related to the filtered customer accounts
+        $buying = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('buying');
+        $deposit = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('deposit');
 
         return view('customer-account', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
             "customerAccounts" => $customerAccounts,
-            "buying" => $buying
+            "buying" => $buying,
+            "deposit" => $deposit,
         ]);
     }
 }

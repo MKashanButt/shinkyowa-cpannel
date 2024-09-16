@@ -72,6 +72,26 @@
                     @endforeach
                 </tbody>
             </table>
+            <table class="total-row" cellspacing="0">
+                <tr>
+                    <td class="sno"></td>
+                    <td class="cname"></td>
+                    <td class="ccompany">
+                        Total
+                    </td>
+                    <td class="buying">
+                        {{ '$' . number_format($buying) }}
+                    </td>
+                    <td class="deposit">
+                        {{ '$' . number_format($deposit) }}
+                    </td>
+                    <td class="remaining">
+                        {{ '$' . number_format($buying - $deposit) }}
+                    </td>
+                    <td class="agent"></td>
+                    <td class="actions"></td>
+                </tr>
+            </table>
         </div>
     </section>
 @endsection
