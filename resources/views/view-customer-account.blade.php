@@ -7,23 +7,33 @@
     <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
     <x-customer-options />
     <section class="single-customer-account">
-        <p><span>Customer Id:</span> {{ $customerAccount->customer_id }}</p>
-        <p><span>Customer Name:</span> {{ $customerAccount->customer_name }}</p>
-        <p><span>Customer Company:</span> {{ $customerAccount->customer_company }}</p>
-        <p><span>Customer Email:</span> {{ $customerAccount->customer_email }}</p>
-        <p><span>Phone No:</span> {{ $customerAccount->customer_phone }}</p>
-        <p><span>Whatsapp No:</span> {{ $customerAccount->customer_whatsapp }}</p>
-        <p><span>Description:</span> {{ $customerAccount->description }}</p>
-        <p><span>Location:</span> {{ $customerAccount->location }}</p>
-        <p><span>Buying:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
-        </p>
-        <p><span>Deposit:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format(intval($customerAccount->deposit)) : '' }}
-        </p>
-        <p><span>Remaining:</span>
-            {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - intval($customerAccount->deposit)) : '' }}
-        </p>
+        <div class="tab">
+            <button onclick="toggleTab('customer-info-tab')">Customer Payments
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+            </button>
+            <div class="info hidden" id="customer-info-tab">
+                <p><span>Customer Id:</span> {{ $customerAccount->customer_id }}</p>
+                <p><span>Customer Name:</span> {{ $customerAccount->customer_name }}</p>
+                <p><span>Customer Company:</span> {{ $customerAccount->customer_company }}</p>
+                <p><span>Customer Email:</span> {{ $customerAccount->customer_email }}</p>
+                <p><span>Phone No:</span> {{ $customerAccount->customer_phone }}</p>
+                <p><span>Whatsapp No:</span> {{ $customerAccount->customer_whatsapp }}</p>
+                <p><span>Description:</span> {{ $customerAccount->description }}</p>
+                <p><span>Location:</span> {{ $customerAccount->location }}</p>
+                <p><span>Buying:</span>
+                    {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
+                </p>
+                <p><span>Deposit:</span>
+                    {{ $customerAccount->buying ? $customerAccount->currency . number_format(intval($customerAccount->deposit)) : '' }}
+                </p>
+                <p><span>Remaining:</span>
+                    {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - intval($customerAccount->deposit)) : '' }}
+                </p>
+            </div>
+        </div>
         <div class="tab">
             <button onclick="toggleTab('customer-vehicle-tab')">Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
