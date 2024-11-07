@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'roles' => ['required', 'string'],
+                'roles' => ['string'],
                 'manager' => ['string', 'nullable']
             ]);
 
@@ -54,7 +54,11 @@ class RegisteredUserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->role = $request->roles;
+            if (!$request->role) {
+                $user->role = "agent";
+            } else {
+                $user->role = $request->role;
+            }
 
             if ($request->manager) {
                 $user->manager = $request->manager;

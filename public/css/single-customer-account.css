@@ -267,9 +267,37 @@
 }
 
 .docContent img {
-    width: 19%;
-    padding: 1%;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
+}
+
+.docContent p {
+    width: 19%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.docContent .imageBox {
+    width: 19%;
+    height: 100px;
+    position: relative;
+}
+
+.docContent .imageBox button,
+.docContent p button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--red);
+    color: white;
+    border: 1px solid var(--red);
+    cursor: pointer;
+}
+
+.docContent .imageBox button .icon {
+    width: 20px;
 }
 
 form {
@@ -301,10 +329,6 @@ form .field:nth-of-type(2) label {
     padding: 10px;
     text-align: center;
     background-color: rgba(239, 239, 240, 1);
-}
-
-form .field input[type="file"] {
-    /* display: none; */
 }
 
 form button {

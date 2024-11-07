@@ -27,6 +27,7 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
         ]);
     })->name('customer-account.add-docs');
     Route::post('/customer-account/docs/upload', 'uploadDocs')->name('customer-account.upload-docs');
+    Route::get('/delete-docs', 'deleteDoc')->name('customer-account.delete-doc');
     Route::get('/customer-vehicle/edit/{stockid}', 'fetch_customer_vehicle')->name('customer-vehicle.edit-form');
     Route::post('/customer-vehicle/update', 'edit_customer_vehicle')->name('customer-vehicle.edit');
     Route::get('/customer-vehicle/destroy/{id}', 'destroy_customer_vehicle')->name('customer-vehicle.destroy');

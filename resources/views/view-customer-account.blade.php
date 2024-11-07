@@ -155,12 +155,14 @@
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
                                 <td class="action-btns">
                                     @if (Auth::user()->role != 'agent')
-                                        <a href="/customer-payment/edit/{{ $customerPayment->id }}"><button
-                                                class="primary">Edit</button></a>
+                                        <a href="/customer-payment/edit/{{ $customerPayment->id }}">
+                                            <button class="primary">Edit</button>
+                                        </a>
                                     @endif
                                     @if (Auth::user()->role == 'admin')
-                                        <a href="/customer-payment/destroy/{{ $customerPayment->id }}"><button
-                                                class="danger">Delete</button></a>
+                                        <a href="/customer-payment/destroy/{{ $customerPayment->id }}">
+                                            <button class="danger">Delete</button>
+                                        </a>
                                     @endif
                                 </td>
                             </tr>

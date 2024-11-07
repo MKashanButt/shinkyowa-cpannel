@@ -7,6 +7,11 @@
 @section('content')
     <x-breadcrumbs :page="'Sales'" :subpage="'Documents'" :category="'Add Document'" />
     <section>
+        @if (session('success'))
+            <div class="alert">
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
         <form action="/customer-account/docs/upload" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="field">

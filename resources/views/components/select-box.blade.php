@@ -4,7 +4,7 @@
     <option value="" selected>{{ $placeholder }}</option>
     @foreach ($data as $item)
         @if ($column != 'none')
-            <option value="{{ $item->column }}">{{ ucwords($item->$column) }}</option>
+            <option value="{{ $item->$column }}">{{ ucwords($item->$column) }}</option>
         @else
             <option value="{{ $item }}">{{ ucwords($item) }}</option>
         @endif

@@ -14,8 +14,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Foreach_;
 use SebastianBergmann\CodeCoverage\Report\Html\CustomCssFile;
+
+use function Laravel\Prompts\error;
 
 class CustomerAccountController extends Controller
 {
@@ -185,7 +188,7 @@ class CustomerAccountController extends Controller
     {
         $request->validate([
             'stock_id' => 'required|string|max:10',
-            'documents' => 'required|file|mimes:jpg,png,pdf',
+            'documents.*' => 'required|file|mimes:jpg,png,pdf',
         ]);
 
         $docs = new Docs;
@@ -202,6 +205,37 @@ class CustomerAccountController extends Controller
         $docs->save();
 
         return redirect()->back()->with('success', 'Documents Uploaded');
+    }
+
+    public function deleteDoc(Request $request)
+    {
+        $request->validate([
+            'stock_id' => 'required|string|max:10',
+            'filename' => 'required|string'
+        ]);
+
+        $docs = Docs::where('stock_id', $request->input('stock_id'))->first();
+
+        if ($docs) {
+            $fileNames = explode(',', $docs->documents);
+
+            if (in_array($request->input('filename'), $fileNames)) {
+                Storage::delete('public/' . trim($request->input('filename')));
+
+                $fileNames = array_filter($fileNames, function ($name) use ($request) {
+                    return $name !== $request->input('filename');
+                });
+
+                $docs->documents = implode(',', $fileNames);
+                $docs->save();
+
+                return redirect()->back()->with('success', 'Document Deleted');
+            }
+
+            return redirect()->back()->with('error', 'File not found in records');
+        }
+
+        return redirect()->back()->with('error', 'No documents found for this stock ID');
     }
 
     public function findDocs($stockid)
