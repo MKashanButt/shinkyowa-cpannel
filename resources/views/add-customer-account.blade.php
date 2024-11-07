@@ -11,42 +11,47 @@
             </div>
             <div class="item">
                 <label for="cname">Customer Name:</label>
-                <input type="text" id="cname" name="cname" required value="{{ $customerAccount->customer_name }}">
+                <input type="text" id="cname" name="cname" required
+                    value="{{ isset($customerAccount) ? $customerAccount->customer_name : '' }}">
             </div>
             <div class="item">
                 <label for="ccompany">Customer Company:</label>
                 <input type="text" id="ccompany" name="ccompany" required
-                    value="{{ $customerAccount->customer_company }}">
+                    value="{{ isset($customerAccount) ? $customerAccount->customer_company : '' }}">
             </div>
             <div class="item">
                 <label for="cphone">Phone No:</label>
-                <input type="text" name="cphone" id="cphone" required value="{{ $customerAccount->customer_phone }}">
+                <input type="text" name="cphone" id="cphone" required
+                    value="{{ isset($customerAccount) ? $customerAccount->customer_phone : '' }}">
             </div>
             <div class="item">
                 <label for="cwhatsapp">Whatsapp No:</label>
                 <input type="text" name="cwhatsapp" id="cwhatsapp" required
-                    value="{{ $customerAccount->customer_whatsapp }}">
+                    value="{{ isset($customerAccount) ? $customerAccount->customer_whatsapp : '' }}">
             </div>
             <div class="item">
                 <label for="cemail">Email:</label>
                 <input type="email" name="cemail" id="cemail" onblur="checkEmailAvailability($('#cemail').val())"
-                    value="{{ $customerAccount->customer_email }}">
+                    value="{{ isset($customerAccount) ? $customerAccount->customer_email : '' }}">
                 <p id="email-availability-message"></p>
             </div>
             <div class="item">
                 <label for="cmanager">Manager:</label>
                 <input type="text" name="cmanager" id="cmanager" value="{{ Auth::user()->manager }}" readonly
-                    value="{{ $customerAccount->agent_manager }}">
+                    value="{{ isset($customerAccount) ? $customerAccount->agent_manager : '' }}">
             </div>
             <div class="item">
                 <label for="ccurrency">Currency:</label>
                 <select name="ccurrency" id="ccurrency" required>
-                    @if ($customerAccount->currency)
-                        <option value="{{ $customerAccount->currency }}" selected>{{ $customerAccount->currency }}
-                        </option>
-                    @else
-                        <option value="" disabled selected>Currency</option>
-                    @endif
+                    @isset($customerAccount)
+                        @if ($customerAccount->currency)
+                            <option value="{{ isset($customerAccount) ? $customerAccount->currency : '' }}" selected>
+                                {{ isset($customerAccount) ? $customerAccount->currency : '' }}
+                            </option>
+                        @else
+                            <option value="" disabled selected>Currency</option>
+                        @endif
+                    @endisset
                     <option value="$">$</option>
                     <option value="€">€</option>
                     <option value="¥">¥</option>
@@ -54,11 +59,11 @@
             </div>
             <div class="item" style="align-items:baseline;">
                 <label for="cdescription">Description:</label>
-                <textarea name="cdescription" id="cdescription" cols="30" rows="2">{{ $customerAccount->description }}</textarea>
+                <textarea name="cdescription" id="cdescription" cols="30" rows="2">{{ isset($customerAccount) ? $customerAccount->description : '' }}</textarea>
             </div>
             <div class="item" style="align-items:baseline;">
                 <label for="clocation">Location:</label>
-                <textarea name="clocation" id="clocation" cols="30" rows="2">{{ $customerAccount->location }}</textarea>
+                <textarea name="clocation" id="clocation" cols="30" rows="2">{{ isset($customerAccount) ? $customerAccount->location : '' }}</textarea>
             </div>
             <div class="item">
                 <label for="cdescription">Agent:</label>
