@@ -50,7 +50,7 @@
                             <th class="vehicle">Vehicle</th>
                             <th class="chassis">Chassis</th>
                             <th class="fob">CNF</th>
-                            <th class="fob">Payment</th>
+                            <th class="fob">Amount</th>
                             <th class="fob">Remaining</th>
                             <th class="fob">Status</th>
                             <th class="actions">Actions</th>
