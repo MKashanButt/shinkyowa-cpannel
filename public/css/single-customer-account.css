@@ -9,7 +9,16 @@
     font-size: 13px;
 }
 
-.single-customer-account p span {
+#customer-info-tab {
+    flex-direction: column;
+    gap: 10px;
+}
+
+#customer-info-tab p {
+    margin-bottom: 10px;
+}
+
+#customer-info-tab p span {
     font-weight: bold;
 }
 
