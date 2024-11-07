@@ -132,7 +132,7 @@
                             <th class="vehicle">Description</th>
                             <th class="cemail">Customer Email</th>
                             <th class="paymentDate">Payment Date</th>
-                            <th class="payment">Payment</th>
+                            <th class="payment">Amount</th>
                             <th class="paymentRecievedDate">Recieved Date</th>
                             @if (Auth::user()->role != 'agent')
                                 <th class="action">Action</th>
