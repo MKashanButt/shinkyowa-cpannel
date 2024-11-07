@@ -1,7 +1,6 @@
 @extends('template')
 @section('content')
     <x-breadcrumbs :page="'User'" :subpage="$name" :category="'Credentials'" />
-    @dd($managers)
     <div class="container">
         <h2>Update User:</h2>
         <form action="{{ route('users.update') }}" method="post">
