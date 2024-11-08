@@ -11,6 +11,11 @@
             <a href="/customer-account">
                 <li>Customer Accounts</li>
             </a>
+            @if (Auth::user()->role == 'admin')
+                <a href="/recently-added-tts">
+                    <li>Recently Added TT's</li>
+                </a>
+            @endif
             @if (Auth::user()->role != 'agent')
                 <a href="/users">
                     <li>Users</li>
