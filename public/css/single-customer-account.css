@@ -322,32 +322,30 @@
     margin: auto;
 }
 
-form {
+.doc-add-form form {
     display: flex;
     position: relative;
     flex-direction: column;
 }
 
-form .field {
+.doc-add-form form .field {
     width: 40%;
     display: flex;
     align-items: center;
     padding: 10px;
 }
 
-form .field label {
+.doc-add-form form .field label {
     width: 30%;
 }
 
-form .field input {
+.doc-add-form form .field input {
     width: 70%;
     height: 30px;
     padding: 0 10px;
 }
 
-form .field label {}
-
-form button {
+.doc-add-form form button {
     right: 20px;
     bottom: -20px;
     position: absolute;
