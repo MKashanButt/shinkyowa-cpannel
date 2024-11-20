@@ -51,7 +51,7 @@ function findEmail(email) {
         url: "/find-email",
         method: "GET",
         data: {
-            email: email
+            email: email,
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -87,6 +87,8 @@ function findStockId(stockId) {
             if (response.available) {
                 $('#stockid-find-message').text('Stock Id Found!');
                 $('#stockid-find-message').css('color', 'green');
+                $('#vehicle').val(response.vehicle);
+                $('#chassis').val(response.chassis);
             } else {
                 $('#stockid-find-message').text('Stock Id not found or already reserved!');
                 $('#stockid-find-message').css('color', 'red');
