@@ -8,6 +8,7 @@
     --blue: #11254A;
     --red: #902126;
     --primary: #2E9264;
+    --progress: #E16B16;
 }
 
 * {
@@ -83,7 +84,7 @@ button {
 }
 
 .progress {
-    background-color: #E16B16;
+    background-color: var(--progress);
 }
 
 .danger {
