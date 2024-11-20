@@ -32,8 +32,8 @@
             @if (in_array($extension, ['pdf']))
                 <div class="pdf-element">
                     <a href="/storage/{{ trim($docs, '[]"\/') }}" target="_blank" class="pdf-icon-link">
-                        <img src="{{ asset('images/') }}" alt="">
-                        {{ ucwords(trim($docs, '[]""')) }}
+                        <img src="{{ asset('images/pdf_icon.png') }}" alt="">
+                        Shipping Certificate
                     </a>
                     <button type="button">
                         <a href="/delete-docs?stock_id={{ $stockid }}&filename={{ trim($docs, '[]""') }}">
