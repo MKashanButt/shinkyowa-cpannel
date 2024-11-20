@@ -54,11 +54,7 @@ Route::controller(CustomerPaymentController::class)->middleware(['auth', 'verifi
 
 Route::controller(VehicleDocsController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/customer-account/docs/{stockid}', 'find')->name('customer-account.docs');
-    Route::get('/customer-account/docs/{stockid}/add', function ($stockid) {
-        return view('pages.vehicle-docs.add-docs', [
-            'id' => $stockid
-        ]);
-    })->name('customer-account.add-docs');
+    Route::get('/customer-account/docs/{stockid}/add', 'render_form')->name('customer-account.add-docs');
     Route::post('/customer-account/docs/upload', 'store')->name('customer-account.upload-docs');
     Route::get('/delete-docs', 'delete')->name('customer-account.delete-doc');
 });
