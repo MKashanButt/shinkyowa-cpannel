@@ -23,7 +23,13 @@ class VehicleDocsController extends Controller
     {
         $present = Docs::where('stock_id', $stockid)->first();
         return view('pages.vehicle-docs.add-docs', [
-            'documents' => $present ? $present : false,
+            'documents' => $present ? $present : (object) [
+                'japanese_export' => false,
+                'english_export' => false,
+                'final_invoice' => false,
+                'inspection_certificate' => false,
+                'bl_copy' => false
+            ],
             'id' => $stockid,
         ]);
     }
