@@ -14,5 +14,6 @@ class CustomerVehicles extends Model
         'vehicle',
         'customer_email',
         'status',
+        'payment'
     ];
 }

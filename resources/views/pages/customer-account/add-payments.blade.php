@@ -9,6 +9,11 @@
                 <p>{{ session('success') }}</p>
             </div>
         @endif
+        @if (session('progress'))
+            <div class="alert progress">
+                <p>{{ session('progress') }}</p>
+            </div>
+        @endif
         <form action="{{ $actionUrl }}" method="POST">
             @csrf
             <div class="item">

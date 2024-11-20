@@ -8,7 +8,7 @@
     <x-customer-options />
     <section class="single-customer-account">
         <div class="tab">
-            <button onclick="toggleTab('customer-info-tab')">Customer Payments
+            <button onclick="toggleTab('customer-info-tab')">Customer Info
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -72,7 +72,9 @@
                                 </td>
                                 <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
                                 </td>
-                                @if ($customerVehicle->amount - $customerVehicle->payment == 0)
+                                @if (
+                                    $customerVehicle->amount - $customerVehicle->payment == 0 ||
+                                        $customerVehicle->amount - $customerVehicle->payment < 0)
                                     <td><button class="done">Cleared</button></td>
                                 @else
                                     <td><button class="progress">Pending</button></td>
@@ -160,7 +162,8 @@
                                         </a>
                                     @endif
                                     @if (Auth::user()->role == 'admin')
-                                        <a href="/customer-payment/destroy/{{ $customerPayment->id }}">
+                                        <a
+                                            href="/customer-payment/destroy/{{ $customerPayment->stock_id }}/{{ $customerAccount->customer_email }}/{{ $customerPayment->payment }}">
                                             <button class="danger">Delete</button>
                                         </a>
                                     @endif

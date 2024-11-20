@@ -44,7 +44,7 @@
             </div>
             <div class="item">
                 <label for="status">Status:</label>
-                <select name="status" id="status">
+                <select name="status" id="status" required>
                     @if (isset($vehicle->status))
                         <option selected value="{{ isset($vehicle) ? $vehicle->status : '' }}">
                             {{ ucwords($vehicle->status) }}</option>

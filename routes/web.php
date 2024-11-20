@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\CustomerAccountController;
+use App\Http\Controllers\CustomerPaymentController;
+use App\Http\Controllers\CustomerVehicleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleDocsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -10,42 +15,15 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/', 'dashboard')->name('dashboard');
 
     Route::get('/customer-account', 'index')->name('customer-accounts');
-    Route::get('/customer-account/edit/{id}', 'fetch_customer_account')->name('customer-accounts.edit-form');
-    Route::post('/customer-account/update', 'update_customer_account')->name('customer-accounts.update');
+    Route::get('/customer-account/edit/{id}', 'edit_account')->name('customer-accounts.edit-form');
+    Route::post('/customer-account/update', 'update')->name('customer-accounts.update');
     Route::get('/agent-customers-account/{agent}', 'agent_customers_account')
         ->name('agent.customer-accounts');
     Route::get('customer-account/destroy/{id}', 'destroy');
     Route::post('/add-customer/post', 'store')->name('add-customer-account');
 
-    Route::get('/add-customer-account', 'render_add_customer_form')->name('add-customer-form');
+    Route::get('/add-customer-account', 'render_form')->name('add-customer-form');
     Route::get('/customer-account/{id}', 'find')->name('find-customer-account');
-    Route::get('/customer-account/images/{stockid}', 'findImages')->name('customer-account.images');
-    Route::get('/customer-account/docs/{stockid}', 'findDocs')->name('customer-account.docs');
-    Route::get('/customer-account/docs/{stockid}/add', function ($stockid) {
-        return view('add-docs', [
-            'id' => $stockid
-        ]);
-    })->name('customer-account.add-docs');
-    Route::post('/customer-account/docs/upload', 'uploadDocs')->name('customer-account.upload-docs');
-    Route::get('/delete-docs', 'deleteDoc')->name('customer-account.delete-doc');
-    Route::get('/customer-vehicle/edit/{stockid}', 'fetch_customer_vehicle')->name('customer-vehicle.edit-form');
-    Route::post('/customer-vehicle/update', 'edit_customer_vehicle')->name('customer-vehicle.edit');
-    Route::get('/customer-vehicle/destroy/{id}', 'destroy_customer_vehicle')->name('customer-vehicle.destroy');
-
-    Route::get('/add-customer-payments', 'render_customer_payment_form')->name('customer-payment-form');
-    Route::post('/add-customer-payment', 'add_customer_payment')->name('add-customer-payment');
-    Route::get('/customer-payment/edit/{id}', 'fetch_customer_payment')->name('customer-payment.edit-form');
-    Route::post('/customer-payment/update', 'edit_customer_payment')->name('customer-payment.update');
-    Route::get('/customer-payment/destroy/{id}', 'destroy_customer_payment')->name('customer-payment.destroy');
-
-    Route::get('/add-customer-vehicle', 'render_customer_vehicle_form')->name('customer-vehicle-form');
-    Route::post('/add-customer-vehicle/post', 'add_customer_vehicle')->name('add-customer-vehicle');
-
-    Route::get('/users', 'render_users')->name('users');
-    Route::get('/user/destroy/{id}', 'destroy_user')->name('users.destory');
-    Route::get('/user/members/{manager}', 'team_members')->name('users.team-members');
-    Route::get('/user/credentials/{id}', 'user_credentials')->name('user-credentails');
-    Route::post('/user/update/', 'update_user_credentials')->name('users.update');
 
     // AJAX ROUTES START
     Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
@@ -54,6 +32,43 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
 
     // SEARCH
     Route::get('/search', 'search')->name('search');
+});
+
+Route::controller(CustomerVehicleController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/add-customer-vehicle', 'render_form')->name('customer-vehicle-form');
+    Route::post('/add-customer-vehicle/post', 'store')->name('add-customer-vehicle');
+    Route::get('/customer-vehicle/edit/{stockid}', 'edit_vehicle')->name('customer-vehicle.edit-form');
+    Route::post('/customer-vehicle/update', 'udpate')->name('customer-vehicle.edit');
+    Route::get('/customer-account/images/{stockid}', 'findImages')->name('customer-account.images');
+    Route::get('/customer-vehicle/destroy/{id}', 'destroy')->name('customer-vehicle.destroy');
+});
+
+
+Route::controller(CustomerPaymentController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/add-customer-payment', 'render_form')->name('customer-payment-form');
+    Route::post('/add-customer-payment', 'store')->name('add-customer-payment');
+    Route::get('/customer-payment/edit/{id}', 'find')->name('customer-payment.edit-form');
+    Route::post('/customer-payment/update', 'update')->name('customer-payment.update');
+    Route::get('customer-payment/destroy/{id}/{email}/{payment}', 'destroy')->name('customer-payment.destroy');
+});
+
+Route::controller(VehicleDocsController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/customer-account/docs/{stockid}', 'find')->name('customer-account.docs');
+    Route::get('/customer-account/docs/{stockid}/add', function ($stockid) {
+        return view('pages.vehicle-docs.add-docs', [
+            'id' => $stockid
+        ]);
+    })->name('customer-account.add-docs');
+    Route::post('/customer-account/docs/upload', 'store')->name('customer-account.upload-docs');
+    Route::get('/delete-docs', 'delete')->name('customer-account.delete-doc');
+});
+
+Route::controller(UserController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/users', 'index')->name('users');
+    Route::get('/user/destroy/{id}', 'destroy')->name('users.destory');
+    Route::get('/user/members/{manager}', 'team_members')->name('users.team-members');
+    Route::get('/user/credentials/{id}', 'credentials')->name('user-credentails');
+    Route::post('/user/update/', 'update_credentials')->name('users.update');
 });
 
 Route::middleware('auth')->group(function () {
