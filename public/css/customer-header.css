@@ -48,7 +48,7 @@
 }
 
 .customer-options .customer-account,
-.customer-options .customer-payments,
+.customer-options .customer-payment,
 .customer-options .customer-vehicle {
     display: flex;
     align-items: center;
