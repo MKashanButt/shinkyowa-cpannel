@@ -37,8 +37,8 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
 Route::controller(CustomerVehicleController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/add-customer-vehicle/{email?}', 'render_form')->name('customer-vehicle-form');
     Route::post('/add-customer-vehicle/post', 'store')->name('add-customer-vehicle');
-    Route::get('/customer-vehicle/edit/{stockid}', 'edit_vehicle')->name('customer-vehicle.edit-form');
-    Route::post('/customer-vehicle/update', 'udpate')->name('customer-vehicle.edit');
+    Route::get('/customer-vehicle/edit/{stockid}', 'find')->name('customer-vehicle.edit-form');
+    Route::post('/customer-vehicle/update', 'update')->name('customer-vehicle.edit');
     Route::get('/customer-account/images/{stockid}', 'findImages')->name('customer-account.images');
     Route::get('/customer-vehicle/destroy/{id}', 'destroy')->name('customer-vehicle.destroy');
 });
