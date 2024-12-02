@@ -66,12 +66,13 @@ class CustomerVehicleController extends Controller
         return redirect()->back()->with('success', 'Vehicle Uploaded');
     }
 
-    public function render_form()
+    public function render_form($email =  null)
     {
         return view('pages.customer-account.add-vehicle', [
             "title" => "Add Customer Vehicle",
             "stylesheet" => "add-customer-vehicle.css",
             "actionUrl" => "/add-customer-vehicle/post",
+            "email" => $email,
         ]);
     }
 
