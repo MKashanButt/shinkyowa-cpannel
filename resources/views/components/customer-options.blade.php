@@ -2,7 +2,8 @@
     <h3>Customer Account Options</h3>
     <div class="stage">
         <form action="/search" method="GET">
-            <input type="search" name="search" id="search" placeholder="Search By Customer Email">
+            <input type="search" name="search" id="search" placeholder="Search By Customer Email"
+                value="{{ Request::get('search') ? Request::get('search') : '' }}">
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 512 512">
                     <path d="M256 80a176 176 0 10176 176A176 176 0 00256 80z" fill="none" stroke="currentColor"
