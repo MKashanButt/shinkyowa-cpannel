@@ -247,10 +247,10 @@ class CustomerAccountController extends Controller
         $search = trim($request->input('search'));
 
         if (Auth::user()->role == 'admin') {
-            $customerAccounts = CustomerAccounts::where('customer_email', 'LIKE', '%' . $search . '%')->orderBy('id', 'DESC')->get()->toArray();
+            $customerAccounts = CustomerAccounts::where('customer_email', '=', $search)->orderBy('id', 'DESC')->get()->toArray();
         } else if (Auth::user()->role == 'operational manager') {
             $user_account = Auth::user()->name;
-            $users = User::where('name', '!=', $user_account, 'AND', 'customer_email', 'LIKE', '%' . $search . '%')->orderBy('id', 'DESC')->get();
+            $users = User::where('name', '!=', $user_account, 'AND', 'customer_email', '=', $search)->orderBy('id', 'DESC')->get();
             $customerAccounts = array();
             foreach ($users as $user) {
                 $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
@@ -261,11 +261,11 @@ class CustomerAccountController extends Controller
             $users = User::where('manager', $user_account)->get();
             $customerAccounts = array();
             foreach ($users as $user) {
-                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name, 'AND', 'customer_email', 'LIKE', '%' . $search . '%')->get()->toArray());
+                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name, 'AND', 'customer_email', '=', $search)->get()->toArray());
             }
-            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account, 'AND', 'customer_email', 'LIKE', '%' . $search . '%')->get()->toArray());
+            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account, 'AND', 'customer_email', '=', $search)->get()->toArray());
         } else {
-            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name, 'AND', 'customer_email', 'LIKE', '%' . $search . '%')->orderBy('id', 'DESC')->get()->toArray();
+            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name, 'AND', 'customer_email', '=', $search)->orderBy('id', 'DESC')->get()->toArray();
         }
 
         $customerAccountIds = array_column($customerAccounts, 'id');
@@ -273,7 +273,7 @@ class CustomerAccountController extends Controller
         $buying = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('buying');
         $deposit = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('deposit');
 
-        return view('customer-account', [
+        return view('pages.customer-account.index', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
             "customerAccounts" => $customerAccounts,
