@@ -35,19 +35,21 @@
                             <td>{{ ucwords($user['name']) }}</td>
                             <td>{{ ucwords($user['role']) }}</td>
                             <td class="actions">
-                                <a href="/user/credentials/{{ $user['id'] }}">
-                                    <button>Credentials</button>
-                                </a>
-                                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'operational manager')
-                                    <a href="/user/destroy/{{ $user['id'] }}">
-                                        <button class="danger">Delete</button>
+                                <div class="stage">
+                                    <a href="/user/credentials/{{ $user['id'] }}">
+                                        <button>Credentials</button>
                                     </a>
-                                    @if ($user['role'] == 'manager')
-                                        <a href="/user/members/{{ $user['name'] }}">
-                                            <button class="primary">Team Members</button>
+                                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'operational manager')
+                                        <a href="/user/destroy/{{ $user['id'] }}">
+                                            <button class="danger">Delete</button>
                                         </a>
+                                        @if ($user['role'] == 'manager')
+                                            <a href="/user/members/{{ $user['name'] }}">
+                                                <button class="primary">Team Members</button>
+                                            </a>
+                                        @endif
                                     @endif
-                                @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach
