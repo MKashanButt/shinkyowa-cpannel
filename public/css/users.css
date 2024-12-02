@@ -25,7 +25,7 @@
 
 .user-accounts .container {
     width: 98%;
-    height: 68vh;
+    height: 62vh;
     margin: 10px auto;
     overflow-y: scroll;
 }
@@ -38,28 +38,60 @@
 .user-accounts table td {
     padding: 1%;
     border: 1px solid;
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.user-accounts table th {
+    background-color: var(--blue);
+    color: white;
+    border: 1px solid black;
 }
 
 .user-accounts table button {
+    width: 100%;
     padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-size: 13px;
+    border: 1px solid;
+    border-radius: 0;
+    margin: auto;
 }
 
 .user-accounts table .sno {
-    width: 5%;
+    width: 50px;
 }
 
-.user-accounts table .username {
-    width: 60%;
+.user-accounts table .cname {
+    width: 150px;
 }
 
-.user-accounts table .role {
-    width: 15%;
+.user-accounts table .ccompany {
+    width: 200px
 }
 
-.user-accounts table .actions {
-    width: 25%;
+.user-accounts table .buying {
+    width: 70px
+}
+
+.user-accounts table .deposit {
+    width: 70px
+}
+
+.user-accounts table .remaining {
+    width: 90px
+}
+
+.user-accounts table .agent {
+    width: 140px
+}
+
+.user-accounts table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
 }
