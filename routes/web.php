@@ -35,7 +35,7 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
 });
 
 Route::controller(CustomerVehicleController::class)->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/add-customer-vehicle', 'render_form')->name('customer-vehicle-form');
+    Route::get('/add-customer-vehicle/{email?}', 'render_form')->name('customer-vehicle-form');
     Route::post('/add-customer-vehicle/post', 'store')->name('add-customer-vehicle');
     Route::get('/customer-vehicle/edit/{stockid}', 'edit_vehicle')->name('customer-vehicle.edit-form');
     Route::post('/customer-vehicle/update', 'udpate')->name('customer-vehicle.edit');
@@ -43,9 +43,8 @@ Route::controller(CustomerVehicleController::class)->middleware(['auth', 'verifi
     Route::get('/customer-vehicle/destroy/{id}', 'destroy')->name('customer-vehicle.destroy');
 });
 
-
 Route::controller(CustomerPaymentController::class)->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/add-customer-payment', 'render_form')->name('customer-payment-form');
+    Route::get('/add-customer-payment/{email?}', 'render_form')->name('customer-payment-form');
     Route::post('/add-customer-payment', 'store')->name('add-customer-payment');
     Route::get('/customer-payment/edit/{id}', 'find')->name('customer-payment.edit-form');
     Route::post('/customer-payment/update', 'update')->name('customer-payment.update');

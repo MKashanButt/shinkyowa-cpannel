@@ -15,7 +15,10 @@
             </button>
         </form>
         <a href="/add-customer-account"><button class="customer-account">Add Customer Account</button></a>
-        <a href="/add-customer-payment"><button class="customer-payment">Add Customer Payment</button></a>
-        <a href="/add-customer-vehicle"><button class="customer-vehicle">Add Customer Vehicle</button></a>
+        <a href="/add-customer-payment/{{ isset($customeremail) ? $customeremail : '' }}"><button
+                class="customer-payment">Add
+                Customer Payment</button></a>
+        <a href="/add-customer-vehicle/{{ isset($customeremail) ? $customeremail : '' }}"><button
+                class="customer-vehicle">Add Customer Vehicle</button></a>
     </div>
 </div>

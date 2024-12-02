@@ -38,8 +38,12 @@
             </div>
             <div class="item">
                 <label for="cemail">Customer Email:</label>
-                <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())"
-                    value="{{ isset($vehicle) ? $vehicle->customer_email : '' }}">
+                @isset($email)
+                    <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                        value="{{ $email }}" readonly>
+                @endisset
+                <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                    value="{{ $vehicle->customer_email }}">
                 <p id="email-find-message"></p>
             </div>
             <div class="item">

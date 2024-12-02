@@ -71,7 +71,7 @@ class CustomerVehicleController extends Controller
         return view('pages.customer-account.add-vehicle', [
             "title" => "Add Customer Vehicle",
             "stylesheet" => "add-customer-vehicle.css",
-            "actionUrl" => "/add-customer-vehicle/post"
+            "actionUrl" => "/add-customer-vehicle/post",
         ]);
     }
 

@@ -24,8 +24,12 @@
             </div>
             <div class="item">
                 <label for="cemail">Customer Email:</label>
+                @isset($payment)
+                    <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                        value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
+                @endisset
                 <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
-                    value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
+                    value="{{ isset($email) ? $email : '' }}">
                 <p id="email-find-message"></p>
             </div>
             <div class="item">

@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerPaymentController extends Controller
 {
-    public function render_form()
+    public function render_form($email =  null)
     {
         return view('pages.customer-account.add-payments', [
             "title" => "Customer Payments",
             "stylesheet" => "customer-payments.css",
-            "actionUrl" => "/add-customer-payment"
+            "actionUrl" => "/add-customer-payment",
+            "email" => $email
         ]);
     }
 

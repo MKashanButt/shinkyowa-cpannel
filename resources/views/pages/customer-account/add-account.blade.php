@@ -62,8 +62,8 @@
                 <textarea name="cdescription" id="cdescription" cols="30" rows="2">{{ isset($customerAccount) ? $customerAccount->description : '' }}</textarea>
             </div>
             <div class="item" style="align-items:baseline;">
-                <label for="clocation">Location:</label>
-                <textarea name="clocation" id="clocation" cols="30" rows="2">{{ isset($customerAccount) ? $customerAccount->location : '' }}</textarea>
+                <label for="caddress">Address:</label>
+                <textarea name="caddress" id="caddress" cols="30" rows="2">{{ isset($customerAccount) ? $customerAccount->address : '' }}</textarea>
             </div>
             <div class="item">
                 <label for="cdescription">Agent:</label>

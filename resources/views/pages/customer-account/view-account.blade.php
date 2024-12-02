@@ -5,7 +5,7 @@
 @extends('template')
 @section('content')
     <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
-    <x-customer-options />
+    <x-customer-options :customeremail="$customerAccount->customer_email" />
     <section class="single-customer-account">
         <div class="tab">
             <button onclick="toggleTab('customer-info-tab')">Customer Info
@@ -22,7 +22,7 @@
                 <p><span>Phone No:</span> {{ $customerAccount->customer_phone }}</p>
                 <p><span>Whatsapp No:</span> {{ $customerAccount->customer_whatsapp }}</p>
                 <p><span>Description:</span> {{ $customerAccount->description }}</p>
-                <p><span>Location:</span> {{ $customerAccount->location }}</p>
+                <p><span>Address:</span> {{ $customerAccount->address }}</p>
                 <p><span>Buying:</span>
                     {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
                 </p>
