@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function hasUnviewedTTs()
+    {
+        return TTUploaded::where('viewed', false)->exists();
+    }
+
+    public function unviewedTTCount()
+    {
+        return TTUploaded::where('viewed', false)->count();
+    }
 }
