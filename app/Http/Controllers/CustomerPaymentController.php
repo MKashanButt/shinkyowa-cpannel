@@ -22,15 +22,19 @@ class CustomerPaymentController extends Controller
 
     public function store(Request $request)
     {
-        $FILTERED_AMMOUNT = ltrim($request->input('payment'), "$");
-        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
+        $USD_FILTERED_AMMOUNT = ltrim($request->input('in_usd'), "$");
+        $USD_FILTERED_AMMOUNT = str_replace(',', '', $USD_FILTERED_AMMOUNT);
+
+        $YEN_FILTERED_AMMOUNT = ltrim($request->input('in_yen'), "$");
+        $YEN_FILTERED_AMMOUNT = str_replace(',', '', $YEN_FILTERED_AMMOUNT);
 
         $customer_payment = new CustomerPayments;
         $customer_payment->stock_id = $request->input('stockId');
         $customer_payment->description = $request->input('description');
         $customer_payment->customer_email = $request->input('cemail');
         $customer_payment->payment_date = $request->input('paymentDate');
-        $customer_payment->payment = $FILTERED_AMMOUNT;
+        $customer_payment->in_usd = $USD_FILTERED_AMMOUNT;
+        $customer_payment->in_yen = $YEN_FILTERED_AMMOUNT;
         $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
 
         $customer_payment->save();
@@ -38,7 +42,7 @@ class CustomerPaymentController extends Controller
         $customerData = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
 
         CustomerAccounts::where('customer_email', $request->input('cemail'))->update([
-            "deposit" =>  $customerData->deposit + $FILTERED_AMMOUNT,
+            "deposit" =>  $customerData->deposit + $USD_FILTERED_AMMOUNT,
         ]);
 
         $customerPayment = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
@@ -50,7 +54,7 @@ class CustomerPaymentController extends Controller
         }
 
         CustomerVehicles::where('stock_id', $request->input('stockId'))->update([
-            "payment" => $customerPayment->payment + $FILTERED_AMMOUNT
+            "payment" => $customerPayment->payment + (int) $USD_FILTERED_AMMOUNT
         ]);
 
         return redirect()->back()->with('success', 'Customer Payment Added');
@@ -59,19 +63,22 @@ class CustomerPaymentController extends Controller
     public function find($id)
     {
         $payment = CustomerPayments::findOrFail($id);
-        return view('pages.customer-account.add-payments', [
+        return view("pages.customer-account.add-payments", [
             "title" => "Edit Client Payment",
             "stylesheet" => "customer-payments.css",
             "payment" => $payment,
-            "actionUrl" => "/customer-payment/update"
+            "actionUrl" => "/customer-payment/update",
         ]);
     }
 
     public function update(Request $request)
     {
         $PREVIOUS_DEPOSIT = CustomerAccounts::where('customer_email', $request->input('cemail'))->pluck('deposit');
-        $FILTERED_AMMOUNT = ltrim($request->input('payment'), "$");
-        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
+        $USD_FILTERED_AMMOUNT = ltrim($request->input('in_usd'), "$");
+        $USD_FILTERED_AMMOUNT = str_replace(',', '', $USD_FILTERED_AMMOUNT);
+
+        $YEN_FILTERED_AMMOUNT = ltrim($request->input('in_yen'), "$");
+        $YEN_FILTERED_AMMOUNT = str_replace(',', '', $YEN_FILTERED_AMMOUNT);
 
         $customerPayments = new CustomerPayments();
 
@@ -80,20 +87,21 @@ class CustomerPaymentController extends Controller
             "description" => $request->input('description'),
             "customer_email" => $request->input('cemail'),
             "payment_date" => $request->input('paymentDate'),
-            "payment" => $FILTERED_AMMOUNT,
+            "in_usd" => $USD_FILTERED_AMMOUNT,
+            "in_yen" => $YEN_FILTERED_AMMOUNT,
             "payment_recieved_date" => $request->input('paymentReceivedDate'),
         ]);
 
         $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
         $customerDeposit = $customerAccount->deposit;
 
-        if ($PREVIOUS_DEPOSIT[0] < ($customerDeposit + $FILTERED_AMMOUNT)) {
+        if ($PREVIOUS_DEPOSIT[0] < ($customerDeposit + $USD_FILTERED_AMMOUNT)) {
             $customerAccount->update([
-                'deposit' => $customerDeposit + ($FILTERED_AMMOUNT - $PREVIOUS_DEPOSIT[0])
+                'deposit' => $customerDeposit + ($USD_FILTERED_AMMOUNT - $PREVIOUS_DEPOSIT[0])
             ]);
-        } elseif ($PREVIOUS_DEPOSIT[0] > ($customerDeposit + $FILTERED_AMMOUNT)) {
+        } elseif ($PREVIOUS_DEPOSIT[0] > ($customerDeposit + $USD_FILTERED_AMMOUNT)) {
             $customerAccount->update([
-                'deposit' => $customerDeposit - ($PREVIOUS_DEPOSIT[0] - $FILTERED_AMMOUNT)
+                'deposit' => $customerDeposit - ($PREVIOUS_DEPOSIT[0] - $USD_FILTERED_AMMOUNT)
             ]);
         }
 
