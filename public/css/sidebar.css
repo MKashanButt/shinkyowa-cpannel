@@ -28,6 +28,7 @@ aside nav li {
     padding: 10px;
     color: white;
     transition: all 0.2s ease;
+    user-select: none;
 }
 
 aside nav li:hover {
@@ -35,7 +36,57 @@ aside nav li:hover {
     color: var(--black);
 }
 
+.sub-menu {
+    background-color: white;
+    color: black;
+}
+
+.sub-menu li {
+    color: black;
+}
+
+.sub-menu li:hover {
+    color: var(--blue);
+    cursor: pointer;
+}
+
 aside a:active {
     background-color: white;
     color: var(--black);
+}
+
+
+aside .tt-added {
+    background-color: var(--primary);
+    animation: animateTT 1s linear infinite;
+    position: relative;
+    display: flex;
+}
+
+aside .tt-added .alert {
+    width: 10px;
+    height: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--red);
+    color: white;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+}
+
+@keyframes animateTT {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
