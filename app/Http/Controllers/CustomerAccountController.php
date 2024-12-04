@@ -150,7 +150,7 @@ class CustomerAccountController extends Controller
         $cnf = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('amount');
         $payment = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('payment');
 
-        $totalCustomerPayments = CustomerPayments::whereIn('id', $customerPaymentsIds)->sum('payment');
+        $totalCustomerPayments = CustomerPayments::whereIn('id', $customerPaymentsIds)->sum('in_usd');
 
         return view('pages.customer-account.view-account', [
             "title" => "Customer Account",
