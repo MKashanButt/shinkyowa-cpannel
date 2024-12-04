@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\CustomerVehicleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TTController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleDocsController;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,14 @@ Route::controller(UserController::class)->middleware(['auth', 'verified'])->grou
     Route::get('/user/members/{manager}', 'team_members')->name('users.team-members');
     Route::get('/user/credentials/{id}', 'credentials')->name('user-credentails');
     Route::post('/user/update/', 'update_credentials')->name('users.update');
+});
+
+Route::controller(TTController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/recently-added-tts', 'recently_added')->name('recently-added-tts');
+    Route::get('/tt/pending-tts', 'index')->name('tt.pending-tts');
+    Route::get('/tt/add-tt', 'store_form')->name('tt.add-form');
+    Route::post('/tt/add-tt/store', 'store')->name('tt.store');
+    Route::get('/recently-added-tt/proceed-payments/{id}', 'proceed_form')->name('recently-added-tts');
 });
 
 Route::middleware('auth')->group(function () {
