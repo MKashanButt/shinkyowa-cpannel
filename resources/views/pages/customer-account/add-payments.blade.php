@@ -1,6 +1,5 @@
 @extends('template')
 @section('content')
-    {{-- @dd($payment) --}}
     <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="'Add Customer Payments'" />
     <div class="container">
         <h2>Add Customer Payments:</h2>
@@ -24,32 +23,43 @@
             </div>
             <div class="item">
                 <label for="cemail">Customer Email:</label>
-                @isset($payment)
+                @if ($email)
+                    <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                        value="{{ isset($email) ? $email : '' }}">
+                @else
                     <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
                         value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
-                @endisset
-                <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
-                    value="{{ isset($email) ? $email : '' }}">
+                @endif
                 <p id="email-find-message"></p>
             </div>
             <div class="item">
                 <label for="paymentDate">Payment Date:</label>
                 <input type="date" name="paymentDate" id="paymentDate" required
-                    value="{{ isset($payment) ? $payment->payment_date->format('mm-dd-YYYY') : '' }}">
+                    value={{ isset($payment->payment_date) ? $payment->payment_date : '' }}>
             </div>
             <div class="item">
-                <label for="payment">Payment:</label>
-                <input type="text" name="payment" id="payment" required
-                    value="{{ isset($payment->payment) ? $payment->payment : '' }}">
+                <label for="in_usd">Amount In Usd:</label>
+                <input type="text" name="in_usd" id="in_usd" required
+                    value="{{ isset($payment->in_usd) ? number_format($payment->in_usd) : '' }}">
             </div>
-            <div class="item" style="align-items: baseline">
-                <label for="paymentReceivedDate">Received Date:</label>
-                <input type="date" name="paymentReceivedDate" id="paymentReceivedDate" required
-                    value="{{ isset($payment) ? $payment->payment_recieved_date->format('mm-dd-YYYY') : '' }}">
+            <div class="item" style="align-self: baseline;">
+                <label for="in_yen">Amount In Yen:</label>
+                <input type="text" name="in_yen" id="in_yen" required
+                    value="{{ isset($payment->in_yen) ? number_format($payment->in_yen) : '' }}">
             </div>
             <div class="item" style="align-items: baseline">
                 <label for="description">Description:</label>
                 <textarea type="text" name="description" id="description" required rows="5">{{ isset($payment->description) ? $payment->description : '' }} </textarea>
+            </div>
+            <div class="item" style="align-items: baseline">
+                <label for="paymentReceivedDate">Received Date:</label>
+                @isset($payment)
+                    @if ($payment->paymentReceivedDate)
+                        <input type="date" name="paymentReceivedDate" id="paymentReceivedDate" required
+                            value={{ $payment->payment_received_date }}>
+                    @endif
+                @endisset
+                <input type="date" name="paymentReceivedDate" id="paymentReceivedDate" required>
             </div>
             <button>Submit</button>
         </form>
