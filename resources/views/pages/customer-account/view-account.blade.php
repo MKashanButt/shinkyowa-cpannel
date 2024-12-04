@@ -7,14 +7,14 @@
     <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
     <x-customer-options :customeremail="$customerAccount->customer_email" />
     <section class="single-customer-account">
-        <div class="tab">
-            <button onclick="toggleTab('customer-info-tab')">Customer Info
+        <div class="tab" x-data='{open: false}' x-cloak>
+            <button @click='open=!open' @click.outside='open= false'>Customer Info
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>
-            <div class="info hidden" id="customer-info-tab">
+            <div class="info" id="customer-info-tab" x-show='open'>
                 <p><span>Customer Id:</span> {{ $customerAccount->customer_id }}</p>
                 <p><span>Customer Name:</span> {{ $customerAccount->customer_name }}</p>
                 <p><span>Customer Company:</span> {{ $customerAccount->customer_company }}</p>
@@ -34,14 +34,14 @@
                 </p>
             </div>
         </div>
-        <div class="tab">
-            <button onclick="toggleTab('customer-vehicle-tab')">Customer Vehicles
+        <div class="tab" x-data='{open: false}' x-cloak>
+            <button @click='open=!open' @click.outside='open= false'>Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>
-            <div class="info hidden" id="customer-vehicle-tab">
+            <div class="info" id="customer-vehicle-tab" x-show='open'>
                 <table class="customer-vehicle" cellspacing="0">
                     <thead>
                         <tr>
@@ -118,14 +118,14 @@
                 </table>
             </div>
         </div>
-        <div class="tab">
-            <button onclick="toggleTab('customer-payments-tab')">Customer Payments
+        <div class="tab" x-data="{ open: false }" x-cloak>
+            <button @click='open=!open' @click.outside='open= false'>Customer Payments
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d=" m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>
-            <div class="info hidden" id="customer-payments-tab">
+            <div class="info" id="customer-payments-tab" x-show="open">
                 <table class="customer-payments" cellspacing="0">
                     <thead>
                         <tr>
