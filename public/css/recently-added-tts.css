@@ -1,0 +1,90 @@
+.recently-added-tts {
+    width: 98%;
+    margin: 20px auto;
+}
+
+.recently-added-tts .new-customer {
+    width: 98%;
+    margin: 20px auto;
+    padding: 20px 10px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.recently-added-tts .container {
+    width: 98%;
+    height: 62vh;
+    margin: 10px auto;
+    overflow-y: scroll;
+}
+
+.recently-added-tts table {
+    width: 100%;
+}
+
+.recently-added-tts table th,
+.recently-added-tts table td {
+    padding: 1%;
+    border: 1px solid;
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.recently-added-tts table th {
+    background-color: var(--blue);
+    color: white;
+    border: 1px solid black;
+}
+
+.recently-added-tts table button {
+    width: 100%;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: 1px solid;
+    border-radius: 0;
+    margin: auto;
+}
+
+.recently-added-tts table .sno {
+    width: 60px;
+}
+
+.recently-added-tts table .cemail {
+    width: 250px;
+}
+
+.recently-added-tts table .cpaymentusd {
+    width: 140px;
+}
+
+.recently-added-tts table .cpaymentyen {
+    width: 140px;
+}
+
+.recently-added-tts table .date {
+    width: 140px
+}
+
+.recently-added-tts table .upload {
+    width: 140px;
+}
+
+.recently-added-tts table .description {
+    width: 290px;
+}
+
+.recently-added-tts table .agent {
+    width: 140px;
+}
+
+.recently-added-tts table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
+}
