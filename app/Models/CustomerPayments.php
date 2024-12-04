@@ -16,10 +16,11 @@ class CustomerPayments extends Model
      */
     protected $fillable = [
         'stock_id',
-        'vehicle',
+        'description',
         'customer_email',
         'payment_date',
-        'payment',
+        'in_usd',
+        'in_yen',
         'payment_recieved_date',
     ];
 
