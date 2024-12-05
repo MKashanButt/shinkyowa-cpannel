@@ -4,8 +4,10 @@
     <div class="container">
         <h2>Add Customer Vehicle:</h2>
         @if (session('success'))
-            <div class="alert" onshow="timeout($('#stockId').val())">
-                <p>{{ session('success') }}</p>
+            <div x-data='{show: true}'>
+                <div class="alert" x-show='show' x-init='setTimeout(() => show = false, 3000)'>
+                    <p>{{ session('success') }}</p>
+                </div>
             </div>
         @endif
         <form action="{{ $actionUrl }}" method="POST">
@@ -42,8 +44,10 @@
                     <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
                         value="{{ $email }}" readonly>
                 @endisset
-                <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
-                    value="{{ $vehicle->customer_email }}">
+                @if (!isset($email))
+                    <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                        value="{{ isset($vehicle->customer_email) ? $vehicle->customer_email : '' }}">
+                @endif
                 <p id="email-find-message"></p>
             </div>
             <div class="item">
