@@ -4,11 +4,13 @@
     <div class="container">
         <h2>Upload TT:</h2>
         @if (session('success'))
-            <div class="alert">
-                <p>{{ session('success') }}</p>
+            <div x-data='{show: true}'>
+                <div class="alert" x-show='show' x-init='setTimeout(() => show = false, 1500)'>
+                    <p>{{ session('success') }}</p>
+                </div>
             </div>
         @endif
-        <form action="{{ $actionUrl }}" method="POST">
+        <form action="{{ $actionUrl }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="item">
                 <label for="stock_id">Stock Id:</label>
@@ -44,6 +46,11 @@
             <div class="item" style="align-items: baseline">
                 <label for="description">Description:</label>
                 <textarea type="text" name="description" id="description" required rows="5">{{ isset($record->description) ? $record->description : '' }}</textarea>
+            </div>
+            <div class="item" style="align-self: baseline;">
+                <label for="tt_copy">Upload TT Copy:</label>
+                <input type="file" name="tt_copy" id="tt_copy" required
+                    value="{{ isset($record->tt_copy) ? $record->tt_copy : '' }}">
             </div>
             <button>Submit</button>
         </form>
