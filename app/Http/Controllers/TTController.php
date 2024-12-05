@@ -72,6 +72,7 @@ class TTController extends Controller
             'in_usd' => 'required|numeric|max:999999.99',
             'in_yen' => 'required|numeric|max:999999999.99',
             'description' => 'required|string|max:500',
+            'tt_copy' => 'required|file|mimes:pdf,png,jpg,jpeg'
         ]);
 
         $model = new TTUploaded();
@@ -82,6 +83,12 @@ class TTController extends Controller
         $model->payment_date = $request->input('payment_date');
         $model->description = $request->input('description');
         $model->agent = Auth::user()->name;
+
+        // Save uploaded file
+        $file = $request->file('tt_copy');
+        $filename = $file->getClientOriginalName();
+        $file->storeAs('public/', $filename);
+        $model->tt_copy = $filename;
 
         $model->save();
 
