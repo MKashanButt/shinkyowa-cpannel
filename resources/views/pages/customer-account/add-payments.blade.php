@@ -23,10 +23,11 @@
             </div>
             <div class="item">
                 <label for="cemail">Customer Email:</label>
-                @if ($email)
+                @isset($email)
                     <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
                         value="{{ isset($email) ? $email : '' }}">
-                @else
+                @endisset
+                @if (!isset($email))
                     <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
                         value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
                 @endif
