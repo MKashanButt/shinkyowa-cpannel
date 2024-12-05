@@ -28,7 +28,7 @@
             </div>
             <div class="item">
                 <label for="payment_date">Payment Date:</label>
-                <input type="date" name="paymentDate" id="paymentDate" required
+                <input type="date" name="payment_date" id="payment_date" required
                     value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
             </div>
             <div class="item">
