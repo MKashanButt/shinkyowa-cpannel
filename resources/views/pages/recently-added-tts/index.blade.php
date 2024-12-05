@@ -17,9 +17,7 @@
                         <th class="upload">Uploaded Date</th>
                         <th class="description">Description</th>
                         <th class="agent">Agent</th>
-                        @if (Auth::user()->role == 'admin')
-                            <th>Actions</th>
-                        @endif
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +39,9 @@
                                     <button>{{ strtoupper($record['agent']) }}</button>
                                 </a>
                             </td>
-                            @if (Auth::user()->role == 'admin')
-                                <td class="actions">
-                                    <div class="stage">
+                            <td class="actions">
+                                <div class="stage">
+                                    @if (Auth::user()->role == 'admin')
                                         <a href="/recently-added-tt/proceed-payments/{{ $record['id'] }}">
                                             <button>Proceed</button>
                                         </a>
@@ -53,9 +51,12 @@
                                         <a href="/recently-added-tt/destroy/{{ $record['id'] }}">
                                             <button class="danger">Delete</button>
                                         </a>
-                                    </div>
-                                </td>
-                            @endif
+                                    @endif
+                                    <a href="{{ asset('storage/' . $record['tt_copy']) }}" target="__blank">
+                                        <button>View TT</button>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
