@@ -83,6 +83,10 @@
     width: 140px;
 }
 
+.recently-added-tts table .actions {
+    width: 300px;
+}
+
 .recently-added-tts table .actions .stage {
     height: 100%;
     display: flex;
