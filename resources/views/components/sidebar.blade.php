@@ -20,21 +20,21 @@
                     </li>
                 </a>
             @endif
-            @if (Auth::user()->role == 'agent' || Auth::user()->role == 'manager')
-                <div x-data='{open: false}' x-cloak>
-                    <li @click='open=!open' @click.outside='open=false'>TTs</li>
-                    <div class="sub-menu" x-show="open" x-transition>
-                        <ul>
-                            <a href="/tt/pending-tts">
-                                <li>Pending TT's</li>
-                            </a>
-                            <a href="/tt/add-tt">
-                                <li>Add New TT</li>
-                            </a>
-                        </ul>
-                    </div>
+            {{-- @if (Auth::user()->role == 'agent' || Auth::user()->role == 'manager') --}}
+            <div x-data='{open: false}' x-cloak>
+                <li @click='open=!open' @click.outside='open=false'>TTs</li>
+                <div class="sub-menu" x-show="open" x-transition>
+                    <ul>
+                        <a href="/tt/pending-tts">
+                            <li>Pending TT's</li>
+                        </a>
+                        <a href="/tt/add-tt">
+                            <li>Add New TT</li>
+                        </a>
+                    </ul>
                 </div>
-            @endif
+            </div>
+            {{-- @endif --}}
             @if (Auth::user()->role != 'agent')
                 <a href="/users">
                     <li>Users</li>
