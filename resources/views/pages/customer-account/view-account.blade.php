@@ -8,13 +8,13 @@
     <x-customer-options :customeremail="$customerAccount->customer_email" />
     <section class="single-customer-account">
         <div class="tab" x-data='{open: false}' x-cloak>
-            <button @click='open=!open' @click.outside='open= false'>Customer Info
+            <button @click='open=!open'>Customer Info
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>
-            <div class="info" id="customer-info-tab" x-show='open'>
+            <div class="info" id="customer-info-tab" x-show='open' @click.outside='open= false'>
                 <p><span>Customer Id:</span> {{ $customerAccount->customer_id }}</p>
                 <p><span>Customer Name:</span> {{ $customerAccount->customer_name }}</p>
                 <p><span>Customer Company:</span> {{ $customerAccount->customer_company }}</p>
@@ -41,7 +41,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>
-            <div class="info" id="customer-vehicle-tab" x-show='open'>
+            <div class="info" id="customer-vehicle-tab" x-show='open' @click.outside='open= false'>
                 <table class="customer-vehicle" cellspacing="0">
                     <thead>
                         <tr>
@@ -125,7 +125,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d=" m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>
-            <div class="info" id="customer-payments-tab" x-show="open">
+            <div class="info" id="customer-payments-tab" x-show="open" @click.outside='open= false'>
                 <table class="customer-payments" cellspacing="0">
                     <thead>
                         <tr>
