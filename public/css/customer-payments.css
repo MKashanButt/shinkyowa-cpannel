@@ -13,6 +13,11 @@
 }
 
 form {
+    position: relative;
+}
+
+form .container {
+    all: unset;
     display: flex;
     flex-wrap: wrap;
     position: relative;
@@ -41,7 +46,7 @@ form .item textarea {
     font-size: 14px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border: none;
-    padding: 20px;
+    padding: 10px;
 }
 
 form button {
@@ -53,8 +58,8 @@ form button {
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 10px;
-    bottom: 18px;
+    right: 40px;
+    bottom: -40px;
     cursor: pointer;
 }
 
@@ -64,8 +69,16 @@ form button:hover {
 
 .payment_info .consignee_info {
     width: 40%;
+    background-color: var(--blue);
+    color: white;
     display: flex;
     flex-direction: column;
+}
+
+.payment_info h2 {
+    font-size: 18px;
+    padding: 20px;
+    letter-spacing: 1px;
 }
 
 .payment_info .consignee_info .item {
@@ -84,27 +97,6 @@ form button:hover {
     gap: 10px;
 }
 
-.payment_info .consignee_info .item .container {
-    all: unset;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-}
-
-.payment_info .consignee_info .item .container p {
-    width: 50%;
-}
-
-.payment_info .consignee_info .item .container label {
-    width: 52%;
-}
-
-.payment_info .consignee_info .item .container input {
-    width: 62%;
-}
-
 .payment_info .consignee_info .item label {
     width: 145px;
     font-weight: bold;
@@ -117,7 +109,9 @@ form button:hover {
     width: -webkit-fill-available;
     width: stretch;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 20px;
+    padding: 10px;
+    background-color: white;
+    color: black;
 }
 
 .payment_info form {
