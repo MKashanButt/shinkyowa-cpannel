@@ -198,7 +198,7 @@ class CustomerAccountController extends Controller
         $class = $exists ? 'success-text' : 'error-text';
 
         if ($email) {
-            $record = CustomerAccounts::where('customer_email', $email)
+            $record = CustomerAccounts::where('customer_email', 'LIKE', '%' . $email . '%')
                 ->select('customer_name', 'customer_company', 'customer_phone', 'customer_whatsapp', 'address')
                 ->first();
             $customer_name = $record->customer_name;
