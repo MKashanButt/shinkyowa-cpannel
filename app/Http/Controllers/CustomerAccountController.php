@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Exists;
 
 class CustomerAccountController extends Controller
 {
@@ -194,11 +195,39 @@ class CustomerAccountController extends Controller
     // AJAX APIS
     public function checkEmailAvailability(Request $request)
     {
-        $email = $request->input('email');
-        $exists = CustomerAccounts::where('customer_email', $email)->exists();
+        $email = $request->input('customer_email');
+        $exists = CustomerAccounts::where('customer_email', $email)->exists() ? $msg = 'Email Exists' : $msg = 'Email does not Exist';
+        $class = $exists ? 'success-text' : 'error-text';
 
-        return response()->json([
-            'available' => !$exists
+        if ($email) {
+            $record = CustomerAccounts::where('customer_email', $email)
+                ->select('customer_name', 'customer_company', 'customer_phone', 'customer_whatsapp', 'address')
+                ->first();
+            $customer_name = $record->customer_name;
+            $customer_company = $record->customer_company;
+            $customer_phone = $record->customer_phone;
+            $customer_whatsapp = $record->customer_whatsapp;
+            $address = $record->address;
+        } else {
+            $customer_name = '';
+            $customer_company = '';
+            $customer_phone = '';
+            $customer_whatsapp = '';
+            $address = '';
+        }
+
+
+        $html = "
+        <p id='email-find-message' class=$class hx-swap-oob='true'>$msg</p>
+        <span id='customer_name' hx-swap-oob='true'>$customer_name</span>
+        <span id='company_name' hx-swap-oob='true'>$customer_company</span>
+        <span id='phone_no' hx-swap-oob='true'>$customer_phone</span>
+        <span id='whatsapp_no' hx-swap-oob='true'>$customer_whatsapp</span>
+        <span id='address' hx-swap-oob='true'>$address</span>
+        ";
+
+        return response()->make($html, 200, [
+            'Content-Type' => 'text/html',
         ]);
     }
 
@@ -221,20 +250,17 @@ class CustomerAccountController extends Controller
             ->exists();
 
         $stockInfo = Stocks::where('stock_id', $stockId)->first(['make', 'model', 'year', 'chassis']);
+        $msg = $availableStock ? 'Stock Id is Present' : 'Stock Id is not present or reserved';
+        $html = "
+                    <p id='stockid-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
+                    
+                ";
 
         if (!$availableStock) {
-            return response()->json([
-                'available' => $availableStock,
-                'vehicle' => "",
-                'chassis' => "",
+            return response()->make($html, 200, [
+                'Content-Type' => 'text/html',
             ]);
         }
-
-        return response()->json([
-            'available' => $availableStock,
-            'vehicle' => ucfirst($stockInfo->make) . " " . ucfirst($stockInfo->model) . " " . $stockInfo->year,
-            'chassis' => $stockInfo->chassis,
-        ]);
     }
 
     // SEARCH
