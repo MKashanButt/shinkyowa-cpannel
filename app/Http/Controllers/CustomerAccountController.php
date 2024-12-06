@@ -190,8 +190,6 @@ class CustomerAccountController extends Controller
         return redirect()->back()->with('success', 'Account Deleted');
     }
 
-
-
     // AJAX APIS
     public function checkEmailAvailability(Request $request)
     {
@@ -215,7 +213,6 @@ class CustomerAccountController extends Controller
             $customer_whatsapp = '';
             $address = '';
         }
-
 
         $html = "
         <p id='email-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
