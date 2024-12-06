@@ -219,11 +219,11 @@ class CustomerAccountController extends Controller
 
         $html = "
         <p id='email-find-message' class=$class hx-swap-oob='true'>$msg</p>
-        <input type='text' value='$customer_name' id='customer_name' hx-swap-oob='true'>
-        <input type='text' value='$customer_company' id='company_name' hx-swap-oob='true'>
-        <input type='text' value='$customer_phone' id='phone_no' hx-swap-oob='true'>
-        <input type='text' value='$customer_whatsapp' id='whatsapp_no' hx-swap-oob='true'>
-        <input type='text' value='$address' id='address' hx-swap-oob='true'>
+        <input type='text' value='$customer_name' id='customer_name' hx-swap-oob='true' disabled>
+        <input type='text' value='$customer_company' id='company_name' hx-swap-oob='true' disabled>
+        <input type='text' value='$customer_phone' id='phone_no' hx-swap-oob='true' disabled>
+        <input type='text' value='$customer_whatsapp' id='whatsapp_no' hx-swap-oob='true' disabled>
+        <input type='text' value='$address' id='address' hx-swap-oob='true' disabled>
         ";
 
         return response()->make($html, 200, [

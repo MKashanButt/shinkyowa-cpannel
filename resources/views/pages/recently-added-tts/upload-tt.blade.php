@@ -14,22 +14,24 @@
             <div class="consignee_info">
                 <div class="item">
                     <p><label for="customer_name">Customer Name:</label> <input type="text" value=""
-                            id="customer_name" /></p>
+                            id="customer_name" disabled /></p>
                 </div>
                 <div class="item">
                     <p><label for="company_name">Company Name:</label> <input type="text" value=""
-                            id="company_name" /></p>
+                            id="company_name" disabled /></p>
                 </div>
                 <div class="item">
                     <div class="container">
-                        <p><label for="phone_no">Phone No:</label> <input type="text" value="" id="phone_no" />
+                        <p><label for="phone_no">Phone No:</label> <input type="text" value="" id="phone_no"
+                                disabled />
                         </p>
                         <p><label for="whatsapp_no">Whatsapp No:</label> <input type="text" value=""
-                                id="whatsapp_no" /></p>
+                                id="whatsapp_no" disabled /></p>
                     </div>
                 </div>
                 <div class="item">
-                    <p><label for="address">Address:</label> <input type="text" value="" id="address" /></p>
+                    <p><label for="address">Address:</label> <input type="text" value="" id="address"
+                            disabled /></p>
                 </div>
             </div>
             <form action="{{ $actionUrl }}" method="POST" enctype="multipart/form-data">
