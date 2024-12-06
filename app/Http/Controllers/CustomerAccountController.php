@@ -196,7 +196,7 @@ class CustomerAccountController extends Controller
     public function checkEmailAvailability(Request $request)
     {
         $email = $request->input('customer_email');
-        $exists = CustomerAccounts::where('customer_email', $email)->exists() ? $msg = 'Email Exists' : $msg = 'Email does not Exist';
+        $exists = CustomerAccounts::where('customer_email', $email)->exists() ? $msg = '' : $msg = 'Email does not Exist';
         $class = $exists ? 'success-text' : 'error-text';
 
         if ($email) {
@@ -218,7 +218,7 @@ class CustomerAccountController extends Controller
 
 
         $html = "
-        <p id='email-find-message' class=$class hx-swap-oob='true'>$msg</p>
+        <p id='email-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
         <input type='text' value='$customer_name' id='customer_name' hx-swap-oob='true' disabled>
         <input type='text' value='$customer_company' id='company_name' hx-swap-oob='true' disabled>
         <input type='text' value='$customer_phone' id='phone_no' hx-swap-oob='true' disabled>
