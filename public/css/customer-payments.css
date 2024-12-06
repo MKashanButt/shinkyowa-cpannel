@@ -84,24 +84,38 @@ form button:hover {
     gap: 10px;
 }
 
-.payment_info .consignee_info .item:nth-of-type(3)>p:nth-of-type(1)>b {
-    width: 195px;
+.payment_info .consignee_info .item .container {
+    all: unset;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
 }
 
-.payment_info .consignee_info .item:nth-of-type(3)>p:nth-of-type(2)>b {
-    width: 149px;
+.payment_info .consignee_info .item .container p {
+    width: 50%;
 }
 
-.payment_info .consignee_info .item b {
+.payment_info .consignee_info .item .container label {
+    width: 52%;
+}
+
+.payment_info .consignee_info .item .container input {
+    width: 62%;
+}
+
+.payment_info .consignee_info .item label {
     width: 145px;
+    font-weight: bold;
 }
 
 
-.payment_info .consignee_info .item span {
+.payment_info .consignee_info .item input {
+    all: unset;
     width: -moz-available;
     width: -webkit-fill-available;
     width: stretch;
-    height: 57px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 20px;
 }
