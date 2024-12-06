@@ -109,3 +109,7 @@ button {
 [x-cloak] {
     display: none !important;
 }
+
+.error-text {
+    color: var(--red);
+}
