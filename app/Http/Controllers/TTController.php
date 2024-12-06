@@ -72,11 +72,13 @@ class TTController extends Controller
             'in_usd' => 'required|numeric|max:999999.99',
             'in_yen' => 'required|numeric|max:999999999.99',
             'description' => 'required|string|max:500',
-            'tt_copy' => 'required|file|mimes:pdf,png,jpg,jpeg'
+            'tt_copy' => 'required|file|mimes:pdf,png,jpg,jpeg',
+            'remittance_name' => 'required|string|max:20'
         ]);
 
         $model = new TTUploaded();
         $model->stock_id = $request->input('stock_id');
+        $model->remittance_name = $request->input('remittance_name');
         $model->customer_email = $request->input('customer_email');
         $model->in_usd = $request->input('in_usd');
         $model->in_yen = $request->input('in_yen');
