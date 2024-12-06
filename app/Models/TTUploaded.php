@@ -19,7 +19,9 @@ class TTUploaded extends Model
         'payment_date',
         'description',
         'agent',
-        'viewed'
+        'viewed',
+        'tt_copy',
+        'remittance_name',
     ];
 
     protected $casts = [
