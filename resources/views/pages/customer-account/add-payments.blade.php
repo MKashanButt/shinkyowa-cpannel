@@ -33,6 +33,11 @@
                 @endif
                 <p id="email-find-message"></p>
             </div>
+            <div class="item" style="align-self: baseline;">
+                <label for="remittance_name">Remittance Name:</label>
+                <input type="text" name="remittance_name" id="remittance_name" required
+                    value="{{ isset($payment->remittance_name) ? $payment->remittance_name : '' }}">
+            </div>
             <div class="item">
                 <label for="paymentDate">Payment Date:</label>
                 <input type="date" name="paymentDate" id="paymentDate" required
