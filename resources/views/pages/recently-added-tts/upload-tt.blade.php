@@ -13,17 +13,23 @@
         <section class="payment_info">
             <div class="consignee_info">
                 <div class="item">
-                    <p><b>Customer Name:</b> <span id="customer_name"></span></p>
+                    <p><label for="customer_name">Customer Name:</label> <input type="text" value=""
+                            id="customer_name" /></p>
                 </div>
                 <div class="item">
-                    <p><b>Company Name:</b><span id="company_name"></span></p>
+                    <p><label for="company_name">Company Name:</label> <input type="text" value=""
+                            id="company_name" /></p>
                 </div>
                 <div class="item">
-                    <p><b>Phone No:</b> <span id="phone_no"></span></p>
-                    <p><b>Whatsapp No:</b><span id="whatsapp_no"></span></p>
+                    <div class="container">
+                        <p><label for="phone_no">Phone No:</label> <input type="text" value="" id="phone_no" />
+                        </p>
+                        <p><label for="whatsapp_no">Whatsapp No:</label> <input type="text" value=""
+                                id="whatsapp_no" /></p>
+                    </div>
                 </div>
                 <div class="item">
-                    <p><b>Address:</b> <span id="address"></span></p>
+                    <p><label for="address">Address:</label> <input type="text" value="" id="address" /></p>
                 </div>
             </div>
             <form action="{{ $actionUrl }}" method="POST" enctype="multipart/form-data">
