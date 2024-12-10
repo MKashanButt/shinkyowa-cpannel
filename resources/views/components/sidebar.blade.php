@@ -111,7 +111,7 @@
         <hr>
         <nav>
             <ul>
-                <li class="{{ Request::is('/') ? 'active-url' : '' }}">
+                <li class="{{ Request::is('/') ? 'active-url' : '' }}" @click="closed=false">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="icon">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -121,7 +121,7 @@
                 {{-- <a href="/customer-account">
                 <li>Company Accounts</li>
             </a> --}}
-                <li class="{{ Request::is('customer-account') ? 'active-url' : '' }}">
+                <li class="{{ Request::is('customer-account') ? 'active-url' : '' }}" @click="closed=false">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="icon">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -130,7 +130,7 @@
                 </li>
                 @if (Auth::user()->role == 'admin')
                     <li class="{{ Auth::user()->hasUnviewedTTs() ? 'tt-added' : '' }}"
-                        class="{{ Request::is('/') ? 'active-url' : '' }}">
+                        class="{{ Request::is('/') ? 'active-url' : '' }}" @click="closed=false">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -139,8 +139,7 @@
                     </li>
                 @endif
                 {{-- @if (Auth::user()->role == 'agent' || Auth::user()->role == 'manager') --}}
-                <li @click="open = !open; active = !active" @click.outside="open = false; active = false"
-                    x-bind:class="active ? 'active-sub-menu' : ''">
+                <li @click="closed=false">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="icon">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -148,7 +147,7 @@
                     </svg>
                 </li>
                 {{-- @endif --}}
-                <li class="{{ Request::is('users') ? 'active-url' : '' }}">
+                <li class="{{ Request::is('users') ? 'active-url' : '' }}" @click="closed=false">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="icon">
                         <path stroke-linecap="round" stroke-linejoin="round"
