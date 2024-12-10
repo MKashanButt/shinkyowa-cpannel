@@ -8,7 +8,8 @@
     <path stroke-linecap='round' stroke-linejoin='round' d='M6 18 18 6M6 6l12 12' />
     </svg>
     `
-}" x-cloak x-bind:class="closed ? 'sidabar-closed' : 'sidebar-alpine-container'">
+}" x-cloak x-bind:class="closed ? 'sidabar-closed' : 'sidebar-alpine-container'"
+    @click.outside="closed=true">
     <aside x-bind:class="closed ? 'closed' : ''">
         <img src="/images/logo.png" alt="">
         <hr>
@@ -158,6 +159,4 @@
             </ul>
         </nav>
     </aside>
-    <button class="toggle-sidebar-btn" @click="closed=!closed" x-html="closed ? closedIcon : openIcon">
-    </button>
 </section>
