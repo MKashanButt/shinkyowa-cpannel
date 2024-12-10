@@ -12,11 +12,12 @@
     align-items: center;
     justify-content: center;
     background-color: var(--primary);
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
     text-transform: uppercase;
     color: white;
     font-weight: bold;
     letter-spacing: 1px;
+    border-radius: 25px;
 }
 
 .topbar .options {
@@ -32,7 +33,7 @@
 
 .topbar .account button {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
     justify-content: center;
     padding: 10px;
@@ -40,20 +41,43 @@
     background-color: var(--blue);
     color: white;
     text-transform: uppercase;
+    border-radius: 25px;
+    cursor: pointer;
 }
 
 .topbar .account button svg {
-    height: 12px;
+    height: 15px;
 }
 
 .topbar .account .options {
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--blue);
     width: 150px;
     position: absolute;
     top: 55px;
     right: 10px;
     flex-direction: column;
     gap: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid var(--blue);
+    color: white;
+    text-transform: uppercase;
+}
+
+.topbar .account .options ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.topbar .account .options ul li {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    align-items: center;
+    position: relative;
+}
+
+.topbar .account .options ul li .icon {
+    position: absolute;
+    right: 10px;
 }
