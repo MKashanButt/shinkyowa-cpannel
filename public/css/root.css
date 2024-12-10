@@ -31,6 +31,8 @@ main {
 
 .body {
     width: 85%;
+    width: -moz-available;
+    width: -webkit-fill-available;
 }
 
 p,
@@ -48,6 +50,8 @@ button {
     user-select: none;
     font-size: 13px;
     margin-bottom: 20px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .breadcrumbs .icon {
@@ -112,4 +116,23 @@ button {
 
 .error-text {
     color: var(--red);
+}
+
+label {
+    user-select: none;
+}
+
+.active-url {
+    background-color: white;
+    color: black;
+}
+
+.active-sub-menu {
+    border-radius: 20px 20px 0 0;
+    background-color: white;
+    color: black;
+}
+
+.closed {
+    display: none;
 }
