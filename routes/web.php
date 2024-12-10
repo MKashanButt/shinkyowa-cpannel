@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\CustomerVehicleController;
@@ -27,12 +28,6 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
     Route::get('/customer-account/{id}', 'find')->name('find-customer-account');
 
     // AJAX ROUTES START
-    Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
-    Route::get('/find-email', 'findEmail')->name('find-email');
-    Route::post('/find-stock-id', 'findStockId')->name('find-stock-id');
-
-    // SEARCH
-    Route::get('/search', 'search')->name('search');
 });
 
 Route::controller(CustomerVehicleController::class)->middleware(['auth', 'verified'])->group(function () {
@@ -79,6 +74,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::controller(ApiController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
+    Route::get('/find-email', 'findEmail')->name('find-email');
+    Route::post('/find-stock-id', 'findStockId')->name('find-stock-id');
+
+    // SEARCH
+    Route::get('/search', 'search')->name('search');
 });
 
 require __DIR__ . '/auth.php';
