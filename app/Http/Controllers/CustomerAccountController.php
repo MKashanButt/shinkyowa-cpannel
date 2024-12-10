@@ -32,6 +32,7 @@ class CustomerAccountController extends Controller
     {
         return view('pages.index', [
             "title" => 'Dashboard',
+            'stylesheet' => 'dashboard.css'
         ]);
     }
 
