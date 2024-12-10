@@ -4,7 +4,7 @@
 @extends('template')
 @section('content')
     <section class="recently-added-tts">
-        <x-breadcrumbs :page="'Sales'" :subpage="'Recently Added TT'" />
+        <x-breadcrumbs :page="'Sale'" :subpage="'Recently Added TT'" />
         <div class="container">
             <table cellspacing="0">
                 <thead>

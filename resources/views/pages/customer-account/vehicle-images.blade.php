@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sales'" :subpage="'Images'" />
+    <x-breadcrumbs :page="'Sale'" :subpage="'Images'" />
     <div class="imageContent">
         @foreach ($images as $image)
             <img src="{{ env('VEHICLE_IMG_API') . trim($image, '[]"\/') }}" alt="" class="vehicle-image">

@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sales'" :subpage="'Upload TT'" />
+    <x-breadcrumbs :page="'Sale'" :subpage="'Upload TT'" />
     <div class="container">
         @if (session('success'))
             <div x-data='{show: true}'>

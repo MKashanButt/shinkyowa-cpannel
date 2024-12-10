@@ -1,4 +1,6 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Dashboard'" />
+    <section class="dashboard">
+        <x-breadcrumbs :page="'Home'" />
+    </section>
 @endsection

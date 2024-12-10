@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="'Add Customer'" />
+    <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer'" />
     <div class="container">
         <h2>Add Customer Accounts:</h2>
         <form action="{{ $actionUrl }}" method="post">

@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sales'" :subpage="'Documents'" />
+    <x-breadcrumbs :page="'Sale'" :subpage="'Documents'" />
     @if (Auth::user()->role == 'operational manager' || Auth::user()->role == 'admin')
         <div class="header">
             <a href="/customer-account/docs/{{ $stockid }}/add"><button class="primary">Add Doc</button></a>

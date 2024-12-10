@@ -5,7 +5,7 @@
 @extends('template')
 @section('content')
     <section class="main-customer-accounts">
-        <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" />
+        <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" />
         <x-customer-options />
         @if (session('success'))
             <div class="alert" style="margin: 20px 0">

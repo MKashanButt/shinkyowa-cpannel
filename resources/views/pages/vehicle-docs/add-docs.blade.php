@@ -5,7 +5,7 @@
 
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sales'" :subpage="'Documents'" :category="'Add Document'" />
+    <x-breadcrumbs :page="'Sale'" :subpage="'Documents'" :category="'Add Document'" />
     <section class="doc-add-form">
         @if (session('success'))
             <div class="alert">

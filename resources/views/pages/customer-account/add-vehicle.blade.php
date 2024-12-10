@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sales'" :subpage="'Customer Accounts'" :category="'Add Customer Vehicle'" />
+    <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer Vehicle'" />
     <div class="container">
         <h2>Add Customer Vehicle:</h2>
         @if (session('success'))
