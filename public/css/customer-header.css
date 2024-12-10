@@ -1,62 +1,98 @@
 .customer-options {
     width: 98%;
     display: flex;
-    flex-direction: column;
     gap: 10px;
     margin: 0 auto;
     border: 1px solid;
     padding: 10px;
+    text-transform: uppercase;
+    border-radius: 25px;
 }
 
 .customer-options h3 {
-    width: 245px;
-    font-size: 16px;
+    font-size: 20px;
     text-transform: uppercase;
     display: flex;
-    margin-top: -24px;
     padding: 5px 5px;
     background-color: white;
+    letter-spacing: 1px;
 }
 
-.customer-options .stage {
-    width: 95%;
+.customer-options .search {
+    width: 75%;
     display: inline-flex;
+    flex-direction: column;
     gap: 10px;
     margin: auto;
 }
 
-.customer-options .stage form {
-    width: 40%;
+.customer-options .search .stage {
     display: flex;
-    border: 1px solid;
+    gap: 10px;
 }
 
-.customer-options .stage input {
+.customer-options .search form {
+    width: calc(100% * (1/3) - 10px);
+    display: flex;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+.customer-options .search input {
     all: unset;
-    width: 90%;
-    padding: 5px;
+    width: 85%;
+    padding: 12px;
+    padding-left: 20px;
     font-size: 13px;
-    border-right: 1px solid;
 }
 
-.customer-options .stage form button {
+.customer-options .search form button {
     all: unset;
-    width: 9%;
+    width: 15%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgba(239, 239, 240, 1);
+    border-radius: 0 25px 25px 0;
+}
+
+.customer-options .search form button svg {
+    width: 30px;
+}
+
+.customer-options .customer-btns {
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: auto;
+}
+
+.customer-options .customer-btns a {
+    width: calc(100% * (1/2) - 5px);
 }
 
 .customer-options .customer-account,
 .customer-options .customer-payment,
 .customer-options .customer-vehicle {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
-    border: 1px solid var(--black);
-    background-color: var(--black);
-    color: white;
+    background-color: transparent;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    color: var(--blue);
     text-transform: uppercase;
     cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s ease all;
+}
+
+.customer-options .customer-account:hover,
+.customer-options .customer-payment:hover,
+.customer-options .customer-vehicle:hover {
+    background-color: var(--blue);
+    color: white;
 }
