@@ -1,11 +1,23 @@
-aside {
-    width: 15%;
+.sidebar-alpine-container,
+.sidabar-closed {
+    padding: 1%;
     height: 100vh;
     background: var(--blue);
     display: flex;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-alpine-container {
+    width: 15%;
+}
+
+aside {
+    width: 100%;
+    display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 1%;
 }
 
 aside img {
@@ -13,8 +25,10 @@ aside img {
     margin: 0;
 }
 
-aside nav {
-    margin-top: 50px;
+aside hr {
+    border: 2px solid white;
+    margin: 10px 0;
+    border-radius: 25px;
 }
 
 aside nav ul {
@@ -29,6 +43,11 @@ aside nav li {
     color: white;
     transition: all 0.2s ease;
     user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 40px;
 }
 
 aside nav li:hover {
@@ -39,15 +58,18 @@ aside nav li:hover {
 .sub-menu {
     background-color: white;
     color: black;
+    border-radius: 0 0 20px 20px;
 }
 
 .sub-menu li {
     color: black;
+    transition: 0.2s ease all;
 }
 
 .sub-menu li:hover {
     color: var(--blue);
     cursor: pointer;
+    font-weight: bold;
 }
 
 aside a:active {
@@ -89,4 +111,34 @@ aside .tt-added .alert {
     100% {
         transform: scale(1);
     }
+}
+
+.sidabar-closed {
+    width: 5%;
+}
+
+.sidabar-closed nav {
+    display: flex;
+    justify-content: center;
+}
+
+.sidabar-closed nav ul {
+    width: fit-content;
+}
+
+.sidabar-closed nav li {
+    justify-content: center;
+}
+
+.toggle-sidebar-btn {
+    width: 50px;
+    border: 2px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+    position: absolute;
+    bottom: 10px;
+    background-color: var(--blue);
+    color: white;
 }
