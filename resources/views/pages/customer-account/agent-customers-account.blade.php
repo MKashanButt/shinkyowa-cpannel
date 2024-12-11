@@ -52,7 +52,7 @@
                             <td class="actions">
                                 <div class="stage">
                                     <a href="/customer-account/{{ $accounts['customer_id'] }}">
-                                        <button>View Account</button>
+                                        <button class="account-btn">View Account</button>
                                     </a>
                                     @if (Auth::user()->role == 'admin')
                                         <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">

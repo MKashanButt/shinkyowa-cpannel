@@ -36,14 +36,14 @@
                             <td>{{ $record['description'] }}</td>
                             <td>
                                 <a href="/agent-customers-account/{{ $record['agent'] }}">
-                                    <button>{{ strtoupper($record['agent']) }}</button>
+                                    <button class="agent-btn">{{ strtoupper($record['agent']) }}</button>
                                 </a>
                             </td>
                             <td class="actions">
                                 <div class="stage">
                                     @if (Auth::user()->role == 'admin')
                                         <a href="/recently-added-tt/proceed-payments/{{ $record['id'] }}">
-                                            <button>Proceed</button>
+                                            <button class="proceed-btn">Proceed</button>
                                         </a>
                                         <a href="/recently-added-tt/edit/{{ $record['id'] }}">
                                             <button class="primary">Edit</button>
@@ -53,7 +53,7 @@
                                         </a>
                                     @endif
                                     <a href="{{ asset('storage/' . $record['tt_copy']) }}" target="__blank">
-                                        <button>View TT</button>
+                                        <button class="proceed-btn">View TT</button>
                                     </a>
                                 </div>
                             </td>

@@ -47,14 +47,14 @@
                             @if (Auth::user()->user != 'agent')
                                 <td>
                                     <a href="/agent-customers-account/{{ $accounts['agent'] }}">
-                                        <button>{{ $accounts['agent'] }}</button>
+                                        <button class="agent-btn">{{ $accounts['agent'] }}</button>
                                     </a>
                                 </td>
                             @endif
                             <td class="actions">
                                 <div class="stage">
                                     <a href="/customer-account/{{ $accounts['customer_id'] }}">
-                                        <button>View Account</button>
+                                        <button class="account-btn">View Account</button>
                                     </a>
                                     @if (Auth::user()->role == 'admin')
                                         <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
@@ -70,28 +70,33 @@
                             </td>
                         </tr>
                     @endforeach
+                <tfoot>
+                    <tr class="total-row">
+                        <td></td>
+                        <td></td>
+                        <td>Total:</td>
+                        <td>
+                            {{ '$' . number_format($buying) }}
+                        </td>
+                        <td>
+                            {{ '$' . number_format($deposit) }}
+                        </td>
+                        <td>
+                            {{ '$' . number_format($buying - $deposit) }}
+                        </td>
+                        @if (Auth::user()->user != 'agent')
+                            <td></td>
+                        @endif
+                        <td></td>
+                    </tr>
+                </tfoot>
+                {{ $customerAccounts->links() }}
                 </tbody>
-            </table>
-            <table class="total-row" cellspacing="0">
-                <tr>
-                    <td class="sno"></td>
-                    <td class="cname"></td>
-                    <td class="ccompany">
-                        Total
-                    </td>
-                    <td class="buying">
-                        {{ '$' . number_format($buying) }}
-                    </td>
-                    <td class="deposit">
-                        {{ '$' . number_format($deposit) }}
-                    </td>
-                    <td class="remaining">
-                        {{ '$' . number_format($buying - $deposit) }}
-                    </td>
-                    <td class="agent"></td>
-                    <td class="actions"></td>
-                </tr>
             </table>
         </div>
     </section>
 @endsection
+
+<script>
+    $('table').scrollTableBody();
+</script>
