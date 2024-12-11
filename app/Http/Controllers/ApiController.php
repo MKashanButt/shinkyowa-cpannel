@@ -82,37 +82,85 @@ class ApiController extends Controller
     public function search(Request $request)
     {
         $request->validate([
-            'search' => 'required|string|max:150'
+            'searchByEmail' => 'required|string|max:150'
         ]);
 
-        $search = trim($request->input('search'));
+        $search = trim($request->input('searchByEmail'));
 
         if (Auth::user()->role == 'admin') {
-            $customerAccounts = CustomerAccounts::where('customer_email', '=', $search)->orderBy('id', 'DESC')->get()->toArray();
-        } else if (Auth::user()->role == 'operational manager') {
+            // Admin can view all customer accounts, filtered by email if provided
+            $customerAccounts = CustomerAccounts::where('customer_email', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
+        } elseif (Auth::user()->role == 'operational manager') {
+            // Operational manager can view accounts of agents they manage and their own, filtered by email
             $user_account = Auth::user()->name;
-            $users = User::where('name', '!=', $user_account, 'AND', 'customer_email', '=', $search)->orderBy('id', 'DESC')->get();
-            $customerAccounts = array();
-            foreach ($users as $user) {
-                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
-            }
-            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account)->get()->toArray());
-        } else if (Auth::user()->role == 'manager') {
+            $users = User::where('name', '!=', $user_account)->pluck('name');
+            $agents = $users->push($user_account);
+            $customerAccounts = CustomerAccounts::whereIn('agent', $agents)
+                ->where('customer_email', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
+        } elseif (Auth::user()->role == 'manager') {
+            // Manager can view accounts of agents they manage and their own, filtered by email
             $user_account = Auth::user()->name;
-            $users = User::where('manager', $user_account)->get();
-            $customerAccounts = array();
-            foreach ($users as $user) {
-                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name, 'AND', 'customer_email', '=', $search)->get()->toArray());
-            }
-            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account, 'AND', 'customer_email', '=', $search)->get()->toArray());
+            $users = User::where('manager', $user_account)->pluck('name');
+            $agents = $users->push($user_account);
+            $customerAccounts = CustomerAccounts::whereIn('agent', $agents)
+                ->where('customer_email', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
         } else {
-            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name, 'AND', 'customer_email', '=', $search)->orderBy('id', 'DESC')->get()->toArray();
+            // Other roles (e.g., general user) can only view their own accounts, filtered by email
+            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)
+                ->where('customer_email', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
         }
 
-        $customerAccountIds = array_column($customerAccounts, 'id');
-        // Sum up payments related to the filtered customer accounts
-        $buying = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('buying');
-        $deposit = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('deposit');
+        // Calculate sums for 'buying' and 'deposit' directly from the paginated collection
+        $buying = $customerAccounts->sum('buying');
+        $deposit = $customerAccounts->sum('deposit');
+
+        return view('pages.customer-account.index', [
+            "title" => 'Customer Account',
+            "stylesheet" => "customer-account.css",
+            "customerAccounts" => $customerAccounts,
+            "buying" => $buying,
+            "deposit" => $deposit,
+        ]);
+    }
+
+    public function searchByCompany(Request $request)
+    {
+        $request->validate([
+            'searchByCompany' => 'required|string|max:150'
+        ]);
+
+        $search = trim($request->input('searchByCompany'));
+
+        if (Auth::user()->role == 'admin') {
+            $customerAccounts = CustomerAccounts::where('customer_company', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
+        } elseif (Auth::user()->role == 'operational manager') {
+            $user_account = Auth::user()->name;
+            $users = User::where('name', '!=', $user_account)->pluck('name');
+            $agents = $users->push($user_account);
+            $customerAccounts = CustomerAccounts::whereIn('agent', $agents)
+                ->where('customer_company', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
+        } elseif (Auth::user()->role == 'manager') {
+            $user_account = Auth::user()->name;
+            $users = User::where('manager', $user_account)->pluck('name');
+            $agents = $users->push($user_account);
+            $customerAccounts = CustomerAccounts::whereIn('agent', $agents)
+                ->where('customer_company', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
+        } else {
+            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)
+                ->where('customer_company', 'LIKE', "%$search%")
+                ->orderBy('id', 'DESC')->paginate(6);
+        }
+
+        // Calculate sums for 'buying' and 'deposit' directly from the paginated collection
+        $buying = $customerAccounts->sum('buying');
+        $deposit = $customerAccounts->sum('deposit');
 
         return view('pages.customer-account.index', [
             "title" => 'Customer Account',
