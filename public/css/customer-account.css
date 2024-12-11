@@ -1,82 +1,94 @@
 .main-customer-accounts {
     width: 98%;
-margin: 20px auto;
-}
-
-.main-customer-accounts .new-customer {
-    width: 98%;
     margin: 20px auto;
-    padding: 20px 10px;
-    border: 1px solid black;
-    display: flex;
-    align-items: center;
 }
 
 .main-customer-accounts .container {
     width: 98%;
     height: 62vh;
     margin: 10px auto;
-    overflow-y: scroll;
 }
 
 .main-customer-accounts table {
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.main-customer-accounts table thead {
+    margin-bottom: 10px;
 }
 
 .main-customer-accounts table th,
 .main-customer-accounts table td {
-    padding: 1%;
-    border: 1px solid;
-    text-align: center;
     font-size: 13px;
+    padding: 1%;
+    text-align: center;
     text-transform: uppercase;
 }
 
+.main-customer-accounts table td {
+    padding: 0.5% 1%;
+}
+
+.main-customer-accounts table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.main-customer-accounts table th:last-child {
+    border-top-right-radius: 25px;
+}
+
 .main-customer-accounts table th {
+    width: min-content;
     background-color: var(--blue);
     color: white;
-    border: 1px solid black;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.main-customer-accounts table td {
+    width: min-content;
+}
+
+.main-customer-accounts table th:first-child {
+    border: none;
+}
+
+.main-customer-accounts table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .main-customer-accounts table button {
     width: 100%;
-    padding: 5px 10px;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 13px;
-    border: 1px solid;
+    border: none;
     border-radius: 0;
     margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
 }
 
-.main-customer-accounts table .sno {
-    width: 50px;
+.main-customer-accounts table button:hover {
+    filter: brightness(0.9);
 }
 
-.main-customer-accounts table .cname {
-    width: 150px;
+.main-customer-accounts table .agent-btn {
+    background-color: var(--primary);
 }
 
-.main-customer-accounts table .ccompany {
-    width: 200px
-}
-
-.main-customer-accounts table .buying {
-    width: 70px
-}
-
-.main-customer-accounts table .deposit {
-    width: 70px
-}
-
-.main-customer-accounts table .remaining {
-    width: 90px
-}
-
-.main-customer-accounts table .agent {
-    width: 140px
+.main-customer-accounts table .account-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
 }
 
 .main-customer-accounts table .actions .stage {
@@ -85,42 +97,17 @@ margin: 20px auto;
     gap: 5px;
 }
 
-.total-row {
-    margin-top: 20px;
+.main-customer-accounts table .body_container {
+    height: 50vh;
+    overflow-y: scroll;
 }
 
-.total-row .sno {
-    width: 50px;
-    border: none;
+.main-customer-accounts tfoot .total-row {
+    box-shadow: none !important;
 }
 
-.total-row .cname {
-    width: 150px;
-    border: none;
-}
-
-.total-row .ccompany {
-    width: 200px;
-    border: none;
-}
-
-.total-row .buying {
-    width: 70px
-}
-
-.total-row .deposit {
-    width: 70px
-}
-
-.total-row .remaining {
-    width: 90px
-}
-
-.total-row .agent {
-    width: 140px;
-    border: none;
-}
-
-.total-row .actions {
-    border: none;
+.main-customer-accounts tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
 }

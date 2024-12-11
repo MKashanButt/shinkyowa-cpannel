@@ -27,67 +27,101 @@
     width: 98%;
     height: 62vh;
     margin: 10px auto;
-    overflow-y: scroll;
 }
 
 .user-accounts table {
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.user-accounts table thead {
+    margin-bottom: 10px;
+}
+
+.user-accounts table tbody {
+    height: max-content;
+    overflow-y: scroll;
 }
 
 .user-accounts table th,
 .user-accounts table td {
-    padding: 1%;
-    border: 1px solid;
-    text-align: center;
     font-size: 13px;
+    padding: 1%;
+    text-align: center;
     text-transform: uppercase;
 }
 
+.user-accounts table td {
+    padding: 0.5% 1%;
+}
+
+.user-accounts table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.user-accounts table th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.user-accounts table tr:last-child td:last-child {
+    border-bottom-right-radius: 25px;
+}
+
+.user-accounts table tr:last-child td:first-child {
+    border-bottom-left-radius: 25px;
+}
+
 .user-accounts table th {
+    width: min-content;
     background-color: var(--blue);
     color: white;
-    border: 1px solid black;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.user-accounts table td {
+    width: min-content;
+}
+
+.user-accounts table th:first-child {
+    border: none;
+}
+
+.user-accounts table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .user-accounts table button {
     width: 100%;
-    padding: 5px 10px;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 13px;
-    border: 1px solid;
+    border: none;
     border-radius: 0;
     margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
 }
 
-.user-accounts table .sno {
-    width: 50px;
+.user-accounts table button:hover {
+    filter: brightness(0.9);
 }
 
-.user-accounts table .cname {
-    width: 150px;
+.user-accounts table .agent-btn {
+    background-color: var(--primary);
 }
 
-.user-accounts table .ccompany {
-    width: 200px
-}
-
-.user-accounts table .buying {
-    width: 70px
-}
-
-.user-accounts table .deposit {
-    width: 70px
-}
-
-.user-accounts table .remaining {
-    width: 90px
-}
-
-.user-accounts table .agent {
-    width: 140px
+.user-accounts table .account-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
 }
 
 .user-accounts table .actions .stage {

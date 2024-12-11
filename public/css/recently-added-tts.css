@@ -16,75 +16,101 @@
     width: 98%;
     height: 62vh;
     margin: 10px auto;
-    overflow-y: scroll;
 }
 
 .recently-added-tts table {
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.recently-added-tts table thead {
+    margin-bottom: 10px;
+}
+
+.recently-added-tts table tbody {
+    height: max-content;
+    overflow-y: scroll;
 }
 
 .recently-added-tts table th,
 .recently-added-tts table td {
-    padding: 1%;
-    border: 1px solid;
-    text-align: center;
     font-size: 13px;
+    padding: 1%;
+    text-align: center;
     text-transform: uppercase;
 }
 
+.recently-added-tts table td {
+    padding: 0.5% 1%;
+}
+
+.recently-added-tts table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.recently-added-tts table th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.recently-added-tts table tr:last-child td:last-child {
+    border-bottom-right-radius: 25px;
+}
+
+.recently-added-tts table tr:last-child td:first-child {
+    border-bottom-left-radius: 25px;
+}
+
 .recently-added-tts table th {
+    width: min-content;
     background-color: var(--blue);
     color: white;
-    border: 1px solid black;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.recently-added-tts table td {
+    width: min-content;
+}
+
+.recently-added-tts table th:first-child {
+    border: none;
+}
+
+.recently-added-tts table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .recently-added-tts table button {
     width: 100%;
-    padding: 5px 10px;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 13px;
-    border: 1px solid;
+    border: none;
     border-radius: 0;
     margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
 }
 
-.recently-added-tts table .sno {
-    width: 60px;
+.recently-added-tts table button:hover {
+    filter: brightness(0.9);
 }
 
-.recently-added-tts table .cemail {
-    width: 250px;
+.recently-added-tts table .agent-btn {
+    background-color: var(--primary);
 }
 
-.recently-added-tts table .cpaymentusd {
-    width: 140px;
-}
-
-.recently-added-tts table .cpaymentyen {
-    width: 140px;
-}
-
-.recently-added-tts table .date {
-    width: 140px
-}
-
-.recently-added-tts table .upload {
-    width: 140px;
-}
-
-.recently-added-tts table .description {
-    width: 290px;
-}
-
-.recently-added-tts table .agent {
-    width: 140px;
-}
-
-.recently-added-tts table .actions {
-    width: 300px;
+.recently-added-tts table .proceed-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
 }
 
 .recently-added-tts table .actions .stage {
