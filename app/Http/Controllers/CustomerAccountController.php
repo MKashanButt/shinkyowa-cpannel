@@ -182,12 +182,19 @@ class CustomerAccountController extends Controller
             ->orderBy('id', 'DESC')
             ->get()
             ->toArray();
+        $agent_customers_account_second = CustomerAccounts::where('agent', $name)
+            ->orderBy('id', 'DESC')
+            ->get();
 
+        $buying = $agent_customers_account_second->sum('buying');
+        $deposit = $agent_customers_account_second->sum('deposit');
         return view('pages.customer-account.agent-customers-account', [
             'title' => $name . ' | Customer Account',
             'stylesheet' => 'customer-account.css',
             'customerAccounts' => $agent_customers_account,
-            'agent' => $name
+            'agent' => $name,
+            "buying" => $buying,
+            "deposit" => $deposit,
         ]);
     }
 
