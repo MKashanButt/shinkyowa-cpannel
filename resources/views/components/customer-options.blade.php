@@ -2,7 +2,8 @@
     <div class="search">
         <h3>Customer Account Options</h3>
         <div class="stage">
-            <form action="/search" method="GET">
+            <form action="/search/email" method="POST">
+                @csrf
                 <input type="search" name="searchByEmail" id="searchByEmail" placeholder="Search By Customer Email"
                     value="{{ Request::get('searchByEmail') ? Request::get('searchByEmail') : '' }}">
                 <button>
@@ -16,7 +17,8 @@
                     </svg>
                 </button>
             </form>
-            <form action="/search" method="GET">
+            <form action="/search/company" method="POST">
+                @csrf
                 <input type="search" name="searchByCompany" id="searchByCompany"
                     placeholder="Search By Customer Company"
                     value="{{ Request::get('searchByCompany') ? Request::get('searchByCompany') : '' }}">
@@ -31,7 +33,8 @@
                     </svg>
                 </button>
             </form>
-            <form action="/search" method="GET">
+            <form action="/search/stockid" method="POST">
+                @csrf
                 <input type="search" name="searchByStockId" id="search" placeholder="Search By Stock Id"
                     value="{{ Request::get('searchByStockId') ? Request::get('searchByStockId') : '' }}">
                 <button>
