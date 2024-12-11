@@ -1,12 +1,51 @@
 .header {
+    width: 98%;
+    margin: auto;
     display: flex;
-    justify-content: flex-end;
+    background-color: var(--primary);
+    color: white;
     padding: 10px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-radius: 25px;
+    border: 2px solid var(--primary);
+    transition: 0.2s ease all;
 }
 
-.header button {
+.header:hover {
+    filter: brightness(0.9);
+}
+
+.header a {
+    width: 100%;
+}
+
+.header .content {
+    width: 100%;
     display: flex;
-    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .content hr {
+    width: 50%;
+}
+
+.header .content span {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.header p span .icon {
+    width: 30px;
+    border: 1px solid;
+    border-radius: 25px;
+    padding: 5px;
 }
 
 .user-accounts {
@@ -87,9 +126,13 @@
     border: none;
 }
 
+.user-accounts table td:first-child {
+    border-left: none;
+}
+
 .user-accounts table td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-    border-right: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .user-accounts table button {
