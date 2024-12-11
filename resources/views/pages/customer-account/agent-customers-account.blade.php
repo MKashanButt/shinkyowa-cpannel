@@ -69,6 +69,26 @@
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td></td>
+                        <td></td>
+                        <td>Total:</td>
+                        <td>
+                            {{ '$' . number_format($buying) }}
+                        </td>
+                        <td>
+                            {{ '$' . number_format($deposit) }}
+                        </td>
+                        <td>
+                            {{ '$' . number_format($buying - $deposit) }}
+                        </td>
+                        @if (Auth::user()->user != 'agent')
+                            <td></td>
+                        @endif
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </section>
