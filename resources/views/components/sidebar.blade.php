@@ -11,7 +11,9 @@
 }" x-cloak x-bind:class="closed ? 'sidabar-closed' : 'sidebar-alpine-container'"
     @click.outside="closed=true">
     <aside x-bind:class="closed ? 'closed' : ''">
-        <img src="/images/logo.png" alt="">
+        <a href="https://www.shinkyowa.com" target="__blank">
+            <img src="/images/logo.png" alt="">
+        </a>
         <hr>
         <nav>
             <ul>
@@ -108,7 +110,9 @@
     </aside>
 
     <aside x-bind:class="closed ? '' : 'closed'">
-        <img src="/images/logo-small.png" alt="">
+        <a href="https://www.shinkyowa.com" target="__blank">
+            <img src="/images/logo-small.png" alt="">
+        </a>
         <hr>
         <nav>
             <ul>
