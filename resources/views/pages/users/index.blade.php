@@ -37,7 +37,7 @@
                             <td class="actions">
                                 <div class="stage">
                                     <a href="/user/credentials/{{ $user['id'] }}">
-                                        <button>Credentials</button>
+                                        <button class="credentials-btn">Credentials</button>
                                     </a>
                                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'operational manager')
                                         <a href="/user/destroy/{{ $user['id'] }}">

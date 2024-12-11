@@ -118,7 +118,7 @@
     background-color: var(--primary);
 }
 
-.user-accounts table .account-btn {
+.user-accounts table .credentials-btn {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     color: var(--blue);
     border: 1px solid var(--blue);
