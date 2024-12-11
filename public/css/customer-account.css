@@ -54,9 +54,13 @@
     border: none;
 }
 
+.main-customer-accounts table td:first-child {
+    border-left: none;
+}
+
 .main-customer-accounts table td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-    border-right: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .main-customer-accounts table button {
