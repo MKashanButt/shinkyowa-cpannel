@@ -39,32 +39,42 @@ class CustomerAccountController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->get()->toArray();
-        } else if (Auth::user()->role == 'operational manager') {
+            // Admin can view all customer accounts
+            $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->paginate(6);
+        } elseif (Auth::user()->role == 'operational manager') {
+            // Get the current user's name
             $user_account = Auth::user()->name;
-            $users = User::where('name', '!=', $user_account)->orderBy('id', 'DESC')->get();
-            $customerAccounts = array();
-            foreach ($users as $user) {
-                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
-            }
-            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account)->get()->toArray());
-        } else if (Auth::user()->role == 'manager') {
+
+            // Fetch agents other than the current user
+            $users = User::where('name', '!=', $user_account)->pluck('name');
+
+            // Include the current user in the agent filter
+            $agents = $users->push($user_account);
+
+            // Filter customer accounts by agents and paginate
+            $customerAccounts = CustomerAccounts::whereIn('agent', $agents)->orderBy('id', 'DESC')->paginate(6);
+        } elseif (Auth::user()->role == 'manager') {
+            // Get the current user's name
             $user_account = Auth::user()->name;
-            $users = User::where('manager', $user_account)->get();
-            $customerAccounts = array();
-            foreach ($users as $user) {
-                $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user->name)->get()->toArray());
-            }
-            $customerAccounts = array_merge($customerAccounts, CustomerAccounts::where('agent', $user_account)->get()->toArray());
+
+            // Fetch agents assigned to the manager
+            $users = User::where('manager', $user_account)->pluck('name');
+
+            // Include the current user in the agent filter
+            $agents = $users->push($user_account);
+
+            // Filter customer accounts by agents and paginate
+            $customerAccounts = CustomerAccounts::whereIn('agent', $agents)->orderBy('id', 'DESC')->paginate(6);
         } else {
-            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->get()->toArray();
+            // Default case: restrict to accounts managed by the current user
+            $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->paginate(6);
         }
 
-        $customerAccountIds = array_column($customerAccounts, 'id');
-        // Sum up payments related to the filtered customer accounts
-        $buying = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('buying');
-        $deposit = CustomerAccounts::whereIn('id', $customerAccountIds)->sum('deposit');
+        // Calculate totals
+        $buying = $customerAccounts->sum('buying');
+        $deposit = $customerAccounts->sum('deposit');
 
+        // Return the view with data
         return view('pages.customer-account.index', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
