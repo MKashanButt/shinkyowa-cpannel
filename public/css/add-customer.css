@@ -4,16 +4,24 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    text-transform: uppercase;
+}
+
+.container h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 form {
     display: flex;
-    gap: 10px;
+    gap: 10px 40px;
     flex-wrap: wrap;
+    position: relative;
 }
 
 form .item {
-    width: calc(100% * (1/2) - 10px);
+    width: calc(100% * (1/2) - 40px);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -22,6 +30,7 @@ form .item {
 
 form .item label {
     width: 30%;
+    font-weight: bold;
 }
 
 form .item input,
@@ -31,15 +40,37 @@ form .item select {
     padding: 5px;
     outline: none;
     resize: none;
+    border-radius: 10px;
+    border: 1px solid var(--blue);
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 14px;
 }
 
 form button {
+    position: absolute;
+    bottom: -30px;
+    right: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--blue);
     border: 1px solid var(--blue);
     color: white;
-    padding: 5px 30px;
+    padding: 15px 40px;
     cursor: pointer;
+    border-radius: 25px;
+    text-transform: uppercase;
+    border: 2px solid var(--blue);
+    transition: 0.2s ease all;
+    gap: 5px;
+}
+
+form button .icon {
+    width: 30px;
+}
+
+form button:hover {
+    background-color: transparent;
+    color: var(--blue);
 }
