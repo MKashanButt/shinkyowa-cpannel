@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer'" />
-        <h2>Add Customer Accounts</h2>
+        <h2>Add Customer Account</h2>
         <form action="{{ $actionUrl }}" method="post">
             @csrf
             <div class="item">
