@@ -62,22 +62,36 @@ class ApiController extends Controller
     {
         $stockId = $request->input('stockId');
 
-        $availableStock = DB::table('stocks')->where('stock_id', $stockId)
+        // Check if stock ID is available
+        $availableStock = DB::table('stocks')
+            ->where('stock_id', $stockId)
             ->whereNotIn('status', ['reserved', 'not_available'])
             ->exists();
 
+        // Get stock info
         $stockInfo = Stocks::where('stock_id', $stockId)->first(['make', 'model', 'year', 'chassis']);
-        $msg = $availableStock ? '' : 'Stock Id is not present or reserved';
-        $html = "
-                <p id='stockid-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
-                ";
 
-        if (!$availableStock) {
-            return response()->make($html, 200, [
-                'Content-Type' => 'text/html',
-            ]);
+        // Prepare message and HTML
+        $msg = $availableStock ? '' : 'Stock ID is not present or reserved';
+        if ($msg == '') {
+            $vehicle_name = $stockInfo['make'] . ' ' . $stockInfo['model'] . ' ' . $stockInfo['year'];
+            $html = "
+                <p id='stockid-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
+                <input type='text' name='vehicle' id='vehicle' value='$vehicle_name' hx-swap-oob='true'>
+                <input type='text' name='chassis' id='chassis' value='{$stockInfo['chassis']}' hx-swap-oob='true'>
+            ";
+        } else {
+            $html = "
+                <p id='stockid-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
+            ";
         }
+
+        // Return HTML response
+        return response()->make($html, 200, [
+            'Content-Type' => 'text/html',
+        ]);
     }
+
 
     public function search(Request $request)
     {
