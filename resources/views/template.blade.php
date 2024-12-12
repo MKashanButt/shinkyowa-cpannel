@@ -15,6 +15,17 @@
 </head>
 
 <body>
+    {{-- <div class="loader-container">
+        <div class="sub-loader-container">
+            <div class="pulsing-circle"></div>
+            <img src="{{ asset('images/logo-small.png') }}" alt="">
+            <div class="bouncing-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div> --}}
     <main>
         <x-sidebar />
         <div class="body">
