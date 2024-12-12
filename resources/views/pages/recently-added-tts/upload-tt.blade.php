@@ -48,7 +48,7 @@
                         <label for="cemail">Customer Email:</label>
                         @isset($email)
                             <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
-                                hx-post='/check-email-availability' hx-target='this'required
+                                hx-post='/check-email-availability' hx-target='this' required
                                 value="{{ isset($email) ? $email : '' }}">
                         @endisset
                         <input type="text" name="customer_email" id="cemail" hx-trigger="keyup, blur"
