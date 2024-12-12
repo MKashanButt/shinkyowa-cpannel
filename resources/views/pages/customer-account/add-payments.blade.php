@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer Payments'" />
     <div class="container">
+        <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer Payments'" />
         <h2>Add Customer Payments:</h2>
         @if (session('success'))
             <div class="alert">
