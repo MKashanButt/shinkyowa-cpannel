@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer Payments'" />
-        <h2>Add Customer Payments:</h2>
+        <h2>Add Customer Payment:</h2>
         @if (session('success'))
             <div class="alert">
                 <p>{{ session('success') }}</p>
@@ -50,11 +50,13 @@
                 <div class="item">
                     <label for="cemail">Customer Email:</label>
                     @isset($email)
-                        <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                        <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
+                            hx-post='/check-email-availability' hx-target='this' required
                             value="{{ isset($email) ? $email : '' }}">
                     @endisset
                     @if (!isset($email))
-                        <input type="text" name="cemail" id="cemail" onblur="findEmail($('#cemail').val())" required
+                        <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
+                            hx-post='/check-email-availability' hx-target='this' required
                             value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
                     @endif
                     <p id="email-find-message"></p>
