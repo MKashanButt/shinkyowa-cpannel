@@ -1,64 +1,170 @@
 .container {
     width: 98%;
-    margin: auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+    text-transform: uppercase;
+}
+
+.vehicle_info {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 14px;
 }
 
 form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
     position: relative;
 }
 
+form .container {
+    all: unset;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    font-size: 14px;
+    gap: 10px;
+}
+
 form .item {
-    width: calc(100% * (1/2) - 10px);
-    padding: 10px;
+    width: calc(100% * (1/2) - 15px);
     display: flex;
     align-items: center;
     position: relative;
+    /* margin-bottom: 20px; */
+    padding: 0 20px;
 }
 
 form .item label {
     width: 30%;
+    font-weight: bold;
 }
 
 form .item input,
-form .item select {
+form .item textarea {
     width: 70%;
     padding: 5px;
     outline: none;
+    resize: none;
+    border-radius: 10px;
+    border: 1px solid var(--blue);
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+form .amount {
+    float: right;
 }
 
 form .amount select {
-    width: 10%;
-    padding: 5px;
+    width: 13%;
+    padding: 10.5px;
+    border: 1px solid var(--blue);
     outline: none;
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 form .amount input {
-    width: 60%;
-    padding: 5px;
+    width: 57%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+}
+
+form #status {
+    width: 70%;
+    padding: 10.5px;
+    border: 1px solid var(--blue);
     outline: none;
+    border-radius: 10px;
 }
 
 form button {
+    position: absolute;
+    bottom: 0;
+    right: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 50px;
-    position: absolute;
-    bottom: -40px;
-    right: 20px;
-    border: 1px solid;
     background-color: var(--blue);
+    border: 1px solid var(--blue);
     color: white;
-    transition: all 0.2s ease;
+    padding: 15px 40px;
     cursor: pointer;
+    border-radius: 25px;
+    text-transform: uppercase;
+    border: 2px solid var(--blue);
+    transition: 0.2s ease all;
+    gap: 5px;
 }
 
 form button:hover {
-    filter: brightness(0.8);
+    filter: brightness(0.9);
+}
+
+form button .icon {
+    width: 15px;
+}
+
+form button:hover {
+    background-color: transparent;
+    color: var(--blue);
+}
+
+.vehicle_info .consignee_info {
+    width: 40%;
+    background-color: var(--blue);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+}
+
+.vehicle_info h2 {
+    font-size: 18px;
+    padding: 20px;
+    letter-spacing: 1px;
+}
+
+.vehicle_info .consignee_info .item {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding: 0 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.vehicle_info .consignee_info .item p {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vehicle_info .consignee_info .item label {
+    width: 145px;
+    font-weight: bold;
+}
+
+
+.vehicle_info .consignee_info .item input {
+    all: unset;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: stretch;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+}
+
+.vehicle_info form {
+    width: 60%;
 }
