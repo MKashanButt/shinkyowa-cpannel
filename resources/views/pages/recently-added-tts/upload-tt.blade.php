@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
-    <x-breadcrumbs :page="'Sale'" :subpage="'Upload TT'" />
     <div class="container">
+        <x-breadcrumbs :page="'Sale'" :subpage="'Upload TT'" />
         @if (session('success'))
             <div x-data='{show: true}'>
                 <div class="alert" x-show='show' x-init='setTimeout(() => show = false, 3000)'>
