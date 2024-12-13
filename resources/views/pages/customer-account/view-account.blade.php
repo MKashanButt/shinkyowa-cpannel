@@ -23,6 +23,8 @@
                 <p><span>Whatsapp No:</span> {{ $customerAccount->customer_whatsapp }}</p>
                 <p><span>Description:</span> {{ $customerAccount->description }}</p>
                 <p><span>Address:</span> {{ $customerAccount->address }}</p>
+                <p><span>City:</span> {{ $customerAccount->city }}</p>
+                <p><span>Country:</span> {{ $customerAccount->country }}</p>
                 <p><span>Buying:</span>
                     {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
                 </p>
