@@ -159,7 +159,7 @@
                                 <td>{{ $customerPayment->description }}</td>
                                 <td>{{ $customerPayment->customer_email }}</td>
                                 <td>{{ $customerPayment->payment_date }}</td>
-                                <td>{{ $customerAccount->currency . number_format((int) $customerPayment->in_yen) }}</td>
+                                <td>{{ '¥' . number_format((int) $customerPayment->in_yen) }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
                                 <td class="actions">
                                     <div class="stage">
