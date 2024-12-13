@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerAccounts;
+use App\Models\CustomerPayments;
 use App\Models\Stocks;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -182,6 +183,34 @@ class ApiController extends Controller
             "customerAccounts" => $customerAccounts,
             "buying" => $buying,
             "deposit" => $deposit,
+        ]);
+    }
+
+    public function searchByStockId(Request $request)
+    {
+        $request->validate([
+            'searchByStockId' => 'required|string|max:255'
+        ]);
+
+        $record = Stocks::where('stock_id', $request->input('searchByStockId'))
+            ->select('thumbnail', 'stock_id', 'customer_email', 'make', 'model', 'year', 'fob', 'status')
+            ->first()
+            ->toArray();
+
+        if ($record['status'] == 'reserved') {
+            $agent = CustomerAccounts::where('customer_email', $record['customer_email'])->select('agent')->first()->toArray();
+            $payment = CustomerPayments::where('stock_id', $record['stock_id'])->sum('in_yen');
+            $record = array_merge($record, $agent, ['in_yen' => $payment]);
+        } else {
+            $agent = ["agent" => ''];
+            $payment = ["in_yen" => 0];
+            $record = array_merge($record, $agent, $payment);
+        }
+
+        return view('pages.customer-account.stockid-view-table', [
+            'record' => $record,
+            'title' => 'Filter By Stock Id | Shinkyowa International',
+            'stylesheet' => 'stock-id-filter-page.css'
         ]);
     }
 }
