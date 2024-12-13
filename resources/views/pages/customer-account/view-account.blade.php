@@ -8,7 +8,7 @@
         <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
         <x-customer-options :customeremail="$customerAccount->customer_email" />
         <div class="tab" x-data='{open: false}' x-cloak>
-            <button @click='open=!open'>Customer Info
+            <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Customer Info
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="tab" x-data='{open: false}' x-cloak>
-            <button @click='open=!open'>Customer Vehicles
+            <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -47,15 +47,15 @@
                 <table class="customer-vehicle" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="sno">S.No</th>
-                            <th class="stockId">Stock Id</th>
-                            <th class="vehicle">Vehicle</th>
-                            <th class="chassis">Chassis</th>
-                            <th class="fob">CNF</th>
-                            <th class="fob">Amount</th>
-                            <th class="fob">Remaining</th>
-                            <th class="fob">Status</th>
-                            <th class="actions">Actions</th>
+                            <th>S.No</th>
+                            <th>Stock Id</th>
+                            <th>Vehicle</th>
+                            <th>Chassis</th>
+                            <th>CNF</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,47 +81,51 @@
                                 @else
                                     <td><button class="progress">Pending</button></td>
                                 @endif
-                                <td class="action-btns">
-                                    <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button>View
-                                            Images</button></a>
-                                    <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button>View
-                                            Docs</button></a>
-                                    @if (Auth::user()->role == 'admin')
-                                        <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
-                                                class="danger">Delete</button></a>
-                                    @endif
-                                    @if (Auth::user()->role != 'agent')
-                                        <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
-                                                class="primary">Edit</button></a>
-                                    @endif
+                                <td class="actions">
+                                    <div class="stage">
+                                        <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button
+                                                class="image-btn">View
+                                                Images</button></a>
+                                        <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button
+                                                class="docs-btn">View
+                                                Docs</button></a>
+                                        @if (Auth::user()->role == 'admin')
+                                            <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
+                                                    class="danger">Delete</button></a>
+                                        @endif
+                                        @if (Auth::user()->role != 'agent')
+                                            <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
+                                                    class="primary">Edit</button></a>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
-                <table class="total-row" cellspacing="0">
-                    <tr>
-                        <td class="sno"></td>
-                        <td class="stockId"></td>
-                        <td class="vehicle"></td>
-                        <td class="chassis">Total</td>
-                        <td class="fob">
-                            {{ '$' . number_format($cnf) }}
-                        </td>
-                        <td class="fob">
-                            {{ '$' . number_format($payment) }}
-                        </td>
-                        <td class="fob">
-                            {{ '$' . number_format($cnf - $payment) }}
-                        </td>
-                        <td></td>
-                        <td class="action-btns"></td>
-                    </tr>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total</td>
+                            <td>
+                                {{ '$' . number_format($cnf) }}
+                            </td>
+                            <td>
+                                {{ '$' . number_format($payment) }}
+                            </td>
+                            <td>
+                                {{ '$' . number_format($cnf - $payment) }}
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
         <div class="tab" x-data="{ open: false }" x-cloak>
-            <button @click='open=!open'>Customer Payments
+            <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Customer Payments
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d=" m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -131,13 +135,13 @@
                 <table class="customer-payments" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="sno">S.No</th>
-                            <th class="stockId">Stock Id</th>
-                            <th class="vehicle">Description</th>
-                            <th class="cemail">Customer Email</th>
-                            <th class="paymentDate">Payment Date</th>
-                            <th class="payment">Amount</th>
-                            <th class="paymentRecievedDate">Recieved Date</th>
+                            <th>S.No</th>
+                            <th>Stock Id</th>
+                            <th>Description</th>
+                            <th>Customer Email</th>
+                            <th>Payment Date</th>
+                            <th>Payment In Yen</th>
+                            <th>Recieved Date</th>
                             @if (Auth::user()->role != 'agent')
                                 <th class="action">Action</th>
                             @endif
@@ -155,43 +159,44 @@
                                 <td>{{ $customerPayment->description }}</td>
                                 <td>{{ $customerPayment->customer_email }}</td>
                                 <td>{{ $customerPayment->payment_date }}</td>
-                                <td>{{ $customerAccount->currency . $customerPayment->payment }}</td>
+                                <td>{{ $customerAccount->currency . number_format($customerPayment->in_yen) }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
-                                <td class="action-btns">
-                                    @if (Auth::user()->role != 'agent')
-                                        <a href="/customer-payment/edit/{{ $customerPayment->id }}">
-                                            <button class="primary">Edit</button>
-                                        </a>
-                                    @endif
-                                    @if (Auth::user()->role == 'admin')
-                                        <a
-                                            href="/customer-payment/destroy/{{ $customerPayment->stock_id }}/{{ $customerAccount->customer_email }}/{{ $customerPayment->payment }}">
-                                            <button class="danger">Delete</button>
-                                        </a>
-                                    @endif
+                                <td class="actions">
+                                    <div class="stage">
+                                        @if (Auth::user()->role != 'agent')
+                                            <a href="/customer-payment/edit/{{ $customerPayment->id }}">
+                                                <button class="primary">Edit</button>
+                                            </a>
+                                        @endif
+                                        @if (Auth::user()->role == 'admin')
+                                            <a
+                                                href="/customer-payment/destroy/{{ $customerPayment->stock_id }}/{{ $customerAccount->customer_email }}/{{ $customerPayment->payment }}">
+                                                <button class="danger">Delete</button>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
-                {{-- <x-table-total-row :buying="'$' . number_format($buying)" :deposit="'$' . number_format($deposit)" :remaining="'$' . number_format($buying - $deposit)" /> --}}
-                <table class="total-row-2" cellspacing="0">
-                    <tr>
-                        <td class="sno"></td>
-                        <td class="stockId"></td>
-                        <td class="vehicle">
-                        </td>
-                        <td class="cemail">
-                        </td>
-                        <td class="paymentDate">
-                            Total
-                        </td>
-                        <td class="payment">
-                            {{ '$' . number_format($totalCustomerPayments) }}
-                        </td>
-                        <td class="paymentRecievedDate"></td>
-                        <td class="action"></td>
-                    </tr>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td></td>
+                            <td></td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                Total
+                            </td>
+                            <td>
+                                {{ '$' . number_format($totalCustomerPayments) }}
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
