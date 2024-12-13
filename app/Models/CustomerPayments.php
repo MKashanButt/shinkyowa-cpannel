@@ -30,7 +30,7 @@ class CustomerPayments extends Model
      * @var array
      */
     protected $casts = [
-        'payment_date' => 'date',
-        'payment_recieved_date' => 'date',
+        'payment_date' => 'date:Y-m-d',
+        'payment_recieved_date' => 'date:Y-m-d',
     ];
 }
