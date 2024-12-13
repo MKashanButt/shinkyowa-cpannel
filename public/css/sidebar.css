@@ -1,7 +1,7 @@
 .sidebar-alpine-container,
 .sidabar-closed {
     padding: 1%;
-    height: 100vh;
+    height: auto;
     background: var(--blue);
     display: flex;
     justify-content: center;
