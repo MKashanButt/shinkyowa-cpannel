@@ -26,7 +26,6 @@
                 modal.style.display = 'block';
                 modal.style.display = 'flex';
                 modalImage.src = image.src;
-                // Optional: Add caption if available
                 captionText.textContent = image.alt;
             });
         });
