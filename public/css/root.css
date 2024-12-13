@@ -114,6 +114,8 @@
 
 main {
     display: flex;
+    min-height: 100vh;
+    height: auto;
 }
 
 .icon {
