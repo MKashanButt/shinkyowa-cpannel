@@ -191,7 +191,7 @@
                                 Total
                             </td>
                             <td>
-                                {{ '$' . number_format($totalCustomerPayments) }}
+                                {{ '¥' . number_format($totalCustomerPayments) }}
                             </td>
                             <td></td>
                             <td></td>
