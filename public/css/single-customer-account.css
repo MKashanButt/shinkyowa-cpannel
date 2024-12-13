@@ -1,11 +1,9 @@
 .single-customer-account {
     width: 98%;
-    height: 62vh;
     margin: 20px auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* overflow-y: scroll; */
     font-size: 14px;
     text-transform: uppercase;
 }
