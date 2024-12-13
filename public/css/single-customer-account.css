@@ -6,10 +6,14 @@
     flex-direction: column;
     gap: 10px;
     /* overflow-y: scroll; */
-    font-size: 13px;
+    font-size: 14px;
+    text-transform: uppercase;
 }
 
 #customer-info-tab {
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto;
     flex-direction: column;
     gap: 10px;
 }
@@ -23,19 +27,27 @@
 }
 
 .single-customer-account .tab {
-    width: 100%;
+    width: 98%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 25px;
 }
 
-.single-customer-account .tab button {
-    border: 1px solid;
-    padding: 10px;
+.single-customer-account .tab>button {
+    border: 1px solid var(--blue);
+    padding: 15px;
     text-align: left;
     display: flex;
     align-items: center;
     position: relative;
+    background-color: var(--blue);
+    color: white;
+    border-radius: 25px;
+    /* border-top-right-radius: 25px;
+border-top-left-radius: 25px; */
+    text-transform: uppercase;
 }
 
 .single-customer-account .tab button .icon {
@@ -44,163 +56,123 @@
     right: 10px;
 }
 
-.single-customer-account .customer-vehicle,
-.single-customer-account .customer-payments {
+.customer-vehicle,
+.customer-payments {
     width: 100%;
-    overflow-x: scroll;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.customer-vehicle thead,
+.customer-payments thead {
+    margin-bottom: 10px;
+}
+
+.customer-vehicle th,
+.customer-vehicle td,
+.customer-payments th,
+.customer-payments td {
+    font-size: 13px;
+    padding: 1%;
     text-align: center;
     text-transform: uppercase;
 }
 
-.single-customer-account .customer-vehicle th,
-.single-customer-account .customer-payments th {
+.customer-vehicle td,
+.customer-payments td {
+    padding: 0.5% 1%;
+}
+
+.customer-vehicle th,
+.customer-payments th {
+    width: min-content;
     background-color: var(--blue);
     color: white;
-    border: 1px solid black;
-    padding: 5px;
-    text-align: center;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+    border-top: 1px solid rgba(0, 0, 0, 0.35);
 }
 
-.single-customer-account .customer-vehicle td,
-.single-customer-account .customer-payments td {
-    border: 1px solid;
-    padding: 5px;
+.customer-vehicle td,
+.customer-payments td {
+    width: min-content;
 }
 
-.single-customer-account .customer-vehicle button {
+.customer-vehicle th:first-child,
+.customer-payments th:first-child {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.customer-vehicle td:first-child,
+.customer-payments td:first-child {
+    border-left: none;
+}
+
+.customer-vehicle td,
+.customer-payments td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.customer-vehicle button,
+.customer-payments button {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
     margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
 }
 
-.single-customer-account .customer-vehicle .sno {
-    width: 50px;
+.customer-vehicle button:hover,
+.customer-payments button:hover {
+    filter: brightness(0.9);
 }
 
-.single-customer-account .customer-vehicle .stockId {
-    width: 80px;
+.customer-vehicle .docs-btn,
+.customer-payments .docs-btn {
+    background-color: var(--primary);
 }
 
-.single-customer-account .customer-vehicle .vehicle {
-    width: 120px;
+.customer-vehicle .image-btn,
+.customer-payments .image-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
 }
 
-.single-customer-account .customer-vehicle .chassis {
-    width: 120px;
-}
-
-.single-customer-account .customer-vehicle .fob {
-    width: 70px;
-}
-
-.single-customer-account .customer-vehicle .action-btns,
-.single-customer-account .customer-payments .action-btns {
+.customer-vehicle .actions .stage,
+.customer-payments .actions .stage {
+    height: 100%;
     display: flex;
     gap: 5px;
 }
 
-.single-customer-account .customer-vehicle .action-btns button {
-    margin: 0;
+.customer-vehicle .body_container,
+.customer-payments .body_container {
+    height: 50vh;
+    overflow-y: scroll;
 }
 
-.single-customer-account .customer-payments .sno {
-    width: 50px;
+.customer-vehicle tfoot .total-row,
+.customer-payments tfoot .total-row {
+    box-shadow: none !important;
 }
 
-.single-customer-account .customer-payments .stockId {
-    width: 80px;
-}
-
-.single-customer-account .customer-payments .vehicle {
-    width: 250px;
-}
-
-.single-customer-account .customer-payments .cemail {
-    width: 200px;
-}
-
-.single-customer-account .customer-payments .paymentDate {
-    width: 120px;
-}
-
-.single-customer-account .customer-payments .payment {
-    width: 70px;
-}
-
-.single-customer-account .customer-payments .paymentRecievedDate {
-    width: 120px;
-}
-
-.total-row {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.total-row td {
-    padding: 5px;
-}
-
-.total-row .sno {
-    width: 50px;
-    border: none;
-}
-
-.total-row .stockId {
-    width: 80px;
-    border: none;
-}
-
-.total-row .vehicle {
-    width: 120px;
-}
-
-.total-row .chassis {
-    width: 120px;
-    border: 1px solid;
-}
-
-.total-row .fob {
-    width: 70px;
-    border: 1px solid;
-}
-
-.total-row-2 {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.total-row-2 td {
-    padding: 5px;
-}
-
-.total-row-2 .sno {
-    width: 50px;
-    border: none;
-}
-
-.total-row-2 .stockId {
-    width: 80px;
-    border: none;
-}
-
-.total-row-2 .vehicle {
-    width: 250px;
-}
-
-.total-row-2 .cemail {
-    width: 200px;
-}
-
-.total-row-2 .paymentDate {
-    width: 120px;
-    border: 1px solid;
-}
-
-.total-row-2 .payment {
-    width: 70px;
-    border: 1px solid;
-}
-
-.total-row-2 .paymentRecievedDate {
-    width: 120px;
+.customer-vehicle tfoot .total-row td,
+.customer-payments tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
 }
 
 .imageContent {
@@ -350,4 +322,9 @@
     bottom: -20px;
     position: absolute;
     padding: 5px 20px;
+}
+
+.active-customer-tab {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 }
