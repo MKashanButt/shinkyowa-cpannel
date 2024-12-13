@@ -72,9 +72,7 @@
     width: calc(100% * (1/2) - 5px);
 }
 
-.customer-options .customer-account,
-.customer-options .customer-payment,
-.customer-options .customer-vehicle {
+.customer-options button {
     width: 100%;
     display: flex;
     align-items: center;
@@ -90,9 +88,7 @@
     transition: 0.2s ease all;
 }
 
-.customer-options .customer-account:hover,
-.customer-options .customer-payment:hover,
-.customer-options .customer-vehicle:hover {
+.customer-options button:hover {
     background-color: var(--blue);
     color: white;
 }
