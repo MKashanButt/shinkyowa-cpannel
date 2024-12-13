@@ -82,7 +82,8 @@ Route::controller(ApiController::class)->middleware(['auth', 'verified'])->group
     Route::post('/find-stock-id', 'findStockId')->name('find-stock-id');
 
     Route::post('/search/email', 'search')->name('search');
-    Route::post('/search/company', 'searchByCompany')->name('searchByCompany');
+    Route::post('/search/company', 'searchByCompany')->name('search-by-company');
+    Route::post('/search/stockid', 'searchByStockId')->name('search-by-stock-id');
 });
 
 require __DIR__ . '/auth.php';
