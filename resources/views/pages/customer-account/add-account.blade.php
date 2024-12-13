@@ -31,7 +31,8 @@
             </div>
             <div class="item">
                 <label for="cemail">Email:</label>
-                <input type="email" name="cemail" id="cemail" onblur="checkEmailAvailability($('#cemail').val())"
+                <input type="email" name="cemail" id="cemail" name="customer_email" id="cemail"
+                    hx-trigger='keyup, blur' hx-post='/check-email-availability' hx-target='this'
                     value="{{ isset($customerAccount) ? $customerAccount->customer_email : '' }}">
                 <p id="email-availability-message"></p>
             </div>
