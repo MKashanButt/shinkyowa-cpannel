@@ -52,16 +52,16 @@
     </div>
     <div class="customer-btns">
         <a href="/add-customer-account">
-            <button class="customer-account">Add Customer Account</button>
+            <button>Add Customer Account</button>
         </a>
         @if (Auth::user()->role == 'admin')
             <a href="/add-customer-payment/{{ isset($customeremail) ? $customeremail : '' }}">
-                <button class="customer-payment">Add
+                <button>Add
                     Customer Payment</button>
             </a>
         @endif
         <a href="/add-customer-vehicle/{{ isset($customeremail) ? $customeremail : '' }}">
-            <button class="customer-vehicle">Add Customer Vehicle</button>
+            <button>Add Customer Vehicle</button>
         </a>
     </div>
 </div>
