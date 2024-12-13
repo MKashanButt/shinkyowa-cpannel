@@ -97,6 +97,8 @@ class CustomerAccountController extends Controller
         $customerAccount->currency = $request->input('ccurrency');
         $customerAccount->description = $request->input('cdescription');
         $customerAccount->address = $request->input('caddress');
+        $customerAccount->city = $request->input('ccity');
+        $customerAccount->country = $request->input('ccountry');
         $customerAccount->agent = $request->input('agent');
 
         $customerAccount->save();
@@ -142,6 +144,8 @@ class CustomerAccountController extends Controller
             'currency' => $request->input('ccurrency'),
             'description' => $request->input('cdescription'),
             'address' => $request->input('caddress'),
+            'city' => $request->input('ccity'),
+            'country' => $request->input('ccountry'),
             'agent' => $request->input('agent')
         ]);
 
