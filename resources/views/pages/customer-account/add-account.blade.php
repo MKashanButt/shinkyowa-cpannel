@@ -66,6 +66,16 @@
                 <label for="caddress">Address:</label>
                 <textarea name="caddress" id="caddress" cols="30" rows="4">{{ isset($customerAccount) ? $customerAccount->address : '' }}</textarea>
             </div>
+            <div class="item" style="align-items:baseline;">
+                <label for="ccity">City:</label>
+                <input type="text" name="city" id="city"
+                    value="{{ isset($customerAccount) ? $customerAccount->city : '' }}"">
+            </div>
+            <div class="item" style="align-items:baseline;">
+                <label for="ccountry">Country:</label>
+                <input type="text" name="country" id="country"
+                    value="{{ isset($customerAccount) ? $customerAccount->country : '' }}"">
+            </div>
             <div class="item">
                 <label for="cdescription">Agent:</label>
                 <input type="text" name="agent" id="agent" value="{{ Auth::user()->name }}" readonly>
