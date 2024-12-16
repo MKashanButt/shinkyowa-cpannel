@@ -93,6 +93,44 @@
                     </div>
                 </div>
                 {{-- @endif --}}
+                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'doc_uploader')
+                    <div x-data='{open: false, active: false}' x-cloak>
+                        <li @click="open = !open; active = !active" @click.outside="open = false; active = false"
+                            x-bind:class="active ? 'active-sub-menu' : ''">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                            </svg>
+                            Docs
+                        </li>
+                        <div class="sub-menu" x-show="open" x-transition>
+                            <ul>
+                                <a href="/docs/all-docs">
+                                    <li class="{{ Request::is('/all-docs') ? 'active-url' : '' }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+                                        </svg>
+                                        All Docs
+                                    </li>
+                                </a>
+                                <a href="/docs/not-uploaded">
+                                    <li class="{{ Request::is('/not-uploaded') ? 'active-url' : '' }}">
+                                        <svg class="icon" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M12.0016 2.00098C12.4158 2.00098 12.7516 2.33676 12.7516 2.75098V3.53801C16.5416 3.9143 19.5016 7.11197 19.5016 11.001V14.115L20.1938 15.9609C20.7454 17.4319 19.6581 19.001 18.0871 19.001H15.0628C15.0287 20.6631 13.6701 21.9995 11.9998 21.9995C10.3295 21.9995 8.97089 20.6631 8.93682 19.001H5.9161C4.34514 19.001 3.25776 17.4319 3.80936 15.9609L4.5016 14.115V11.001C4.5016 7.11197 7.46161 3.9143 11.2516 3.53801V2.75098C11.2516 2.33676 11.5874 2.00098 12.0016 2.00098ZM10.4375 19.001C10.471 19.8339 11.1573 20.4995 11.9998 20.4995C12.8423 20.4995 13.5286 19.8339 13.5622 19.001H10.4375ZM6.0016 11.001C6.0016 7.68727 8.68789 5.00098 12.0016 5.00098C15.3153 5.00098 18.0016 7.68727 18.0016 11.001V14.1168C18.0016 14.2955 18.0337 14.4727 18.0965 14.64L18.7893 16.4876C18.9732 16.9779 18.6108 17.501 18.0871 17.501H5.9161C5.39244 17.501 5.02998 16.9779 5.21385 16.4876L5.90673 14.64C5.96946 14.4727 6.0016 14.2955 6.0016 14.1168V11.001Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                        Not Uploaded
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 @if (Auth::user()->role != 'agent')
                     <a href="/users">
                         <li class="{{ Request::is('users') ? 'active-url' : '' }}">
