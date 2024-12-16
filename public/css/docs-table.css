@@ -1,0 +1,117 @@
+.docs-table {
+    width: 98%;
+    margin: 20px auto;
+}
+
+.docs-table .container {
+    width: 98%;
+    height: 62vh;
+    margin: 10px auto;
+}
+
+.docs-table table {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.docs-table table thead {
+    margin-bottom: 10px;
+}
+
+.docs-table table th,
+.docs-table table td {
+    font-size: 13px;
+    padding: 1%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.docs-table table td {
+    padding: 0.5% 1%;
+}
+
+.docs-table table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.docs-table table th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.docs-table table th {
+    width: min-content;
+    background-color: var(--blue);
+    color: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.docs-table table td {
+    width: min-content;
+}
+
+.docs-table table th:first-child {
+    border: none;
+}
+
+.docs-table table td:first-child {
+    border-left: none;
+}
+
+.docs-table table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.docs-table table button {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
+}
+
+.docs-table table button:hover {
+    filter: brightness(0.9);
+}
+
+.docs-table table .agent-btn {
+    background-color: var(--primary);
+}
+
+.docs-table table .account-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.docs-table table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.docs-table table .body_container {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.docs-table tfoot .total-row {
+    box-shadow: none !important;
+}
+
+.docs-table tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
+}
