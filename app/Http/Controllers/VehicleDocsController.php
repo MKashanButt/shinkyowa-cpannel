@@ -2,12 +2,117 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerVehicles;
 use App\Models\Docs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class VehicleDocsController extends Controller
 {
+    public function index()
+    {
+        // Fetch all customer vehicles and docs
+        $vehicles = CustomerVehicles::all()->toArray();
+        $docs = Docs::all()->toArray();
+
+        // Prepare a map for docs keyed by stock_id for quick lookup
+        $docsByStockId = [];
+        foreach ($docs as $doc) {
+            $docsByStockId[$doc['stock_id']] = $doc; // Group docs by stock_id
+        }
+
+        // Merge doc data with vehicle data and check for completeness
+        $result = [];
+        foreach ($vehicles as $vehicle) {
+            $stockId = $vehicle['stock_id'];
+            $vehicleDocs = $docsByStockId[$stockId] ?? []; // Get docs for the current vehicle
+
+            // Check if all required docs are present
+            $requiredDocs = ['inspection_certificate', 'english_export', 'japanese_export']; // The required document columns
+            $allDocsPresent = true;
+
+            foreach ($requiredDocs as $docColumn) {
+                // Check if the doc exists and is not null or empty
+                if (empty($vehicleDocs[$docColumn])) {
+                    $allDocsPresent = false;
+                    break;
+                }
+            }
+
+            $vehicle['docs'] = $vehicleDocs; // Attach the documents
+            $vehicle['is_complete'] = $allDocsPresent; // True if all required docs are present
+
+            $result[] = $vehicle;
+        }
+
+        // Filter the data if needed (e.g., by specific stock_id)
+        $filteredStockId = request('stock_id'); // Example: filter by stock_id from query parameter
+        if ($filteredStockId) {
+            $result = array_filter($result, function ($vehicle) use ($filteredStockId) {
+                return $vehicle['stock_id'] == $filteredStockId;
+            });
+        }
+
+        // Return the result as a JSON response or pass to a view
+        return view('pages.vehicle-docs.docs-table', [
+            'records' => $result,
+            'stylesheet' => 'docs-table.css',
+            'title' => 'Documents | All Vehicle Documents'
+        ]);
+    }
+
+    public function not_uploaded()
+    {
+        $vehicles = CustomerVehicles::all()->toArray();
+        $docs = Docs::all()->toArray();
+
+        // Prepare a map for docs keyed by stock_id for quick lookup
+        $docsByStockId = [];
+        foreach ($docs as $doc) {
+            $docsByStockId[$doc['stock_id']] = $doc; // Group docs by stock_id
+        }
+
+        // Merge doc data with vehicle data and check for completeness
+        $result = [];
+        foreach ($vehicles as $vehicle) {
+            $stockId = $vehicle['stock_id'];
+            $vehicleDocs = $docsByStockId[$stockId] ?? []; // Get docs for the current vehicle
+
+            // Check if all required docs are present
+            $requiredDocs = ['inspection_certificate', 'english_export', 'japanese_export']; // The required document columns
+            $allDocsPresent = true;
+
+            foreach ($requiredDocs as $docColumn) {
+                // Check if the doc exists and is not null or empty
+                if (empty($vehicleDocs[$docColumn])) {
+                    $allDocsPresent = false;
+                    break;
+                }
+            }
+
+            $vehicle['docs'] = $vehicleDocs; // Attach the documents
+            $vehicle['is_complete'] = $allDocsPresent; // True if all required docs are present
+            if (!$allDocsPresent) {
+                $result[] = $vehicle;
+            }
+        }
+
+        // Filter the data if needed (e.g., by specific stock_id)
+        $filteredStockId = request('stock_id'); // Example: filter by stock_id from query parameter
+        if ($filteredStockId) {
+            $result = array_filter($result, function ($vehicle) use ($filteredStockId) {
+                return $vehicle['stock_id'] == $filteredStockId;
+            });
+        }
+
+        // Return the result as a JSON response or pass to a view
+        return view('pages.vehicle-docs.docs-table', [
+            'records' => $result,
+            'stylesheet' => 'docs-table.css',
+            'title' => 'Documents | All Vehicle Documents'
+        ]);
+    }
+
     public function find($stockid)
     {
         $documents = Docs::where('stock_id', $stockid)->first();
@@ -84,9 +189,6 @@ class VehicleDocsController extends Controller
 
         return redirect()->back()->with('success', 'Documents Uploaded Successfully');
     }
-
-
-
 
     public function delete(Request $request)
     {
