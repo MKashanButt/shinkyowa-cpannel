@@ -26,8 +26,6 @@ Route::controller(CustomerAccountController::class)->middleware(['auth', 'verifi
 
     Route::get('/add-customer-account', 'render_form')->name('add-customer-form');
     Route::get('/customer-account/{id}', 'find')->name('find-customer-account');
-
-    // AJAX ROUTES START
 });
 
 Route::controller(CustomerVehicleController::class)->middleware(['auth', 'verified'])->group(function () {
@@ -52,6 +50,8 @@ Route::controller(VehicleDocsController::class)->middleware(['auth', 'verified']
     Route::get('/customer-account/docs/{stockid}/add', 'render_form')->name('customer-account.add-docs');
     Route::post('/customer-account/docs/upload', 'store')->name('customer-account.upload-docs');
     Route::get('/delete-docs', 'delete')->name('customer-account.delete-doc');
+    Route::get('/docs/all-docs', 'index')->name('customer-account.all-docs');
+    Route::get('/docs/not-uploaded', 'not_uploaded')->name('customer-account.not-uploaded');
 });
 
 Route::controller(UserController::class)->middleware(['auth', 'verified'])->group(function () {
