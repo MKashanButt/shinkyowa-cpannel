@@ -5,7 +5,7 @@
 @section('content')
     <section class="docs-table">
         <x-breadcrumbs :page="'Docs'" :subpage="'All Vehicles'" />
-        @if (Auth::user()->role == 'doc_uploader')
+        @if (Auth::user()->role != 'doc_uploader')
             <x-customer-options />
         @endif
         @if (session('success'))
