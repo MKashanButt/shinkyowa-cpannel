@@ -37,7 +37,7 @@
                         <input type="file" name="final_invoice" id="final_invoice">
                     </div>
                 @endif
-                @if ((!$documents->inspection_certificate && Auth::user()->role == 'admin') || Auth::user()->role == 'doc_uploader')
+                @if (!$documents->inspection_certificate && Auth::user()->role == 'admin')
                     <div class="field">
                         <label for="inspection_certificate">Upload Inspection Certificate</label>
                         <input type="file" name="inspection_certificate" id="inspection_certificate">
