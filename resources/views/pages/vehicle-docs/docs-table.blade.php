@@ -33,10 +33,8 @@
                             @endif
                             <td>{{ $record['stock_id'] }}</td>
                             <td>{{ $record['vehicle'] }}</td>
-                            <td>{{ $record['chassis'] }}
-                            </td>
-                            <td>{{ $record['customer_email'] }}
-                            </td>
+                            <td>{{ $record['chassis'] }}</td>
+                            <td>{{ $record['customer_email'] }}</td>
                             @if ($record['is_complete'])
                                 <td>
                                     <a href="/customer-account/docs/{{ $record['stock_id'] }}">
