@@ -28,7 +28,7 @@ class VehicleDocsController extends Controller
             $vehicleDocs = $docsByStockId[$stockId] ?? []; // Get docs for the current vehicle
 
             // Check if all required docs are present
-            $requiredDocs = ['inspection_certificate', 'english_export', 'japanese_export']; // The required document columns
+            $requiredDocs = ['english_export', 'japanese_export']; // The required document columns
             $allDocsPresent = true;
 
             foreach ($requiredDocs as $docColumn) {
@@ -79,7 +79,7 @@ class VehicleDocsController extends Controller
             $vehicleDocs = $docsByStockId[$stockId] ?? []; // Get docs for the current vehicle
 
             // Check if all required docs are present
-            $requiredDocs = ['inspection_certificate', 'english_export', 'japanese_export']; // The required document columns
+            $requiredDocs = ['english_export', 'japanese_export']; // The required document columns
             $allDocsPresent = true;
 
             foreach ($requiredDocs as $docColumn) {
