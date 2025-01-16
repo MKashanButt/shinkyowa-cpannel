@@ -12,7 +12,7 @@
                         <path d="M9 17h6" />
                         <circle cx="17" cy="17" r="2" />
                     </svg>{{ $data['stockCount'] }}</h1>
-                <p>Stock Count</p>
+                <p>Total Stock Count</p>
             </div>
             <div class="item">
                 <h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -20,7 +20,7 @@
                         <circle cx="12" cy="8" r="5" />
                         <path d="M20 21a8 8 0 0 0-16 0" />
                     </svg>{{ $data['userCount'] }}</h1>
-                <p>User Count</p>
+                <p>Total User Count</p>
             </div>
             <div class="item">
                 <a href="/">
