@@ -6,6 +6,7 @@ use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\Stocks;
+use App\Models\TTUploaded;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +31,22 @@ class CustomerAccountController extends Controller
 
     public function dashboard()
     {
+        $stockCount = Stocks::count();
+        $userCount = User::count();
+        $recentTT = TTUploaded::orderBy('id', 'desc')->first();
+
+        $ttCopy = $recentTT ? $recentTT->tt_copy : null;
+
+        $data = [
+            "stockCount" => $stockCount,
+            "userCount" => $userCount,
+            "recentTT" => $ttCopy
+        ];
+
         return view('pages.index', [
-            "title" => 'Dashboard',
-            'stylesheet' => 'dashboard.css'
+            "title" => "Dashboard",
+            "stylesheet" => "dashboard.css",
+            "data" => $data,
         ]);
     }
 

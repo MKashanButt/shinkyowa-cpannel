@@ -2,3 +2,43 @@
     width: 98%;
     margin: 20px auto;
 }
+
+.dashboard .counter {
+    display: flex;
+    gap: 10px;
+}
+
+.dashboard .counter .item {
+    width: calc(100% * (1/4));
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-direction: column;
+    background-color: var(--primary);
+    border-radius: 25px;
+    color: white;
+    user-select: none;
+}
+
+.dashboard .counter .item h1 {
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard .counter .item h1 .icon {
+    width: 40px;
+}
+
+.dashboard .counter .item img {
+    width: 50px;
+    margin: auto;
+}
+
+.dashboard .counter .item p {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
