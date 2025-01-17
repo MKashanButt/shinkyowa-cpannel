@@ -68,12 +68,12 @@
             </div>
             <div class="item" style="align-items:baseline;">
                 <label for="ccity">City:</label>
-                <input type="text" name="city" id="city"
+                <input type="text" name="ccity" id="ccity"
                     value="{{ isset($customerAccount) ? $customerAccount->city : '' }}"">
             </div>
             <div class="item" style="align-items:baseline;">
                 <label for="ccountry">Country:</label>
-                <input type="text" name="country" id="country"
+                <input type="text" name="ccountry" id="ccountry"
                     value="{{ isset($customerAccount) ? $customerAccount->country : '' }}"">
             </div>
             <div class="item">
