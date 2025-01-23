@@ -160,7 +160,7 @@ class StocksController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'make' => 'required|string|max:255',
             'model' => 'required|string|max:255',
-            'year' => 'required|string|',
+            'year' => 'required|string',
             'chassis' => 'required|string|max:255',
             'body_type' => 'required|string',
             'fuel' => 'required|string',
