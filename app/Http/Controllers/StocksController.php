@@ -26,10 +26,19 @@ class StocksController extends Controller
 
     public function index()
     {
+        $stocks = Stocks::paginate(8)->onEachSide(1);
+
+        if ($stocks->isEmpty()) {
+            return view('pages.stocks.index', [
+                "title" => "Shinkyowa International | Vehicle Stock",
+                "stylesheet" => "stocks.css",
+                "data" => $stocks,
+            ]);
+        }
         return view('pages.stocks.index', [
             "title" => "Shinkyowa International | Vehicle Stock",
             "stylesheet" => "stocks.css",
-            "data" => Stocks::paginate(8)->onEachSide(1)
+            "data" => $stocks,
         ]);
     }
 
