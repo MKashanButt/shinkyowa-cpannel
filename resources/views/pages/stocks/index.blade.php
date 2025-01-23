@@ -76,7 +76,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-                @if ($data->isNotEmpty())
+                @if ($data != [])
                     <tfoot>
                         <tr>
                             <td colspan="10">
