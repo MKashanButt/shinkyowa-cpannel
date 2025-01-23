@@ -76,13 +76,15 @@
                         </tr>
                     @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="10">
-                            {{ $data->links('components.pagination') }}
-                        </td>
-                    </tr>
-                </tfoot>
+                @if ($data->isNotEmpty())
+                    <tfoot>
+                        <tr>
+                            <td colspan="10">
+                                {{ $data->links('components.pagination') }}
+                            </td>
+                        </tr>
+                    </tfoot>
+                @endif
             </table>
         </div>
     </section>
