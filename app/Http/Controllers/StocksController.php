@@ -32,7 +32,7 @@ class StocksController extends Controller
             return view('pages.stocks.index', [
                 "title" => "Shinkyowa International | Vehicle Stock",
                 "stylesheet" => "stocks.css",
-                "data" => $stocks,
+                "data" => [],
             ]);
         }
         return view('pages.stocks.index', [
