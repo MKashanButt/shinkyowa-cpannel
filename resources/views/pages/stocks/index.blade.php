@@ -48,7 +48,7 @@
                             @else
                                 <td>{{ $count++ }}.</td>
                             @endif
-                            <td><img src="{{ $item['thumbnail'] }}" alt=""
+                            <td><img src="{{ asset('storage/' . $item['thumbnail']) }}" alt=""
                                     onerror="this.src='https://placehold.co/200x100'"></td>
                             <td>{{ $item['stock_id'] }}</td>
                             <td>{{ $item['chassis'] }}</td>
