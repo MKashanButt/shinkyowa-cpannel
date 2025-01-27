@@ -130,7 +130,15 @@
             </div>
             <div class="item">
                 <label for="status">Status:</label>
-                <input type="text" id="status" name="status" value="{{ isset($data) ? $data['status'] : '' }}">
+                <select name="status" id="status">
+                    @if (isset($data))
+                        <option value="{{ $data['status'] }}" selected>{{ $data['status'] }}</option>
+                    @else
+                        <option value="" disabled selected>Select Status</option>
+                    @endif
+                    <option value="available">Available</option>
+                    <option value="reserved">Reserved</option>
+                </select>
             </div>
             <div class="item" style="align-items: baseline">
                 <label for="currency">Currency:</label>
