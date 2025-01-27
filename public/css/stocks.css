@@ -49,6 +49,10 @@
     padding: 0.5% 1%;
 }
 
+.stocks table td img {
+    width: 150px;
+}
+
 .stocks table .image {
     width: 250px;
 }
