@@ -91,3 +91,18 @@ form .primary:hover {
     border-radius: 10px 10px 0 0;
     border: 1px solid var(--blue) !important;
 }
+
+.item .stage {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    user-select: none;
+}
+
+.item .stage .field {
+    width: 49%;
+}
+
+.item .stage .field input {
+    width: 10px;
+}
