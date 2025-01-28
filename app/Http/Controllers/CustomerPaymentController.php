@@ -31,7 +31,7 @@ class CustomerPaymentController extends Controller
         $customer_payment = new CustomerPayments;
         $customer_payment->stock_id = $request->input('stockId');
         $customer_payment->description = $request->input('description');
-        $customer_payment->customer_email = $request->input('cemail');
+        $customer_payment->customer_email = $request->input('customer_email');
         $customer_payment->payment_date = $request->input('paymentDate');
         $customer_payment->in_usd = $USD_FILTERED_AMMOUNT;
         $customer_payment->in_yen = $YEN_FILTERED_AMMOUNT;
@@ -39,9 +39,9 @@ class CustomerPaymentController extends Controller
 
         $customer_payment->save();
 
-        $customerData = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
+        $customerData = CustomerAccounts::where('customer_email', $request->input('customer_email'))->first();
 
-        CustomerAccounts::where('customer_email', $request->input('cemail'))->update([
+        CustomerAccounts::where('customer_email', $request->input('customer_email'))->update([
             "deposit" =>  $customerData->deposit + $USD_FILTERED_AMMOUNT,
         ]);
 
