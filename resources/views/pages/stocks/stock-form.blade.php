@@ -154,7 +154,7 @@
                     <option value="$">$</option>
                 </select>
             </div>
-            <div class="item features" style="align-items: baseline">
+            {{-- <div class="item features" style="align-items: baseline">
                 <label for="features">Features:</label>
                 @if (isset($data))
                     <div class="content">
@@ -167,8 +167,153 @@
                         <trix-editor toolbar="my_toolbar" input="features" id="editor"></trix-editor>
                     </div>
                 @endif
+            </div> --}}
+            <div class="item features" style="align-items: baseline">
+                <label for="features">Features:</label>
+                <div class="stage">
+                    <div class="field">
+                        <input type="checkbox" name="cd_player" id="cd_player">
+                        <label for="cd_player">CD Player</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="sun_roof" id="sun_roof">
+                        <label for="sun_roof">Sun Roof</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="leather_seat" id="leather_seat">
+                        <label for="leather_seat">Leather Seat</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="alloy_wheels" id="alloy_wheels">
+                        <label for="alloy_wheels">Alloy Wheels</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="power_steering" id="power_steering">
+                        <label for="power_steering">Power Steering</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="power_window" id="power_window">
+                        <label for="power_window">Power Window</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="a_c" id="a_c">
+                        <label for="a_c">A/C</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="abs" id="abs">
+                        <label for="abs">ABS</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="airbag" id="airbag">
+                        <label for="airbag">Airbag</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="radio" id="radio">
+                        <label for="radio">Radio</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="cd_changer" id="cd_changer">
+                        <label for="cd_changer">CD Changer</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="dvd" id="dvd">
+                        <label for="dvd">DVD</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="tv" id="tv">
+                        <label for="tv">TV</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="power_seat" id="power_seat">
+                        <label for="power_seat">Power Seat</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="back_tire" id="back_tire">
+                        <label for="back_tire">Back Tire</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="grill_guard" id="grill_guard">
+                        <label for="grill_guard">Grill Guard</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="rear_spoiler" id="rear_spoiler">
+                        <label for="rear_spoiler">Rear Spoiler</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="central_locking" id="central_locking">
+                        <label for="central_locking">Central Locking</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="jack" id="jack">
+                        <label for="jack">Jack</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="spare_tire" id="spare_tire">
+                        <label for="spare_tire">Spare Tire</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="wheel_spanner" id="wheel_spanner">
+                        <label for="wheel_spanner">Wheel Spanner</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="fog_lights" id="fog_lights">
+                        <label for="fog_lights">Fog Lights</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="back_camera" id="back_camera">
+                        <label for="back_camera">Back Camera</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="push_start" id="push_start">
+                        <label for="push_start">Push Start</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="keyless_entry" id="keyless_entry">
+                        <label for="keyless_entry">Keyless Entry</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="esc" id="esc">
+                        <label for="esc">ESC</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="360_degree_camera" id="360_degree_camera">
+                        <label for="360_degree_camera">360 Degree Camera</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="body_kit" id="body_kit">
+                        <label for="body_kit">Body Kit</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="side_airbag" id="side_airbag">
+                        <label for="side_airbag">Side Airbag</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="power_mirror" id="power_mirror">
+                        <label for="power_mirror">Power Mirror</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="side_skirts" id="side_skirts">
+                        <label for="side_skirts">Side Skirts</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="front_lip_spoiler" id="front_lip_spoiler">
+                        <label for="front_lip_spoiler">Front Lip Spoiler</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="navigation" id="navigation">
+                        <label for="navigation">Navigation</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="turbo" id="turbo">
+                        <label for="turbo">Turbo</label>
+                    </div>
+                    <div class="field">
+                        <input type="checkbox" name="power_slide_door" id="power_slide_door">
+                        <label for="power_slide_door">Power Slide Door</label>
+                    </div>
+                </div>
             </div>
-            <input type="hidden" id="features" name="features" />
+            {{-- <input type="hidden" id="features" name="features" /> --}}
             <button class="primary">Add</button>
         </form>
     </div>
