@@ -59,6 +59,14 @@ class StocksController extends Controller
     public function store(Request $request)
     {
         try {
+            $requestData = $request->all();
+
+            $checkboxes = array_filter($requestData, function ($value, $key) {
+                return $value === "on";
+            }, ARRAY_FILTER_USE_BOTH);
+
+            $checkboxNames = array_keys($checkboxes);
+
             $request->validate([
                 'stock_id' => 'required|string|unique:stocks,stock_id',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -77,7 +85,6 @@ class StocksController extends Controller
                 'category' => 'nullable|string|max:255',
                 'status' => 'nullable|string|max:255',
                 'currency' => 'nullable|string|max:10',
-                'features' => 'nullable|string',
             ]);
 
             DB::beginTransaction();
@@ -103,7 +110,7 @@ class StocksController extends Controller
                 'category' => $request->input('category'),
                 'status' => $request->input('status'),
                 'currency' => $request->input('currency'),
-                'features' => $request->input('features'),
+                'features' => $checkboxNames,
             ]);
 
             DB::commit();
