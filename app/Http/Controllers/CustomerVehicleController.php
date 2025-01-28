@@ -87,7 +87,7 @@ class CustomerVehicleController extends Controller
         $customerVehicles->chassis = $request->input('chassis');
         $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
         $customerVehicles->amount = $FILTERED_AMMOUNT;
-        $customerVehicles->customer_email = $request->input('cemail');
+        $customerVehicles->customer_email = $request->input('customer_email');
         $customerVehicles->status = $request->input('status');
 
         $customerVehicles->save();
@@ -95,11 +95,11 @@ class CustomerVehicleController extends Controller
         $stocks = Stocks::where('stock_id', $request->input('stockId'))->first();
         if ($stocks) {
             $stocks->status = 'reserved';
-            $stocks->customer_email = $request->input('cemail');
+            $stocks->customer_email = $request->input('customer_email');
             $stocks->save();
         }
 
-        $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
+        $customerAccount = CustomerAccounts::where('customer_email', $request->input('customer_email'))->first();
         $customerBuying = $customerAccount->buying;
         if ($customerAccount) {
             $customerAccount->buying = (int) $customerBuying + (int) $FILTERED_AMMOUNT;
