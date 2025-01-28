@@ -17,7 +17,9 @@ class TTController extends Controller
         if (Auth::user()->role == 'admin') {
             $records = TTUploaded::where('viewed', false)->get();
         } else {
-            $records = TTUploaded::where('viewed', false, 'and', 'agent', '=', Auth::user()->name)->get();
+            $records = TTUploaded::where('viewed', false)
+                ->where('agent', Auth::user()->name)
+                ->get();
         }
 
         return view('pages.recently-added-tts.index', [
