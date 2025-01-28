@@ -32,5 +32,6 @@ class Stocks extends Model
 
     protected $casts = [
         'stock_images' => 'array',
+        'features' => 'array',
     ];
 }
