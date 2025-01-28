@@ -81,6 +81,7 @@
     padding: 10px 0;
     align-items: center;
     position: relative;
+    cursor: pointer;
 }
 
 .topbar .account .options ul li .icon {
