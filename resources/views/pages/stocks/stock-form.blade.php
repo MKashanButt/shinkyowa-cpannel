@@ -16,31 +16,35 @@
             </div>
             <div class="item">
                 <label for="thumbnail">Thumbnail:</label>
-                <input type="file" id="thumbnail" name="thumbnail">
+                <input type="file" id="thumbnail" name="thumbnail" required>
             </div>
             <div class="item">
                 <label for="images">Images:</label>
-                <input type="file" id="images" name="images[]" multiple>
+                <input type="file" id="images" name="images[]" multiple required>
             </div>
             <div class="item">
                 <label for="make">Make:</label>
-                <input type="text" id="make" name="make" value="{{ isset($data) ? $data['make'] : '' }}">
+                <input type="text" id="make" name="make" value="{{ isset($data) ? $data['make'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="model">Model:</label>
-                <input type="text" id="model" name="model" value="{{ isset($data) ? $data['model'] : '' }}">
+                <input type="text" id="model" name="model" value="{{ isset($data) ? $data['model'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="year">Year:</label>
-                <input type="text" id="year" name="year" value="{{ isset($data) ? $data['year'] : '' }}">
+                <input type="text" id="year" name="year" value="{{ isset($data) ? $data['year'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="chassis">Chassis:</label>
-                <input type="text" id="chassis" name="chassis" value="{{ isset($data) ? $data['chassis'] : '' }}">
+                <input type="text" id="chassis" name="chassis" value="{{ isset($data) ? $data['chassis'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="body_type">Body Type:</label>
-                <select name="body_type" id="body_type">
+                <select name="body_type" id="body_type" required>
                     @if (isset($data))
                         <option value="{{ $data['body_type'] }}" selected>{{ $data['body_type'] }}</option>
                     @else
@@ -59,7 +63,7 @@
             </div>
             <div class="item">
                 <label for="fuel">Fuel:</label>
-                <select name="fuel" id="fuel">
+                <select name="fuel" id="fuel" required>
                     @if (isset($data))
                         <option value="{{ $data['fuel'] }}" selected>{{ $data['fuel'] }}</option>
                     @else
@@ -72,11 +76,12 @@
             </div>
             <div class="item">
                 <label for="mileage">Mileage:</label>
-                <input type="text" id="mileage" name="mileage" value="{{ isset($data) ? $data['mileage'] : '' }}">
+                <input type="text" id="mileage" name="mileage" value="{{ isset($data) ? $data['mileage'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="transmission">Transmission:</label>
-                <select name="transmission" id="transmission">
+                <select name="transmission" id="transmission" required>
                     @if (isset($data))
                         <option value="{{ $data['transmission'] }}" selected>{{ $data['transmission'] }}</option>
                     @else
@@ -88,11 +93,12 @@
             </div>
             <div class="item">
                 <label for="doors">Doors:</label>
-                <input type="text" id="doors" name="doors" value="{{ isset($data) ? $data['doors'] : '' }}">
+                <input type="text" id="doors" name="doors" value="{{ isset($data) ? $data['doors'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="country">Country:</label>
-                <select name="country" id="country">
+                <select name="country" id="country" required>
                     @if (isset($data))
                         <option value="{{ $data['country'] }}" selected>{{ $data['country'] }}</option>
                     @else
@@ -112,11 +118,12 @@
             </div>
             <div class="item">
                 <label for="fob">Fob:</label>
-                <input type="text" id="fob" name="fob" value="{{ isset($data) ? $data['fob'] : '' }}">
+                <input type="text" id="fob" name="fob" value="{{ isset($data) ? $data['fob'] : '' }}"
+                    required>
             </div>
             <div class="item">
                 <label for="category">Category:</label>
-                <select name="category" id="category">
+                <select name="category" id="category" required>
                     @if (isset($data))
                         <option value="{{ $data['category'] }}" selected>{{ $data['category'] }}</option>
                     @else
@@ -130,7 +137,7 @@
             </div>
             <div class="item">
                 <label for="status">Status:</label>
-                <select name="status" id="status">
+                <select name="status" id="status" required>
                     @if (isset($data))
                         <option value="{{ $data['status'] }}" selected>{{ $data['status'] }}</option>
                     @else
@@ -142,7 +149,7 @@
             </div>
             <div class="item" style="align-items: baseline">
                 <label for="currency">Currency:</label>
-                <select name="currency" id="currency">
+                <select name="currency" id="currency" required>
                     @if (isset($data))
                         <option value="{{ $data['currency'] }}" selected>{{ $data['currency'] }}</option>
                     @else
