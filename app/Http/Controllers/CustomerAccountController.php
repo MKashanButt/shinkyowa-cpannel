@@ -143,7 +143,7 @@ class CustomerAccountController extends Controller
         ]);
     }
 
-    public function udpate(Request $request)
+    public function update(Request $request)
     {
         $customerAccount = CustomerAccounts::where('customer_id', $request->input('cid'))->first();
 
