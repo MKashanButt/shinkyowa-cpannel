@@ -111,11 +111,11 @@ class CustomerVehicleController extends Controller
 
     public function findImages($stockid)
     {
-        $stock = Stocks::where('stock_id', $stockid)->pluck('stock_images');
+        $stock = json_decode(Stocks::where('stock_id', $stockid)->pluck('stock_images'));
 
         return view('pages.customer-account.vehicle-images', [
             "title" => $stockid . " | Vehicle Images",
-            "images" => explode(',', $stock[0]),
+            "images" => $stock,
             "stylesheet" => 'single-customer-account.css',
         ]);
     }
