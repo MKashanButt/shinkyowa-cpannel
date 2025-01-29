@@ -52,6 +52,10 @@
     font-weight: bold;
 }
 
+.dashboard .counter .item .lastCustomerAdded {
+    font-size: 20px;
+    text-transform: uppercase
+}
 
 .stocks table {
     width: 100%;
