@@ -115,7 +115,7 @@ class CustomerVehicleController extends Controller
 
         return view('pages.customer-account.vehicle-images', [
             "title" => $stockid . " | Vehicle Images",
-            "images" => $stock,
+            "images" => $stock[0],
             "stylesheet" => 'single-customer-account.css',
         ]);
     }
