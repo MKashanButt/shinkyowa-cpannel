@@ -3,7 +3,7 @@
     <x-breadcrumbs :page="'Sale'" :subpage="'Images'" />
     <div class="imageContent">
         @foreach ($images as $image)
-            <img src="{{ asset('public/' . $image) }}" alt="" class="vehicle-image">
+            <img src="{{ asset('storage/' . $image) }}" alt="" class="vehicle-image">
         @endforeach
     </div>
 
