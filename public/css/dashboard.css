@@ -22,6 +22,13 @@
     user-select: none;
 }
 
+.dashboard .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 40px 0;
+}
+
 .dashboard .counter .item h1 {
     font-size: 50px;
     display: flex;
@@ -32,8 +39,10 @@
     width: 40px;
 }
 
-.dashboard .counter .item img {
+.dashboard .counter .item img,
+.dashboard .counter .item .file_icon {
     width: 50px;
+    height: auto;
     margin: auto;
 }
 
@@ -41,4 +50,350 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
+}
+
+
+.stocks table {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.stocks table thead {
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+.stocks table th,
+.stocks table td {
+    font-size: 13px;
+    padding: 1%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.stocks table td {
+    padding: 0.5% 1%;
+}
+
+.stocks table td img {
+    width: 150px;
+}
+
+.stocks table .image {
+    width: 250px;
+}
+
+.stocks table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.stocks table th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.stocks table th {
+    width: min-content;
+    background-color: var(--blue);
+    color: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.stocks table td {
+    width: min-content;
+}
+
+.stocks table th:first-child {
+    border: none;
+}
+
+.stocks table td:first-child {
+    border-left: none;
+}
+
+.stocks table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.stocks table button {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
+}
+
+.stocks table button:hover {
+    filter: brightness(0.9);
+}
+
+.stocks table .agent-btn {
+    background-color: var(--primary);
+}
+
+.stocks table .account-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.stocks table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.stocks table .body_container {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.stocks tfoot .total-row {
+    box-shadow: none !important;
+}
+
+.stocks tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
+}
+
+.stocks tfoot td {
+    border-bottom: 0;
+}
+
+.main-customer-accounts {
+    width: 100%;
+    margin: 20px auto;
+}
+
+.main-customer-accounts .container {
+    width: 98%;
+    height: 62vh;
+    margin: 10px auto;
+}
+
+.main-customer-accounts table {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.main-customer-accounts table thead {
+    margin-bottom: 10px;
+}
+
+.main-customer-accounts table th,
+.main-customer-accounts table td {
+    font-size: 13px;
+    padding: 1%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.main-customer-accounts table td {
+    padding: 0.5% 1%;
+}
+
+.main-customer-accounts table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.main-customer-accounts table th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.main-customer-accounts table th {
+    width: min-content;
+    background-color: var(--blue);
+    color: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.main-customer-accounts table td {
+    width: min-content;
+}
+
+.main-customer-accounts table th:first-child {
+    border: none;
+}
+
+.main-customer-accounts table td:first-child {
+    border-left: none;
+}
+
+.main-customer-accounts table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.main-customer-accounts table button {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
+}
+
+.main-customer-accounts table button:hover {
+    filter: brightness(0.9);
+}
+
+.main-customer-accounts table .agent-btn {
+    background-color: var(--primary);
+}
+
+.main-customer-accounts table .account-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.main-customer-accounts table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.main-customer-accounts table .body_container {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.main-customer-accounts tfoot .total-row {
+    box-shadow: none !important;
+}
+
+.main-customer-accounts tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
+}
+
+
+.customer-vehicle {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.customer-vehicle thead {
+    margin-bottom: 10px;
+}
+
+.customer-vehicle th,
+.customer-vehicle td {
+    font-size: 13px;
+    padding: 1%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.customer-vehicle td {
+    padding: 0.5% 1%;
+}
+
+.customer-vehicle th {
+    width: min-content;
+    background-color: var(--blue);
+    color: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+    border-top: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.customer-vehicle td {
+    width: min-content;
+}
+
+.customer-vehicle th:first-child {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.35);
+    border-top-left-radius: 25px;
+}
+
+.customer-vehicle th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.customer-vehicle td:first-child {
+    border-left: none;
+}
+
+.customer-vehicle td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.customer-vehicle button {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
+}
+
+.customer-vehicle button:hover {
+    filter: brightness(0.9);
+}
+
+.customer-vehicle .docs-btn {
+    background-color: var(--primary);
+}
+
+.customer-vehicle .image-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.customer-vehicle .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.customer-vehicle .body_container {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.customer-vehicle tfoot .total-row {
+    box-shadow: none !important;
+}
+
+.customer-vehicle tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
 }
