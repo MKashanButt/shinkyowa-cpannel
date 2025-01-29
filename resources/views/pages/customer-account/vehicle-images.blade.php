@@ -3,7 +3,7 @@
     <x-breadcrumbs :page="'Sale'" :subpage="'Images'" />
     <div class="imageContent">
         @foreach ($images as $image)
-            <img src="{{ env('VEHICLE_IMG_API') . trim($image, '[]"\/') }}" alt="" class="vehicle-image">
+            <img src="{{ env('VEHICLE_IMG_API') . $image }}" alt="" class="vehicle-image">
         @endforeach
     </div>
 
