@@ -2,6 +2,7 @@
 @section('content')
     <x-breadcrumbs :page="'Sale'" :subpage="'Images'" />
     <div class="imageContent">
+        @dd($images)
         @foreach ($images as $image)
             <img src="{{ env('VEHICLE_IMG_API') . $image }}" alt="" class="vehicle-image">
         @endforeach
