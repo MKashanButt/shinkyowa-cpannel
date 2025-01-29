@@ -78,7 +78,26 @@
             </div>
             <div class="item">
                 <label for="cdescription">Agent:</label>
-                <input type="text" name="agent" id="agent" value="{{ Auth::user()->name }}" readonly>
+                @if (Auth::user()->role == 'admin')
+                    <select name="agent" id="agent">
+                        @if (isset($customerAccount))
+                            <option value="{{ $customerAccount->agent }}" selected>{{ $customerAccount->agent }}</option>
+                            @foreach ($agents as $agent)
+                                @if ($customerAccount->agent != $agent->name)
+                                    <option value="{{ $agent->name }}">{{ $agent->name }}</option>
+                                @endif
+                            @endforeach
+                        @else
+                            <option value="" selected disabled>Select Agent</option>
+                            @foreach ($agents as $agent)
+                                <option value="{{ $agent->name }}">{{ $agent->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                @else
+                    <input type="text" name="agent" id="agent"
+                        value="{{ isset($customerAccount) ? $customerAccount->agent : Auth::user()->name }}"" readonly>
+                @endif
             </div>
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
