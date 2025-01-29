@@ -53,42 +53,24 @@ class CustomerAccountController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            // Admin can view all customer accounts
             $customerAccounts = CustomerAccounts::orderBy('id', 'DESC')->paginate(6);
         } elseif (Auth::user()->role == 'operational manager') {
-            // Get the current user's name
             $user_account = Auth::user()->name;
-
-            // Fetch agents other than the current user
             $users = User::where('name', '!=', $user_account)->pluck('name');
-
-            // Include the current user in the agent filter
             $agents = $users->push($user_account);
-
-            // Filter customer accounts by agents and paginate
             $customerAccounts = CustomerAccounts::whereIn('agent', $agents)->orderBy('id', 'DESC')->paginate(6);
         } elseif (Auth::user()->role == 'manager') {
-            // Get the current user's name
             $user_account = Auth::user()->name;
-
-            // Fetch agents assigned to the manager
             $users = User::where('manager', $user_account)->pluck('name');
-
-            // Include the current user in the agent filter
             $agents = $users->push($user_account);
-
-            // Filter customer accounts by agents and paginate
             $customerAccounts = CustomerAccounts::whereIn('agent', $agents)->orderBy('id', 'DESC')->paginate(6);
         } else {
-            // Default case: restrict to accounts managed by the current user
             $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->paginate(6);
         }
 
-        // Calculate totals
         $buying = $customerAccounts->sum('buying');
         $deposit = $customerAccounts->sum('deposit');
 
-        // Return the view with data
         return view('pages.customer-account.index', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
@@ -123,23 +105,30 @@ class CustomerAccountController extends Controller
     {
         $customerAccount = CustomerAccounts::where('customer_id', $id)->first();
 
+        $agents = User::whereIn('role', ['agent', 'manager'])
+            ->get();
+
         return view('pages.customer-account.add-account', [
             "title" => $customerAccount["customer_name"] . ' | Customer Account',
             "stylesheet" => "add-customer.css",
             "customerAccount" => $customerAccount,
             "id" => $customerAccount->customer_id,
-            "actionUrl" => "/customer-account/update"
+            "actionUrl" => "/customer-account/update",
+            "agents" => $agents
         ]);
     }
 
     public function render_form()
     {
         $id = $this->generateId();
+        $agents = User::whereIn('role', ['agent', 'manager'])
+            ->get();
         return view('pages.customer-account.add-account', [
             "title" => "Add Customer Customer",
             "stylesheet" => "add-customer.css",
             "id" => $id,
-            "actionUrl" => "/add-customer/post"
+            "actionUrl" => "/add-customer/post",
+            "agents" => $agents
         ]);
     }
 
