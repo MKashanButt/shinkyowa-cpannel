@@ -83,7 +83,7 @@ class CustomerAccountController extends Controller
                 "totalStock" => $totalStock,
                 "totalDealers" => $totalDealers,
                 "totalCarsSold" => $totalCarsSold,
-                "lastTTCopyUploaded" => $lastTTCopyUploaded->tt_copy,
+                "lastTTCopyUploaded" => $lastTTCopyUploaded ? $lastTTCopyUploaded->tt_copy : null,
                 "lastCustomerAdded" => $lastCustomerAdded->customer_name,
             ];
 
