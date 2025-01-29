@@ -27,9 +27,6 @@
                         Dashboard
                     </li>
                 </a>
-                {{-- <a href="/customer-account">
-                <li>Company Accounts</li>
-            </a> --}}
                 @if (Auth::user()->role != 'doc_uploader')
                     <a href="/customer-account">
                         <li class="{{ Request::is('customer-account') ? 'active-url' : '' }}">
@@ -58,7 +55,6 @@
                         </li>
                     </a>
                 @endif
-                {{-- @if (Auth::user()->role == 'agent' || Auth::user()->role == 'manager') --}}
                 @if (Auth::user()->role != 'doc_uploader')
                     <div x-data='{open: false, active: false}' x-cloak>
                         <li @click="open = !open; active = !active" @click.outside="open = false; active = false"
@@ -134,7 +130,7 @@
                         </div>
                     </div>
                 @endif
-                @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
+                @if (Auth::user()->role != 'doc_uploader')
                     <a href="/stocks">
                         <li class="{{ Request::is('stocks') ? 'active-url' : '' }}" @click="closed=false">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
