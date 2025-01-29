@@ -247,7 +247,7 @@
                             <tr class="total-row">
                                 <td></td>
                                 <td></td>
-                                <td>Total:</td>
+                                <td>Total</td>
                                 <td>
                                     {{ '$' . number_format($buying) }}
                                 </td>
