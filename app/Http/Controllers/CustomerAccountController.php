@@ -31,22 +31,94 @@ class CustomerAccountController extends Controller
 
     public function dashboard()
     {
-        $stockCount = Stocks::count();
-        $userCount = User::count();
-        $recentTT = TTUploaded::orderBy('id', 'desc')->first();
+        $data = [];
+        if (Auth::user()->role == 'admin') {
+            $stockCount = Stocks::count();
+            $userCount = User::count();
+            $recentTT = TTUploaded::orderBy('id', 'desc')->first();
 
-        $ttCopy = $recentTT ? $recentTT->tt_copy : null;
+            $ttCopy = $recentTT ? $recentTT->tt_copy : null;
 
-        $data = [
-            "stockCount" => $stockCount,
-            "userCount" => $userCount,
-            "recentTT" => $ttCopy
-        ];
+            $data = [
+                "stockCount" => $stockCount,
+                "userCount" => $userCount,
+                "recentTT" => $ttCopy
+            ];
+
+            $dealers = CustomerAccounts::orderBy('id', 'DESC')->paginate(6);
+
+            $buying = collect($dealers->items())->sum('buying');
+            $deposit = collect($dealers->items())->sum('deposit');
+
+            $vehicles = CustomerVehicles::orderBy('id', 'DESC')->get();
+
+            $cnf = $vehicles->sum('cnf');
+            $payment = $vehicles->sum('payment');
+
+            $newVehicles = [];
+
+            foreach ($dealers as $dealer) {
+                foreach ($vehicles as $vehicle) {
+                    if ($dealer->customer_email == $vehicle->customer_email) {
+                        $newVehicles[] = array_merge($vehicle->toArray(), ["currency" => $dealer->currency]);
+                    }
+                }
+            }
+        }
+        if (Auth::user()->role == 'agent') {
+            $totalStock = Stocks::count();
+            $totalDealers = CustomerAccounts::where('agent', Auth::user()->name)->count();
+            $customerEmails = CustomerAccounts::where('agent', Auth::user()->name)->pluck('customer_email');
+            $totalCarsSold = CustomerVehicles::whereIn('customer_email', $customerEmails)
+                ->whereRaw('amount - payment <= 0')
+                ->count();
+            $lastTTCopyUploaded = TTUploaded::where('agent', Auth::user()->name)
+                ->orderBy('id', 'DESC')
+                ->first(['tt_copy']);
+            $lastCustomerAdded = CustomerAccounts::where('agent', Auth::user()->name)
+                ->orderBy('id', 'DESC')
+                ->first(['customer_name']);
+
+            $data = [
+                "totalStock" => $totalStock,
+                "totalDealers" => $totalDealers,
+                "totalCarsSold" => $totalCarsSold,
+                "lastTTCopyUploaded" => $lastTTCopyUploaded,
+                "lastCustomerAdded" => $lastCustomerAdded,
+            ];
+
+            $dealers = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->paginate(6);
+            $buying = collect($dealers->items())->sum('buying');
+            $deposit = collect($dealers->items())->sum('deposit');
+            $customers = CustomerAccounts::where('agent', Auth::user()->name)->pluck('customer_email');
+            $vehicles = CustomerVehicles::whereIn('customer_email', $customers)->orderBy('id', 'DESC')->get();
+            $cnf = $vehicles->sum('cnf');
+            $payment = $vehicles->sum('payment');
+
+            $newVehicles = [];
+
+            foreach ($dealers as $dealer) {
+                foreach ($vehicles as $vehicle) {
+                    if ($dealer->customer_email == $vehicle->customer_email) {
+                        $newVehicles[] = array_merge($vehicle->toArray(), ["currency" => $dealer->currency]);
+                    }
+                }
+            }
+        }
+
+        $stocks = Stocks::paginate(5)->onEachSide(1);
 
         return view('pages.index', [
             "title" => "Dashboard",
             "stylesheet" => "dashboard.css",
             "data" => $data,
+            "stocks" => $stocks,
+            "dealers" => $dealers,
+            "buying" => $buying,
+            "deposit" => $deposit,
+            "newVehicles" => $newVehicles,
+            "cnf" => $cnf,
+            "payment" => $payment,
         ]);
     }
 
