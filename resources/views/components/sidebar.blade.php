@@ -198,7 +198,6 @@
                         </svg>
                     </li>
                 @endif
-                {{-- @if (Auth::user()->role == 'agent' || Auth::user()->role == 'manager') --}}
                 @if (Auth::user()->role != 'doc_uploader')
                     <li @click="closed=false">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
