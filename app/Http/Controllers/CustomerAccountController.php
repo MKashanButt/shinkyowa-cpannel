@@ -83,8 +83,8 @@ class CustomerAccountController extends Controller
                 "totalStock" => $totalStock,
                 "totalDealers" => $totalDealers,
                 "totalCarsSold" => $totalCarsSold,
-                "lastTTCopyUploaded" => $lastTTCopyUploaded,
-                "lastCustomerAdded" => $lastCustomerAdded,
+                "lastTTCopyUploaded" => $lastTTCopyUploaded->tt_copy,
+                "lastCustomerAdded" => $lastCustomerAdded->customer_name,
             ];
 
             $dealers = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->paginate(6);
