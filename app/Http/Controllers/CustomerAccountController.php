@@ -52,7 +52,7 @@ class CustomerAccountController extends Controller
 
             $vehicles = CustomerVehicles::orderBy('id', 'DESC')->get();
 
-            $cnf = $vehicles->sum('cnf');
+            $cnf = $vehicles->sum('amount');
             $payment = $vehicles->sum('payment');
 
             $newVehicles = [];
@@ -92,7 +92,7 @@ class CustomerAccountController extends Controller
             $deposit = collect($dealers->items())->sum('deposit');
             $customers = CustomerAccounts::where('agent', Auth::user()->name)->pluck('customer_email');
             $vehicles = CustomerVehicles::whereIn('customer_email', $customers)->orderBy('id', 'DESC')->get();
-            $cnf = $vehicles->sum('cnf');
+            $cnf = $vehicles->sum('amount');
             $payment = $vehicles->sum('payment');
 
             $newVehicles = [];
