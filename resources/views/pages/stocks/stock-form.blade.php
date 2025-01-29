@@ -24,8 +24,29 @@
             </div>
             <div class="item">
                 <label for="make">Make:</label>
-                <input type="text" id="make" name="make" value="{{ isset($data) ? $data['make'] : '' }}"
-                    required>
+                <select name="make" id="make" required>
+                    @if (isset($data))
+                        <option value="{{ $data['make'] }}" selected>{{ $data['make'] }}</option>
+                    @else
+                        <option value="" disabled selected>Select Body Type</option>
+                    @endif
+                    <option value="toyota">Toyota</option>
+                    <option value="nissan">Nissan</option>
+                    <option value="mazda">Mazda</option>
+                    <option value="mitsubishi">Mitsubishi</option>
+                    <option value="honda">Honda</option>
+                    <option value="suzuki">Suzuki</option>
+                    <option value="subaru">Subaru</option>
+                    <option value="isuzu">Isuzu</option>
+                    <option value="daihatsu">Daihatsu</option>
+                    <option value="mitsuoka">Mitsuoka</option>
+                    <option value="lexus">Lexus</option>
+                    <option value="bmw">BMW</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                    <option value="hino">Hino</option>
+                    <option value="volkswagen">Volkswagen</option>
+                </select>
             </div>
             <div class="item">
                 <label for="model">Model:</label>
@@ -161,20 +182,6 @@
                     <option value="$">$</option>
                 </select>
             </div>
-            {{-- <div class="item features" style="align-items: baseline">
-                <label for="features">Features:</label>
-                @if (isset($data))
-                    <div class="content">
-                        <trix-toolbar id="my_toolbar"></trix-toolbar>
-                        <trix-editor toolbar="my_toolbar" input="features">{!! $data['features'] !!}</trix-editor>
-                    </div>
-                @else
-                    <div class="content">
-                        <trix-toolbar id="my_toolbar" class="ql-toolbar"></trix-toolbar>
-                        <trix-editor toolbar="my_toolbar" input="features" id="editor"></trix-editor>
-                    </div>
-                @endif
-            </div> --}}
             <div class="item features" style="align-items: baseline">
                 <label for="features">Features:</label>
                 <div class="stage">
@@ -320,7 +327,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <input type="hidden" id="features" name="features" /> --}}
             <button class="primary">Add</button>
         </form>
     </div>
