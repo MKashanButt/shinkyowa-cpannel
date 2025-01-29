@@ -56,7 +56,7 @@
                 </div>
             </div>
         @endif
-        @if (Auth::user()->role == 'agent')
+        @if (Auth::user()->role != 'manager')
             <div class="counter">
                 <div class="item">
                     <h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
