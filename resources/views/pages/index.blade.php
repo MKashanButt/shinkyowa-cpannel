@@ -164,7 +164,7 @@
                                             <a href="/stocks/edit/{{ $item['id'] }}">
                                                 <button class="primary">Edit</button>
                                             </a>
-                                            <a href="/{{ $item['id'] }}">
+                                            <a href="/stocks/destroy/{{ $item['id'] }}">
                                                 <button class="danger">Delete</button>
                                             </a>
                                         @endif
