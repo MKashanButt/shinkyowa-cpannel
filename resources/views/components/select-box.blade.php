@@ -3,10 +3,6 @@
     id="{{ $id }}" name="{{ $name }}">
     <option value="" selected>{{ $placeholder }}</option>
     @foreach ($data as $item)
-        @if ($column != 'none')
-            <option value="{{ $item->$column }}">{{ ucwords($item->$column) }}</option>
-        @else
-            <option value="{{ $item }}">{{ ucwords($item) }}</option>
-        @endif
+        <option value="{{ $item }}">{{ ucwords(str_replace('_', ' ', $item)) }}</option>
     @endforeach
 </select>
