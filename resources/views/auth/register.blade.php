@@ -44,7 +44,7 @@
                 id="role" name="role">
                 <option value="" selected>Select Role</option>
                 @foreach ($roles as $item)
-                    <option value="{{ $item }}">{{ ucwords($item) }}</option>
+                    <option value="{{ $item }}">{{ strtoupper(str_replace('_', ' ', $item)) }}</option>
                 @endforeach
             </select>
         </div>
@@ -57,7 +57,7 @@
                 id="manager" name="manager">
                 <option value="" selected>Select Manager</option>
                 @foreach ($managers as $item)
-                    <option value="{{ $item }}">{{ ucwords($item) }}</option>
+                    <option value="{{ $item }}">{{ strtoupper($item) }}</option>
                 @endforeach
             </select>
         </div>
