@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Stocks;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class StocksController extends Controller
 {
@@ -227,12 +229,34 @@ class StocksController extends Controller
         return redirect()->back()->with('success', 'Stock updated successfully!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        try {
+            $stock = Stocks::where('stock_id', $id)->firstOrFail();
+
+            DB::beginTransaction();
+
+            if ($stock->thumbnail) {
+                Storage::delete('public/' . $stock->thumbnail);
+            }
+
+            if (!empty($stock->stock_images)) {
+                foreach ($stock->stock_images as $image) {
+                    Storage::delete('public/' . $image);
+                }
+            }
+
+            $stock->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Stock deleted successfully!');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Stock not found.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Error deleting stock: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to delete stock. Please try again.');
+        }
     }
 }
