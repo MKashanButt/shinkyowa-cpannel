@@ -173,15 +173,6 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    @if ($stocks != [])
-                        <tfoot>
-                            <tr>
-                                <td colspan="10">
-                                    {{ $stocks->links('components.pagination') }}
-                                </td>
-                            </tr>
-                        </tfoot>
-                    @endif
                 </table>
             </div>
             <div class="main-customer-accounts">
@@ -242,6 +233,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                    </tbody>
                     <tfoot>
                         <tr class="total-row">
                             <td></td>
@@ -262,8 +254,6 @@
                             <td></td>
                         </tr>
                     </tfoot>
-                    {{ $dealers->links() }}
-                    </tbody>
                 </table>
             </div>
             <div id="customer-vehicle-tab">
