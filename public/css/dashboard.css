@@ -120,6 +120,10 @@
     border-left: 1px solid rgba(0, 0, 0, 0.35);
 }
 
+.stocks table tr:last-child td {
+    border-bottom: 0;
+}
+
 .stocks table button {
     width: 100%;
     padding: 10px 15px;
