@@ -39,16 +39,27 @@
 
         <div class="mt-4">
             <x-input-label for="role" :value="__('User Role')" />
-
-            <x-select-box :placeholder="'Select Role'" :data="$roles" :id="'role'" :name="'roles'"
-                onchange="toggleManager()" />
+            <select
+                class="block mt-1 w-full p-2 bg-gray-200 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                id="role" name="role">
+                <option value="" selected>Select Role</option>
+                @foreach ($roles as $item)
+                    <option value="{{ $item }}">{{ ucwords($item) }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mt-4 hidden" id="managers">
             <x-input-label for="manager" :value="__('Manager')" />
 
-            <x-select-box :placeholder="'Select Manager'" :data="$managers" :id="'manager'" :name="'manager'"
-                :column="'manager'" />
+            <select
+                class="block mt-1 w-full p-2 bg-gray-200 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                id="manager" name="manager">
+                <option value="" selected>Select Manager</option>
+                @foreach ($managers as $item)
+                    <option value="{{ $item }}">{{ ucwords($item) }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -66,7 +77,7 @@
         document.getElementById('role').addEventListener('change', function() {
             const role = document.getElementById('role').value
             const managerField = document.getElementById('managers')
-            if (role == 'Agent') {
+            if (role == 'agent') {
                 managerField.classList.remove('hidden');
             } else {
                 managerField.classList.add('hidden');
