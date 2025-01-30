@@ -1,0 +1,147 @@
+.inquiries {
+    width: 98%;
+    margin: 20px auto;
+}
+
+.inquiries .header {
+    all: unset;
+    width: 98%;
+    border-radius: 25px;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+    border: 2px solid var(--primary);
+    color: white;
+    font-size: 13px;
+    text-transform: uppercase;
+    transition: 0.2s ease all;
+    cursor: pointer;
+}
+
+.inquiries .header:hover {
+    filter: brightness(0.9);
+}
+
+.inquiries table {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.inquiries table thead {
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+.inquiries table th,
+.inquiries table td {
+    font-size: 13px;
+    padding: 1%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.inquiries table td {
+    padding: 0.5% 1%;
+}
+
+.inquiries table td img {
+    width: 150px;
+}
+
+.inquiries table .image {
+    width: 250px;
+}
+
+.inquiries table th:first-child {
+    border-top-left-radius: 25px;
+}
+
+.inquiries table th:last-child {
+    border-top-right-radius: 25px;
+}
+
+.inquiries table th {
+    width: min-content;
+    background-color: var(--blue);
+    color: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.inquiries table td {
+    width: min-content;
+}
+
+.inquiries table th:first-child {
+    border: none;
+}
+
+.inquiries table td:first-child {
+    border-left: none;
+}
+
+.inquiries table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.inquiries table button {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    margin: auto;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.2s ease all;
+}
+
+.inquiries table button:hover {
+    filter: brightness(0.9);
+}
+
+.inquiries table .agent-btn {
+    background-color: var(--primary);
+}
+
+.inquiries table .account-btn {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.inquiries table .actions .stage {
+    height: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.inquiries table .body_container {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.inquiries tfoot .total-row {
+    box-shadow: none !important;
+}
+
+.inquiries tfoot .total-row td {
+    font-weight: bold;
+    padding: 1% !important;
+    border: none !important;
+}
+
+.inquiries tfoot td {
+    border-bottom: 0;
+}
