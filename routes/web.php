@@ -70,6 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/stocks/add/store', 'store')->name('stocks.store-stock');
         Route::get('/stocks/edit/{id}', 'show')->name('stocks.edit-stock');
         Route::post('/stocks/edit/{id}/update', 'update')->name('stocks.update-stock');
+        Route::post('/stocks/destroy/{id}', 'destroy')->name('stocks.destroy');
     });
 
     Route::controller(TTController::class)->group(function () {
@@ -87,8 +88,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(InquiryController::class)->group(function () {
-        Route::get('/inquiries', 'index');
-        Route::get('/inquiries/destroy/{id}', 'destroy');
+        Route::get('/inquiries', 'index')->name('inquiries');
+        Route::get('/inquiries/destroy/{id}', 'destroy')->name('inquiries.destroy');
     });
 
     Route::controller(ApiController::class)->group(function () {
