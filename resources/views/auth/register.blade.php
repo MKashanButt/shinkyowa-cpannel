@@ -37,11 +37,11 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        {{-- <div class="mt-4">
+        <div class="mt-4">
             <x-input-label for="role" :value="__('User Role')" />
 
             <x-select-box :placeholder="'Select Role'" :data="$roles" :id="'role'" :name="'roles'"
-                onchange="toggleManager()" :column="'role'" />
+                onchange="toggleManager()" />
         </div>
 
         <div class="mt-4 hidden" id="managers">
@@ -49,7 +49,7 @@
 
             <x-select-box :placeholder="'Select Manager'" :data="$managers" :id="'manager'" :name="'manager'"
                 :column="'manager'" />
-        </div> --}}
+        </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
