@@ -105,6 +105,58 @@ class CustomerAccountController extends Controller
                 }
             }
         }
+        if (Auth::user()->role == 'manager') {
+            $totalStock = Stocks::count();
+
+            $teamMembers = User::where('manager', Auth::user()->name)
+                ->orWhere('name', Auth::user()->name)
+                ->pluck('name');
+
+            $totalDealers = CustomerAccounts::whereIn('agent', $teamMembers)
+                ->count();
+
+            $customerEmails = CustomerAccounts::whereIn('agent', $teamMembers)
+                ->pluck('customer_email');
+
+            $totalCarsSold = CustomerVehicles::whereIn('customer_email', $customerEmails)
+                ->whereRaw('amount - payment <= 0')
+                ->count();
+
+            $lastTTCopyUploaded = TTUploaded::whereIn('agent', $teamMembers)
+                ->orderBy('id', 'DESC')
+                ->value('tt_copy');
+
+            $lastCustomerAdded = CustomerAccounts::whereIn('agent', $teamMembers)
+                ->orderBy('id', 'DESC')
+                ->value('customer_name');
+
+
+            $data = [
+                "totalStock" => $totalStock,
+                "totalDealers" => $totalDealers,
+                "totalCarsSold" => $totalCarsSold,
+                "lastTTCopyUploaded" => $lastTTCopyUploaded ? $lastTTCopyUploaded : null,
+                "lastCustomerAdded" => $lastCustomerAdded ? $lastCustomerAdded : 0,
+            ];
+
+            $dealers = CustomerAccounts::whereIn('agent', $teamMembers)->orderBy('id', 'DESC')->paginate(6);
+            $buying = collect($dealers->items())->sum('buying');
+            $deposit = collect($dealers->items())->sum('deposit');
+            $customers = CustomerAccounts::whereIn('agent', $teamMembers)->pluck('customer_email');
+            $vehicles = CustomerVehicles::whereIn('customer_email', $customers)->orderBy('id', 'DESC')->get();
+            $cnf = $vehicles->sum('amount');
+            $payment = $vehicles->sum('payment');
+
+            $newVehicles = [];
+
+            foreach ($dealers as $dealer) {
+                foreach ($vehicles as $vehicle) {
+                    if ($dealer->customer_email == $vehicle->customer_email) {
+                        $newVehicles[] = array_merge($vehicle->toArray(), ["currency" => $dealer->currency]);
+                    }
+                }
+            }
+        }
 
         $stocks = Stocks::paginate(5)->onEachSide(1);
 
