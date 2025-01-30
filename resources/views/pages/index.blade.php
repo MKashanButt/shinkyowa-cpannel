@@ -149,7 +149,7 @@
                                 <td>{{ $item['make'] . '/' . $item['model'] }}</td>
                                 <td>{{ $item['year'] }}</td>
                                 <td>{{ $item['body_type'] }}</td>
-                                <td>{{ $item['currency'] . $item['fob'] }}</td>
+                                <td>{{ $item['currency'] . number_format($item['fob']) }}</td>
                                 <td>
                                     <button
                                         class="{{ $item['status'] == 'reserved' ? 'reserved danger' : 'primary' }}">{{ $item['status'] }}</button>
