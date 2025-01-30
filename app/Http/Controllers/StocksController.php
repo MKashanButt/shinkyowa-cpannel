@@ -106,7 +106,7 @@ class StocksController extends Controller
                 'transmission' => $request->input('transmission'),
                 'doors' => $request->input('doors'),
                 'country' => $request->input('country'),
-                'fob' => $request->input('fob'),
+                'fob' => str_replace(",", "", $request->input('fob')),
                 'category' => $request->input('category'),
                 'status' => $request->input('status'),
                 'currency' => $request->input('currency'),
@@ -203,7 +203,7 @@ class StocksController extends Controller
         $stock->transmission = $request->transmission;
         $stock->doors = $request->doors;
         $stock->country = $request->country;
-        $stock->fob = $request->fob;
+        $stock->fob = str_replace(",", "", $request->input('fob'));
         $stock->category = $request->category;
         $stock->status = $request->status;
         $stock->currency = $request->currency;
