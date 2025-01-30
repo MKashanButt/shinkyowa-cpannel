@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\CustomerVehicleController;
+use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\TTController;
@@ -85,10 +86,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+    Route::controller(InquiryController::class)->group(function () {
+        Route::get('/inquiries', 'index');
+        Route::get('/inquiries/destroy/{id}', 'destroy');
+    });
+
     Route::controller(ApiController::class)->group(function () {
         Route::post('/check-email-availability', 'checkEmailAvailability')->name('check-email-availability');
         Route::get('/find-email', 'findEmail')->name('find-email');
         Route::post('/find-stock-id', 'findStockId')->name('find-stock-id');
+        Route::post('/find-stock-id-present', 'findPresentStockId')->name('find-stock-id');
 
         Route::post('/search/email', 'search')->name('search');
         Route::post('/search/company', 'searchByCompany')->name('search-by-company');
