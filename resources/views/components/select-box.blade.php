@@ -3,6 +3,6 @@
     id="{{ $id }}" name="{{ $name }}">
     <option value="" selected>{{ $placeholder }}</option>
     @foreach ($data as $item)
-        <option value="{{ $item }}">{{ ucwords(str_replace('_', ' ', $item)) }}</option>
+        <option value="{{ $item }}">{{ ucwords($item) }}</option>
     @endforeach
 </select>
