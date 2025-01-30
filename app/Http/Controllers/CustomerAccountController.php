@@ -32,6 +32,7 @@ class CustomerAccountController extends Controller
     public function dashboard()
     {
         $data = [];
+
         if (Auth::user()->role == 'admin') {
             $stockCount = Stocks::count();
             $userCount = User::count();
@@ -45,12 +46,16 @@ class CustomerAccountController extends Controller
                 "recentTT" => $ttCopy
             ];
 
-            $dealers = CustomerAccounts::orderBy('id', 'DESC')->paginate(6);
+            $dealers = CustomerAccounts::orderBy('id', 'DESC')
+                ->limit(6)
+                ->get();
 
-            $buying = collect($dealers->items())->sum('buying');
-            $deposit = collect($dealers->items())->sum('deposit');
+            $buying = $dealers->sum('buying');
+            $deposit = $dealers->sum('deposit');
 
-            $vehicles = CustomerVehicles::orderBy('id', 'DESC')->get();
+            $vehicles = CustomerVehicles::orderBy('id', 'DESC')
+                ->limit(6)
+                ->get();
 
             $cnf = $vehicles->sum('amount');
             $payment = $vehicles->sum('payment');
@@ -87,11 +92,17 @@ class CustomerAccountController extends Controller
                 "lastCustomerAdded" => $lastCustomerAdded ? $lastCustomerAdded->customer_name : 0,
             ];
 
-            $dealers = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->paginate(6);
-            $buying = collect($dealers->items())->sum('buying');
-            $deposit = collect($dealers->items())->sum('deposit');
+            $dealers = CustomerAccounts::where('agent', Auth::user()->name)
+                ->orderBy('id', 'DESC')
+                ->limit(6)
+                ->get();
+            $buying = $dealers->sum('buying');
+            $deposit = $dealers->sum('deposit');
             $customers = CustomerAccounts::where('agent', Auth::user()->name)->pluck('customer_email');
-            $vehicles = CustomerVehicles::whereIn('customer_email', $customers)->orderBy('id', 'DESC')->get();
+            $vehicles = CustomerVehicles::whereIn('customer_email', $customers)
+                ->orderBy('id', 'DESC')
+                ->limit(6)
+                ->get();
             $cnf = $vehicles->sum('amount');
             $payment = $vehicles->sum('payment');
 
@@ -139,11 +150,17 @@ class CustomerAccountController extends Controller
                 "lastCustomerAdded" => $lastCustomerAdded ? $lastCustomerAdded : 0,
             ];
 
-            $dealers = CustomerAccounts::whereIn('agent', $teamMembers)->orderBy('id', 'DESC')->paginate(6);
-            $buying = collect($dealers->items())->sum('buying');
-            $deposit = collect($dealers->items())->sum('deposit');
+            $dealers = CustomerAccounts::whereIn('agent', $teamMembers)
+                ->orderBy('id', 'DESC')
+                ->limit(6)
+                ->get();
+            $buying = $dealers->sum('buying');
+            $deposit = $dealers->sum('deposit');
             $customers = CustomerAccounts::whereIn('agent', $teamMembers)->pluck('customer_email');
-            $vehicles = CustomerVehicles::whereIn('customer_email', $customers)->orderBy('id', 'DESC')->get();
+            $vehicles = CustomerVehicles::whereIn('customer_email', $customers)
+                ->orderBy('id', 'DESC')
+                ->limit(6)
+                ->get();
             $cnf = $vehicles->sum('amount');
             $payment = $vehicles->sum('payment');
 
@@ -158,7 +175,9 @@ class CustomerAccountController extends Controller
             }
         }
 
-        $stocks = Stocks::paginate(5)->onEachSide(1);
+        $stocks = Stocks::orderBy('id', 'DESC')
+            ->limit(6)
+            ->get();
 
         return view('pages.index', [
             "title" => "Dashboard",
