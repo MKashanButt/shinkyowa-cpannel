@@ -30,7 +30,7 @@
                     @else
                         <option value="" disabled selected>Select Body Type</option>
                     @endif
-                    <option value="alfa romeo">Alfa Romeo</option>
+                    <option value="alfa-romeo">Alfa Romeo</option>
                     <option value="toyota">Toyota</option>
                     <option value="nissan">Nissan</option>
                     <option value="mazda">Mazda</option>
