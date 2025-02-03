@@ -153,9 +153,6 @@ class StocksController extends Controller
         return null;
     }
 
-    /**
-     * Handle multiple file uploads.
-     */
     private function uploadMultipleFiles(Request $request, string $fieldName, string $disk): array
     {
         $paths = [];
