@@ -89,7 +89,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(InquiryController::class)->group(function () {
         Route::get('/inquiries', 'index')->name('inquiries');
-        Route::get('/inquiries/destroy/{id}', 'destroy')->name('inquiries.destroy');
+        Route::post('/inquiries/destroy/{id}', 'destroy')->name('inquiries.destroy');
     });
 
     Route::controller(ApiController::class)->group(function () {
