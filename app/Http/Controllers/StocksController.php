@@ -221,7 +221,7 @@ class StocksController extends Controller
             foreach ($request->file('images') as $image) {
                 $imagesPaths[] = $image->store('images', 'public');
             }
-            $stock->images = json_encode($imagesPaths);
+            $stock->stock_images = json_encode($imagesPaths);
         }
 
         $stock->save();
