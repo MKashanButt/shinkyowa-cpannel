@@ -5,10 +5,10 @@
 @extends('template')
 @section('content')
     <section class="single-customer-account">
+        <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
         @if (Auth::user()->role != 'customer')
-            <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
+            <x-customer-options :customeremail="$customerAccount->customer_email" />
         @endif
-        <x-customer-options :customeremail="$customerAccount->customer_email" />
         <div class="tab" x-data='{open: false}' x-cloak>
             <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Customer Info
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
