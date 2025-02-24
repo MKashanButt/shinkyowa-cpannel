@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
         if ($user->role == 'customer') {
             $cid = CustomerAccounts::where('customer_email', $user->email)->first()->customer_id;
-            return redirect()->route('find-customer-account', ['id' => $cid]);
+            return redirect()->route('/customer-account', ['id' => $cid]);
         } else {
             return redirect()->intended(route('dashboard', absolute: false));
         }
