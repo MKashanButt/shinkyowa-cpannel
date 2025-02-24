@@ -38,7 +38,7 @@
                 </p>
             </div>
         </div>
-        <div class="tab ledger" x-data='{open: false}' x-cloak>
+        {{-- <div class="tab ledger" x-data='{open: false}' x-cloak>
             <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Account Ledger
                 <p>
                     <a href="/export-pdf/{{ $customerAccount->customer_id }}">
@@ -81,9 +81,7 @@
                                 </td>
                                 <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
                                 </td>
-                                @if (
-                                    $customerVehicle->amount - $customerVehicle->payment == 0 ||
-                                        $customerVehicle->amount - $customerVehicle->payment < 0)
+                                @if ($customerVehicle->amount - $customerVehicle->payment == 0 || $customerVehicle->amount - $customerVehicle->payment < 0)
                                     <td><button class="done">Cleared</button></td>
                                 @else
                                     <td><button class="progress">Pending</button></td>
@@ -130,7 +128,7 @@
                     </tfoot>
                 </table>
             </div>
-        </div>
+        </div> --}}
         <div class="tab" x-data='{open: false}' x-cloak>
             <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
