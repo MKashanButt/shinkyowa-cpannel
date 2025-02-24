@@ -33,9 +33,7 @@
     <main>
         <x-sidebar />
         <div class="body">
-            @if (Auth::user()->role != 'customer')
-                <x-topbar />
-            @endif
+            <x-topbar />
             @yield('content')
         </div>
     </main>
