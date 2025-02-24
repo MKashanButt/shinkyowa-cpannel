@@ -5,7 +5,7 @@
 @extends('template')
 @section('content')
     <section class="single-customer-account">
-        @if (Auth::user()->role == 'customer')
+        @if (Auth::user()->role != 'customer')
             <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="$customerAccount->customer_name" />
             <x-customer-options :customeremail="$customerAccount->customer_email" />
         @endif
