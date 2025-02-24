@@ -23,7 +23,9 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         if (Auth::user()->role == 'admin') {
-            $roles = ['manager', 'agent', 'doc_uploader', 'stock_uploader'];
+            $roles = ['manager', 'agent', 'doc_uploader', 'stock_uploader', 'customer'];
+        } elseif (Auth::user()->role == 'manager') {
+            $roles = ['customer'];
         }
         $managers = User::where('role', 'manager')->pluck('name');
         return view('auth.register', [
