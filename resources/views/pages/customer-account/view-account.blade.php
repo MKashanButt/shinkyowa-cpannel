@@ -148,7 +148,9 @@
                             <th>Amount</th>
                             <th>Remaining</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role != 'customer')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -174,24 +176,26 @@
                                 @else
                                     <td><button class="progress">Pending</button></td>
                                 @endif
-                                <td class="actions">
-                                    <div class="stage">
-                                        <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button
-                                                class="image-btn">View
-                                                Images</button></a>
-                                        <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button
-                                                class="docs-btn">View
-                                                Docs</button></a>
-                                        @if (Auth::user()->role == 'admin')
-                                            <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
-                                                    class="danger">Delete</button></a>
-                                        @endif
-                                        @if (Auth::user()->role != 'agent')
-                                            <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
-                                                    class="primary">Edit</button></a>
-                                        @endif
-                                    </div>
-                                </td>
+                                @if (Auth::user()->role != 'customer')
+                                    <td class="actions">
+                                        <div class="stage">
+                                            <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button
+                                                    class="image-btn">View
+                                                    Images</button></a>
+                                            <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button
+                                                    class="docs-btn">View
+                                                    Docs</button></a>
+                                            @if (Auth::user()->role == 'admin')
+                                                <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
+                                                        class="danger">Delete</button></a>
+                                            @endif
+                                            @if (Auth::user()->role != 'agent')
+                                                <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
+                                                        class="primary">Edit</button></a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -235,7 +239,7 @@
                             <th>Payment Date</th>
                             <th>Payment In Yen</th>
                             <th>Recieved Date</th>
-                            @if (Auth::user()->role != 'agent')
+                            @if (Auth::user()->role != 'agent' && Auth::user()->role != 'customer')
                                 <th class="action">Action</th>
                             @endif
                         </tr>
@@ -254,21 +258,19 @@
                                 <td>{{ $customerPayment->payment_date }}</td>
                                 <td>{{ '¥' . number_format((int) $customerPayment->in_yen) }}</td>
                                 <td>{{ $customerPayment->payment_recieved_date }}</td>
-                                <td class="actions">
-                                    <div class="stage">
-                                        @if (Auth::user()->role != 'agent')
+                                @if (Auth::user()->role != 'agent' && Auth::user()->role != 'customer')
+                                    <td class="actions">
+                                        <div class="stage">
                                             <a href="/customer-payment/edit/{{ $customerPayment->id }}">
                                                 <button class="primary">Edit</button>
                                             </a>
-                                        @endif
-                                        @if (Auth::user()->role == 'admin')
                                             <a
                                                 href="/customer-payment/destroy/{{ $customerPayment->stock_id }}/{{ $customerAccount->customer_email }}/{{ $customerPayment->payment }}">
                                                 <button class="danger">Delete</button>
                                             </a>
-                                        @endif
-                                    </div>
-                                </td>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
