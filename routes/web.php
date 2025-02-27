@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/add-customer-account', 'render_form')->name('add-customer-form');
         Route::get('/customer-account/{id}', 'find')->name('find-customer-account');
+        Route::get('/export-pdf/{id}', 'export_pdf');
     });
 
     Route::controller(CustomerVehicleController::class)->group(function () {
@@ -64,14 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/user/update/', 'update_credentials')->name('users.update');
     });
 
-    Route::controller(StocksController::class)->group(function () {
-        Route::get('/stocks', 'index')->name('stocks');
-        Route::get('/stocks/add', 'render_form')->name('stocks.add-stock');
-        Route::post('/stocks/add/store', 'store')->name('stocks.store-stock');
-        Route::get('/stocks/edit/{id}', 'show')->name('stocks.edit-stock');
-        Route::post('/stocks/edit/{id}/update', 'update')->name('stocks.update-stock');
-        Route::post('/stocks/destroy/{id}', 'destroy')->name('stocks.destroy');
-    });
+    Route::resource('stocks', StocksController::class);
 
     Route::controller(TTController::class)->group(function () {
         Route::get('/recently-added-tts', 'recently_added')->name('recently-added-tts');
