@@ -28,7 +28,7 @@ class StocksController extends Controller
 
     public function index()
     {
-        $stocks = Stocks::paginate(8)->onEachSide(1);
+        $stocks = Stocks::orderBy('id', 'DESC')->paginate(8)->onEachSide(1);
 
         if ($stocks->isEmpty()) {
             return view('pages.stocks.index', [
@@ -41,20 +41,6 @@ class StocksController extends Controller
             "title" => "Shinkyowa International | Vehicle Stock",
             "stylesheet" => "stocks.css",
             "data" => $stocks,
-        ]);
-    }
-
-    public function render_form()
-    {
-        $id = $this->generate_skid();
-
-        return view('pages.stocks.stock-form', [
-            "title" => "Shinkyowa International | Add Vehicle Stock",
-            "stylesheet" => "stock-form.css",
-            "formTitle" => "Add Vehicle Info",
-            "category" => "Add Vehicle",
-            "id" => $id,
-            "actionUrl" => "/stocks/add/store"
         ]);
     }
 
@@ -127,18 +113,21 @@ class StocksController extends Controller
         }
     }
 
-    public function show(string $id)
+    public function create()
     {
-        $data = Stocks::findOrFail($id);
-        return view('pages.stocks.stock-form', [
-            "title" => "Shinkyowa International | Update Vehicle Stock",
-            "data" => $data,
-            "id" => $data["stock_id"],
-            "stylesheet" => "stock-form.css",
-            "actionUrl" => "/stocks/edit/$id/update",
-            "formTitle" => "Update Vehicle Info",
-            "category" => "Update Vehicle"
-        ]);
+        $id = $this->generate_skid();
+        $title = "Shinkyowa International | Add Vehicle Stock";
+        $stylesheet = "stock-form.css";
+        $formTitle = "Add Vehicle Info";
+        $category = "Add Vehicle";
+
+        return view('pages.stocks.create', compact(
+            "title",
+            "stylesheet",
+            "formTitle",
+            "category",
+            "id",
+        ));
     }
 
     private function uploadFile(Request $request, string $fieldName, string $disk): ?string
@@ -168,8 +157,74 @@ class StocksController extends Controller
         return $paths;
     }
 
+    public function edit(string $id)
+    {
+        $data = Stocks::findOrFail($id);
+        $title = "Shinkyowa International | Add Vehicle Stock";
+        $stylesheet = "stock-form.css";
+        $formTitle = "Add Vehicle Info";
+        $category = "Add Vehicle";
+
+        $existingFeatures = [
+            'cd_player',
+            'sun_roof',
+            'leather_seat',
+            'alloy_wheels',
+            'power_steering',
+            'power_window',
+            'a_c',
+            'abs',
+            'airbag',
+            'radio',
+            'cd_changer',
+            'dvd',
+            'tv',
+            'power_seat',
+            'back_tire',
+            'grill_guard',
+            'rear_spoiler',
+            'central_locking',
+            'jack',
+            'spare_tire',
+            'wheel_spanner',
+            'fog_lights',
+            'back_camera',
+            'push_start',
+            'keyless_entry',
+            'esc',
+            '360_degree_camera',
+            'body_kit',
+            'side_airbag',
+            'power_mirror',
+            'side_skirts',
+            'front_lip_spoiler',
+            'navigation',
+            'turbo',
+            'power_slide_door'
+        ];
+
+        $missingFeatures = array_diff($existingFeatures, $data["features"]);
+
+        return view('pages.stocks.edit', compact(
+            "title",
+            "stylesheet",
+            "formTitle",
+            "category",
+            "data",
+            "missingFeatures"
+        ));
+    }
+
     public function update(Request $request, $id)
     {
+        $requestData = $request->all();
+
+        $checkboxes = array_filter($requestData, function ($value, $key) {
+            return $value === "on";
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $checkboxNames = array_keys($checkboxes);
+
         $request->validate([
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -192,10 +247,10 @@ class StocksController extends Controller
 
         $stock = Stocks::findOrFail($id);
 
-        $stock->make = $request->make;
-        $stock->model = $request->model;
-        $stock->year = $request->year;
-        $stock->chassis = $request->chassis;
+        $stock->make = trim($request->make);
+        $stock->model = trim($request->model);
+        $stock->year = trim($request->year);
+        $stock->chassis = trim($request->chassis);
         $stock->body_type = $request->body_type;
         $stock->fuel = $request->fuel;
         $stock->mileage = $request->mileage;
@@ -206,7 +261,7 @@ class StocksController extends Controller
         $stock->category = $request->category;
         $stock->status = $request->status;
         $stock->currency = $request->currency;
-        $stock->features = $request->features;
+        $stock->features = $checkboxNames;
 
         if ($request->hasFile('thumbnail')) {
             $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
