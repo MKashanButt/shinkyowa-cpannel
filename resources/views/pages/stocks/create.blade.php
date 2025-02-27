@@ -8,11 +8,12 @@
             </div>
         @endisset
         <h2>{{ $formTitle }}</h2>
-        <form action="{{ $actionUrl }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('stocks.store') }}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('POST')
             <div class="item">
                 <label for="stock_id">Stock Id:</label>
-                <input type="text" id="stock_id" name="stock_id" value="{{ isset($id) ? $id : '' }}" readonly>
+                <input type="text" id="stock_id" name="stock_id" value="{{ old('id', $id) }}" readonly>
             </div>
             <div class="item">
                 <label for="thumbnail">Thumbnail:</label>
@@ -25,11 +26,7 @@
             <div class="item">
                 <label for="make">Make:</label>
                 <select name="make" id="make" required>
-                    @if (isset($data))
-                        <option value="{{ $data['make'] }}" selected>{{ $data['make'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Body Type</option>
-                    @endif
+                    <option value="" disabled selected>Select Body Type</option>
                     <option value="alfa-romeo">Alfa Romeo</option>
                     <option value="toyota">Toyota</option>
                     <option value="nissan">Nissan</option>
@@ -51,27 +48,20 @@
             </div>
             <div class="item">
                 <label for="model">Model:</label>
-                <input type="text" id="model" name="model" value="{{ isset($data) ? $data['model'] : '' }}"
-                    required>
+                <input type="text" id="model" name="model" required>
             </div>
             <div class="item">
                 <label for="year">Year:</label>
-                <input type="text" id="year" name="year" value="{{ isset($data) ? $data['year'] : '' }}"
-                    required>
+                <input type="text" id="year" name="year" required>
             </div>
             <div class="item">
                 <label for="chassis">Chassis:</label>
-                <input type="text" id="chassis" name="chassis" value="{{ isset($data) ? $data['chassis'] : '' }}"
-                    required>
+                <input type="text" id="chassis" name="chassis" required>
             </div>
             <div class="item">
                 <label for="body_type">Body Type:</label>
                 <select name="body_type" id="body_type" required>
-                    @if (isset($data))
-                        <option value="{{ $data['body_type'] }}" selected>{{ $data['body_type'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Body Type</option>
-                    @endif
+                    <option value="" disabled selected>Select Body Type</option>
                     <option value="hatchback">Hatchback</option>
                     <option value="sedan">Sedan</option>
                     <option value="truck">Truck</option>
@@ -86,11 +76,7 @@
             <div class="item">
                 <label for="fuel">Fuel:</label>
                 <select name="fuel" id="fuel" required>
-                    @if (isset($data))
-                        <option value="{{ $data['fuel'] }}" selected>{{ $data['fuel'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Fuel</option>
-                    @endif
+                    <option value="" disabled selected>Select Fuel</option>
                     <option value="petrol">Petrol</option>
                     <option value="diesel">Diesel</option>
                     <option value="hybrid">Hybrid</option>
@@ -98,34 +84,24 @@
             </div>
             <div class="item">
                 <label for="mileage">Mileage:</label>
-                <input type="text" id="mileage" name="mileage" value="{{ isset($data) ? $data['mileage'] : '' }}"
-                    required>
+                <input type="text" id="mileage" name="mileage" required>
             </div>
             <div class="item">
                 <label for="transmission">Transmission:</label>
                 <select name="transmission" id="transmission" required>
-                    @if (isset($data))
-                        <option value="{{ $data['transmission'] }}" selected>{{ $data['transmission'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Transmission</option>
-                    @endif
+                    <option value="" disabled selected>Select Transmission</option>
                     <option value="manual">Manual</option>
                     <option value="automatic">Automatic</option>
                 </select>
             </div>
             <div class="item">
                 <label for="doors">Doors:</label>
-                <input type="text" id="doors" name="doors" value="{{ isset($data) ? $data['doors'] : '' }}"
-                    required>
+                <input type="text" id="doors" name="doors" required>
             </div>
             <div class="item">
                 <label for="country">Country:</label>
                 <select name="country" id="country" required>
-                    @if (isset($data))
-                        <option value="{{ $data['country'] }}" selected>{{ $data['country'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Country</option>
-                    @endif
+                    <option value="" disabled selected>Select Country</option>
                     <option value="jamaica">Jamaica</option>
                     <option value="bahamas">Bahamas</option>
                     <option value="guyana">Guyana</option>
@@ -140,17 +116,12 @@
             </div>
             <div class="item">
                 <label for="fob">Fob:</label>
-                <input type="text" id="fob" name="fob" value="{{ isset($data) ? $data['fob'] : '' }}"
-                    required>
+                <input type="text" id="fob" name="fob" required>
             </div>
             <div class="item">
                 <label for="category">Category:</label>
                 <select name="category" id="category" required>
-                    @if (isset($data))
-                        <option value="{{ $data['category'] }}" selected>{{ $data['category'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Category</option>
-                    @endif
+                    <option value="" disabled selected>Select Category</option>
                     <option value="stock">Stock</option>
                     <option value="new arrival">New Arrival</option>
                     <option value="discounted">Discounted</option>
@@ -160,11 +131,7 @@
             <div class="item">
                 <label for="status">Status:</label>
                 <select name="status" id="status" required>
-                    @if (isset($data))
-                        <option value="{{ $data['status'] }}" selected>{{ $data['status'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Status</option>
-                    @endif
+                    <option value="" disabled selected>Select Status</option>
                     <option value="available">Available</option>
                     <option value="reserved">Reserved</option>
                 </select>
@@ -172,11 +139,7 @@
             <div class="item" style="align-items: baseline">
                 <label for="currency">Currency:</label>
                 <select name="currency" id="currency" required>
-                    @if (isset($data))
-                        <option value="{{ $data['currency'] }}" selected>{{ $data['currency'] }}</option>
-                    @else
-                        <option value="" disabled selected>Select Currency</option>
-                    @endif
+                    <option value="" disabled selected>Select Currency</option>
                     <option value="¥">¥</option>
                     <option value="£">£</option>
                     <option value="€">€</option>
@@ -331,34 +294,4 @@
             <button class="primary">Add</button>
         </form>
     </div>
-    @if ($actionUrl == '/stocks/add/store')
-        <script>
-            const thumbnailInput = document.querySelector('#thumbnail');
-            const imagesInput = document.querySelector('#images');
-
-            FilePond.create(thumbnailInput, {
-                allowMultiple: false,
-                server: {
-                    url: '/stocks/add/store',
-                    process: {
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        }
-                    },
-                },
-            });
-
-            FilePond.create(imagesInput, {
-                allowMultiple: true,
-                server: {
-                    url: '/stocks/add/store',
-                    process: {
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        }
-                    },
-                },
-            });
-        </script>
-    @endif
 @endsection

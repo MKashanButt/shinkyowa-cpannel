@@ -12,7 +12,7 @@
             </div>
         @endif
         @if (Auth::user()->role != 'agent')
-            <a href="/stocks/add">
+            <a href="{{ route('stocks.create') }}">
                 <button class="header">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
@@ -68,7 +68,7 @@
                                         <button class="done">View</button>
                                     </a>
                                     @if (Auth::user()->role != 'agent')
-                                        <a href="/stocks/edit/{{ $item['id'] }}">
+                                        <a href="{{ route('stocks.edit', $item) }}" target="_blank">
                                             <button class="primary">Edit</button>
                                         </a>
                                         <a href="/stocks/destroy/{{ $item['id'] }}">
