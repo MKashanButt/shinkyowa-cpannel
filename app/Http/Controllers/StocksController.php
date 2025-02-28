@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Stocks;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class StocksController extends Controller
@@ -37,6 +39,7 @@ class StocksController extends Controller
                 "data" => [],
             ]);
         }
+
         return view('pages.stocks.index', [
             "title" => "Shinkyowa International | Vehicle Stock",
             "stylesheet" => "stocks.css",
@@ -279,6 +282,20 @@ class StocksController extends Controller
         $stock->save();
 
         return redirect()->back()->with('success', 'Stock updated successfully!');
+    }
+
+    public function deleteImage(string $id, string $image_name): RedirectResponse
+    {
+        $stock = Stocks::findOrFail($id);
+        $images = json_decode($stock->stock_images);
+        $updatedImages = array_filter($images, function ($image) use ($image_name) {
+            return $image !== $image_name;
+        });
+        $updatedImages = array_values($updatedImages);
+        $stock->stock_images = json_encode($updatedImages);
+        $stock->save();
+
+        return redirect()->back()->with('success', 'Image removed successfully.');
     }
 
     public function destroy(string $id)
