@@ -15,13 +15,25 @@
                 <label for="stock_id">Stock Id:</label>
                 <input type="text" id="stock_id" name="stock_id" value="{{ old('stock_id', $data['stock_id']) }}" readonly>
             </div>
-            <div class="item">
-                <label for="thumbnail">Thumbnail:</label>
-                <input type="file" id="thumbnail" name="thumbnail">
+            <div class="item image-container">
+                <div class="info">
+                    <label for="thumbnail">Thumbnail:</label>
+                    <input type="file" id="thumbnail" name="thumbnail">
+                </div>
+                <div class="images">
+                    <img src="{{ env('VEHICLE_IMG_API') . $data['thumbnail'] }}" alt="Thumbnail" class="vehicle-image">
+                </div>
             </div>
-            <div class="item">
-                <label for="images">Images:</label>
-                <input type="file" id="images" name="images[]" multiple>
+            <div class="item image-container">
+                <div class="info">
+                    <label for="images">Images:</label>
+                    <input type="file" id="images" name="images[]" multiple>
+                </div>
+                <div class="images">
+                    @foreach (json_decode($data['stock_images']) as $image)
+                        <img src="{{ env('VEHICLE_IMG_API') . $image }}" alt="{{ $image }}" class="vehicle-image">
+                    @endforeach
+                </div>
             </div>
             <div class="item">
                 <label for="make">Make:</label>
@@ -166,4 +178,56 @@
             <button class="primary">Add</button>
         </form>
     </div>
+    <section class="modal">
+        <div class="container">
+            <div class="action">
+                <form action="" method="POST" class="delete-image-form">
+                    @csrf
+                    @method('DELETE')
+                    <button class="danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                            <path d="M3 6h18" />
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                            <line x1="10" x2="10" y1="11" y2="17" />
+                            <line x1="14" x2="14" y1="11" y2="17" />
+                        </svg>
+                    </button>
+                </form>
+                <button class="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+            <img class="modal-content" id="modal-image">
+        </div>
+    </section>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalImage = document.getElementById('modal-image');
+        const deleteImageForm = document.querySelector('.delete-image-form');
+        const captionText = document.querySelector('.caption');
+
+        const images = document.querySelectorAll('.vehicle-image');
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                modal.style.display = 'block';
+                modal.style.display = 'flex';
+                modalImage.src = image.src;
+                let src = image.src.split("/")
+                deleteImageForm.action = `deleteImage/` + src[4]
+            });
+        });
+
+        const span = document.getElementsByClassName('close')[0];
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+    </script>
 @endsection
