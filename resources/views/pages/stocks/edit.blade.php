@@ -21,7 +21,7 @@
                     <input type="file" id="thumbnail" name="thumbnail">
                 </div>
                 <div class="images">
-                    <img src="{{ env('VEHICLE_IMG_API') . $data['thumbnail'] }}" alt="Thumbnail" class="vehicle-image">
+                    <img src="{{ 'storage/' . $data['thumbnail'] }}" alt="Thumbnail" class="vehicle-image">
                 </div>
             </div>
             <div class="item image-container">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="images">
                     @foreach ($data['stock_images'] as $image)
-                        <img src="{{ env('VEHICLE_IMG_API') . $image }}" alt="{{ $image }}" class="vehicle-image">
+                        <img src="{{ 'storage/' . $image }}" alt="{{ $image }}" class="vehicle-image">
                     @endforeach
                 </div>
             </div>
