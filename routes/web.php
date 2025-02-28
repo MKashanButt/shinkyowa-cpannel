@@ -66,6 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::resource('stocks', StocksController::class);
+    Route::delete('stocks/{id}/deleteImage/{image_name}', [StocksController::class, 'deleteImage'])->name('stocks.deleteImage');
 
     Route::controller(TTController::class)->group(function () {
         Route::get('/recently-added-tts', 'recently_added')->name('recently-added-tts');
