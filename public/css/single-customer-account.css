@@ -43,8 +43,6 @@
     background-color: var(--blue);
     color: white;
     border-radius: 25px;
-    /* border-top-right-radius: 25px;
-border-top-left-radius: 25px; */
     text-transform: uppercase;
 }
 
@@ -325,4 +323,18 @@ border-top-left-radius: 25px; */
 .active-customer-tab {
     border-bottom-right-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
+}
+
+.ledger {
+    position: relative;
+}
+
+.ledger p {
+    padding: 10px;
+    border-radius: 25px;
+    background-color: var(--red);
+    position: absolute;
+    right: 50px;
+    user-select: none;
+    cursor: pointer;
 }
