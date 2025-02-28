@@ -30,7 +30,7 @@
                     <input type="file" id="images" name="images[]" multiple>
                 </div>
                 <div class="images">
-                    @foreach (json_decode($data['stock_images']) as $image)
+                    @foreach ($data['stock_images'] as $image)
                         <img src="{{ env('VEHICLE_IMG_API') . $image }}" alt="{{ $image }}" class="vehicle-image">
                     @endforeach
                 </div>
