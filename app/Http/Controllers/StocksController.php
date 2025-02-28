@@ -287,12 +287,12 @@ class StocksController extends Controller
     public function deleteImage(string $id, string $image_name): RedirectResponse
     {
         $stock = Stocks::findOrFail($id);
-        $images = json_decode($stock->stock_images);
+        $images = $stock->stock_images;
         $updatedImages = array_filter($images, function ($image) use ($image_name) {
             return $image !== $image_name;
         });
         $updatedImages = array_values($updatedImages);
-        $stock->stock_images = json_encode($updatedImages);
+        $stock->stock_images = $updatedImages;
         $stock->save();
 
         return redirect()->back()->with('success', 'Image removed successfully.');
