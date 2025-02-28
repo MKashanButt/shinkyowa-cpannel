@@ -221,7 +221,7 @@
                 modal.style.display = 'flex';
                 modalImage.src = image.src;
                 let src = image.src.split("/")
-                deleteImageForm.action = `deleteImage/` + src[4]
+                deleteImageForm.action = `deleteImage/` + src[5]
             });
         });
 
