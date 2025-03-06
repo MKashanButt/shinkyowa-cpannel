@@ -11,6 +11,11 @@
                 <p>{{ session('success') }}</p>
             </div>
         @endif
+        @if (session('error'))
+            <div class="danger alert" style="margin: 20px 0">
+                <p>{{ session('error') }}</p>
+            </div>
+        @endif
         @if (Auth::user()->role != 'agent')
             <a href="{{ route('stocks.create') }}">
                 <button class="header">
