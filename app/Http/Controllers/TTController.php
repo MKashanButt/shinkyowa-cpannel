@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerAccounts;
+use App\Models\CustomerPayments;
+use App\Models\CustomerVehicles;
 use App\Models\TTUploaded;
 use Exception;
 use Illuminate\Cache\RedisTaggedCache;
@@ -52,8 +55,42 @@ class TTController extends Controller
             'title' => 'Proceding Payment | Shinkyowa International',
             'payment' => $record,
             'stylesheet' => 'customer-payments.css',
-            "actionUrl" => '/add-customer-payment',
+            "actionUrl" => '/recently-added-tt/proceed-payments/',
         ]);
+    }
+
+    public function proceed_store(Request $request)
+    {
+        $customerVehicle = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
+
+        if (!$customerVehicle) {
+            return redirect()->back()->with("progress", "Please Add Vehicle First");
+        }
+
+        $USD_FILTERED_AMMOUNT = ltrim($request->input('in_usd'), "$");
+        $USD_FILTERED_AMMOUNT = str_replace(',', '', $USD_FILTERED_AMMOUNT);
+
+        $YEN_FILTERED_AMMOUNT = ltrim($request->input('in_yen'), "$");
+        $YEN_FILTERED_AMMOUNT = str_replace(',', '', $YEN_FILTERED_AMMOUNT);
+
+        $EXCHANGE_RATE_FILTERED_AMMOUNT = ltrim($request->input('exchange_rate'), "$");
+        $EXCHANGE_RATE_FILTERED_AMMOUNT = str_replace(',', '', $EXCHANGE_RATE_FILTERED_AMMOUNT);
+
+        $customer_payment = new CustomerPayments;
+        $customer_payment->stock_id = $request->input('stockId');
+        $customer_payment->description = $request->input('description');
+        $customer_payment->customer_email = $request->input('customer_email');
+        $customer_payment->payment_date = $request->input('paymentDate');
+        $customer_payment->in_usd = $USD_FILTERED_AMMOUNT;
+        $customer_payment->in_yen = $YEN_FILTERED_AMMOUNT;
+        $customer_payment->exchange_rate = $EXCHANGE_RATE_FILTERED_AMMOUNT;
+        $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
+
+        $customer_payment->save();
+
+        TTUploaded::findOrFail($request->input('id'))->delete();
+
+        return redirect()->route("recently-added-tts")->with('success', 'Customer Payment Added');
     }
 
     public function store_form()
@@ -68,11 +105,11 @@ class TTController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'stock_id' => 'required|string',
+            'stock_id' => 'string',
             'customer_email' => 'required|email|max:120',
             'payment_date' => 'required|date',
-            'in_usd' => 'required|numeric|max:999999.99',
-            'in_yen' => 'required|numeric|max:999999999.99',
+            'in_usd' => 'required|string|max:999999.99',
+            'in_yen' => 'required|string|max:999999999.99',
             'description' => 'required|string|max:500',
             'tt_copy' => 'required|file|mimes:pdf,png,jpg,jpeg',
             'remittance_name' => 'required|string|max:20'
@@ -82,8 +119,8 @@ class TTController extends Controller
         $model->stock_id = $request->input('stock_id');
         $model->remittance_name = $request->input('remittance_name');
         $model->customer_email = $request->input('customer_email');
-        $model->in_usd = $request->input('in_usd');
-        $model->in_yen = $request->input('in_yen');
+        $model->in_usd = str_replace(',', '', $request->input('in_usd'));
+        $model->in_yen = str_replace(',', '', $request->input('in_yen'));
         $model->payment_date = $request->input('payment_date');
         $model->description = $request->input('description');
         $model->agent = Auth::user()->name;
@@ -94,8 +131,10 @@ class TTController extends Controller
         $file->storeAs('public/', $filename);
         $model->tt_copy = $filename;
 
-        $model->save();
-
-        return redirect()->back()->with('success', 'TT successfully uploaded.');
+        if ($model->save()) {
+            return redirect()->back()->with('success', 'TT successfully uploaded.');
+        } else {
+            return redirect()->back()->with('error', 'Error Uploading TT.');
+        }
     }
 }
