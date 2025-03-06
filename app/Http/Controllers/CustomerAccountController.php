@@ -8,6 +8,8 @@ use App\Models\CustomerVehicles;
 use App\Models\Stocks;
 use App\Models\TTUploaded;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -211,13 +213,22 @@ class CustomerAccountController extends Controller
             $customerAccounts = CustomerAccounts::where('agent', Auth::user()->name)->orderBy('id', 'DESC')->paginate(6);
         }
 
-        $buying = $customerAccounts->sum('buying');
-        $deposit = $customerAccounts->sum('deposit');
+        $buying = CustomerVehicles::sum('amount');
+        $deposit = CustomerPayments::sum('in_usd');
+
+        $customerStats = $customerAccounts->map(function ($customer) {
+            return [
+                "customer" => $customer,
+                "buying" => CustomerVehicles::where('customer_email', $customer["customer_email"])->sum('amount'),
+                "deposit" => CustomerPayments::where('customer_email', $customer["customer_email"])->sum('in_usd'),
+            ];
+        });
 
         return view('pages.customer-account.index', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
             "customerAccounts" => $customerAccounts,
+            "customerStats" => $customerStats,
             "buying" => $buying,
             "deposit" => $deposit,
         ]);
@@ -250,7 +261,6 @@ class CustomerAccountController extends Controller
 
         $agents = User::whereIn('role', ['agent', 'manager'])
             ->get();
-
         return view('pages.customer-account.add-account', [
             "title" => $customerAccount["customer_name"] . ' | Customer Account',
             "stylesheet" => "add-customer.css",
@@ -357,4 +367,47 @@ class CustomerAccountController extends Controller
 
         return redirect()->back()->with('success', 'Account Deleted');
     }
+
+    //     public function export_pdf($id)
+    //     {
+    //         $customerAccount = CustomerAccounts::where('customer_id', $id)->first();
+    //         $customerPayments = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
+    //         $customerPaymentsArray = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get()->toArray();
+    //         $customerVehicles = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
+    //         $customerVehiclesArray = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get()->toArray();
+
+    //         $customerVehicleIds = array_column($customerVehiclesArray, 'id');
+    //         $customerPaymentsIds = array_column($customerPaymentsArray, 'id');
+
+    //         $cnf = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('amount');
+    //         $payment = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('payment');
+
+    //         $totalCustomerPayments = CustomerPayments::whereIn('id', $customerPaymentsIds)->sum('in_yen');
+
+    //         $data = [
+    //             "title" => "Customer Account",
+    //             "stylesheet" => "single-customer-account.css",
+    //             "customerAccount" => $customerAccount,
+    //             "customerPayments" => $customerPayments,
+    //             "customerVehicles" => $customerVehicles,
+    //             "cnf" => $cnf,
+    //             "payment" => $payment,
+    //             "totalCustomerPayments" => $totalCustomerPayments
+    //         ];
+
+    //         $pdf = FacadePdf::loadView('pages.customer-account.account-ledger-pdf-export', $data);
+
+    //         return $pdf->download('customer-account.pdf');
+
+    //         // return view('pages.customer-account.account-ledger-pdf-export', [
+    //         //     "title" => "Customer Account",
+    //         //     "stylesheet" => "single-customer-account.css",
+    //         //     "customerAccount" => $customerAccount,
+    //         //     "customerPayments" => $customerPayments,
+    //         //     "customerVehicles" => $customerVehicles,
+    //         //     "cnf" => $cnf,
+    //         //     "payment" => $payment,
+    //         //     "totalCustomerPayments" => $totalCustomerPayments
+    //         // ]);
+    //     }
 }
