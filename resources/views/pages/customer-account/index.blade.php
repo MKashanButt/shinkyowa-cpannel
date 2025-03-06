@@ -1,7 +1,3 @@
-@php
-    $count = 1;
-@endphp
-
 @extends('template')
 @section('content')
     <section class="main-customer-accounts">
@@ -29,40 +25,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($customerAccounts as $accounts)
+                    @foreach ($customerStats as $key => $stat)
                         <tr>
-                            @if ($count < 10)
-                                <td>0{{ $count++ }}.</td>
-                            @else
-                                <td>{{ $count++ }}.</td>
-                            @endif
-                            <td>{{ $accounts['customer_name'] }}</td>
-                            <td>{{ $accounts['customer_company'] }}</td>
-                            <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying']) : '' }}
-                            </td>
-                            <td>{{ $accounts['deposit'] ? $accounts['currency'] . number_format($accounts['deposit']) : '' }}
-                            </td>
-                            <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format((int) $accounts['buying'] - (int) $accounts['deposit']) : '' }}
+                            <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}.</td>
+                            <td>{{ $stat['customer']->customer_name }}</td>
+                            <td>{{ $stat['customer']->customer_company }}</td>
+                            <td>{{ $buying ? $stat['customer']->currency . number_format($stat['buying']) : '' }}</td>
+                            <td>{{ $deposit ? $stat['customer']->currency . number_format($stat['deposit']) : '' }}</td>
+                            <td>{{ $buying ? $stat['customer']->currency . number_format($stat['buying'] - $stat['deposit']) : '' }}
                             </td>
                             @if (Auth::user()->user != 'agent')
                                 <td>
-                                    <a href="/agent-customers-account/{{ $accounts['agent'] }}">
-                                        <button class="agent-btn">{{ $accounts['agent'] }}</button>
+                                    <a href="/agent-customers-account/{{ $stat['customer']->agent }}">
+                                        <button class="agent-btn">{{ $stat['customer']->agent }}</button>
                                     </a>
                                 </td>
                             @endif
                             <td class="actions">
                                 <div class="stage">
-                                    <a href="/customer-account/{{ $accounts['customer_id'] }}">
+                                    <a href="/customer-account/{{ $stat['customer']->customer_id }}">
                                         <button class="account-btn">View Account</button>
                                     </a>
                                     @if (Auth::user()->role == 'admin')
-                                        <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
-                                            <button class="danger">Delete</button>
+                                        <a href="/customer-account/destroy/{{ $stat['customer']->customer_id }}">
+                                            <button class="danger"
+                                                onclick="confirm('Are you sure you want to delete {{ ucwords($stat['customer']->customer_name) }} Account?')">Delete</button>
                                         </a>
                                     @endif
                                     @if (Auth::user()->role != 'agent')
-                                        <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
+                                        <a href="/customer-account/edit/{{ $stat['customer']->customer_id }}">
                                             <button class="primary">Edit</button>
                                         </a>
                                     @endif
