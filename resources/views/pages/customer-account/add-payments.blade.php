@@ -41,21 +41,24 @@
             </div>
             <form action="{{ $actionUrl }}" method="POST">
                 @csrf
+                @isset($payment)
+                    <input type="hidden" name="id" value="{{ $payment->id }}">
+                @endisset
                 <div class="item">
                     <label for="stockId">Stock Id:</label>
-                    <input type="text" name="stockId" id="stockId" required
+                    <input type="text" name="stockId" id="stockId"
                         value="{{ isset($payment->stock_id) ? $payment->stock_id : '' }}">
                     <p id="stockid-find-message"></p>
                 </div>
                 <div class="item">
                     <label for="cemail">Customer Email:</label>
                     @isset($email)
-                        <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
+                        <input type="text" name="customer_email" id="cemail" hx-trigger='load, keyup, blur'
                             hx-post='/check-email-availability' hx-target='this' required
                             value="{{ isset($email) ? $email : '' }}">
                     @endisset
                     @if (!isset($email))
-                        <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
+                        <input type="text" name="customer_email" id="cemail" hx-trigger='load, keyup, blur'
                             hx-post='/check-email-availability' hx-target='this' required
                             value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
                     @endif
@@ -75,6 +78,11 @@
                     <label for="in_yen">Amount In Yen:</label>
                     <input type="text" name="in_yen" id="in_yen" required
                         value="{{ isset($payment->in_yen) ? number_format($payment->in_yen) : '' }}">
+                </div>
+                <div class="item" style="align-self: baseline;">
+                    <label for="exchange_rate">Exchange Rate:</label>
+                    <input type="text" name="exchange_rate" id="exchange_rate" required
+                        value="{{ isset($payment->exchange_rate) ? number_format($payment->exchange_rate) : '' }}">
                 </div>
                 <div class="item" style="align-items: baseline">
                     <label for="description">Description:</label>
