@@ -73,7 +73,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/tt/pending-tts', 'index')->name('tt.pending-tts');
         Route::get('/tt/add-tt', 'store_form')->name('tt.add-form');
         Route::post('/tt/add-tt/store', 'store')->name('tt.store');
-        Route::get('/recently-added-tt/proceed-payments/{id}', 'proceed_form')->name('recently-added-tts');
+        Route::get('/recently-added-tt/proceed-payments/{id}', 'proceed_form')->name('tt.proceed_form');
+        Route::post('/recently-added-tt/proceed-payments', 'proceed_store')->name('tt.proceed_store');
     });
 
     Route::middleware('auth')->group(function () {
