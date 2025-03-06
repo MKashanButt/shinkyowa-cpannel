@@ -22,11 +22,20 @@ class CustomerPaymentController extends Controller
 
     public function store(Request $request)
     {
+        $customerVehicle = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
+
+        if (!$customerVehicle) {
+            return redirect()->back()->with("progress", "Please Add Vehicle First");
+        }
+
         $USD_FILTERED_AMMOUNT = ltrim($request->input('in_usd'), "$");
         $USD_FILTERED_AMMOUNT = str_replace(',', '', $USD_FILTERED_AMMOUNT);
 
         $YEN_FILTERED_AMMOUNT = ltrim($request->input('in_yen'), "$");
         $YEN_FILTERED_AMMOUNT = str_replace(',', '', $YEN_FILTERED_AMMOUNT);
+
+        $EXCHANGE_RATE_FILTERED_AMMOUNT = ltrim($request->input('exchange_rate'), "$");
+        $EXCHANGE_RATE_FILTERED_AMMOUNT = str_replace(',', '', $EXCHANGE_RATE_FILTERED_AMMOUNT);
 
         $customer_payment = new CustomerPayments;
         $customer_payment->stock_id = $request->input('stockId');
@@ -35,27 +44,10 @@ class CustomerPaymentController extends Controller
         $customer_payment->payment_date = $request->input('paymentDate');
         $customer_payment->in_usd = $USD_FILTERED_AMMOUNT;
         $customer_payment->in_yen = $YEN_FILTERED_AMMOUNT;
+        $customer_payment->exchange_rate = $EXCHANGE_RATE_FILTERED_AMMOUNT;
         $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
 
         $customer_payment->save();
-
-        $customerData = CustomerAccounts::where('customer_email', $request->input('customer_email'))->first();
-
-        CustomerAccounts::where('customer_email', $request->input('customer_email'))->update([
-            "deposit" =>  $customerData->deposit + $USD_FILTERED_AMMOUNT,
-        ]);
-
-        $customerPayment = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
-
-        $customerVehicle = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
-
-        if (!$customerVehicle) {
-            return redirect()->back()->with("progress", "Please Add Vehicle First");
-        }
-
-        CustomerVehicles::where('stock_id', $request->input('stockId'))->update([
-            "payment" => $customerPayment->payment + (int) $USD_FILTERED_AMMOUNT
-        ]);
 
         return redirect()->back()->with('success', 'Customer Payment Added');
     }
