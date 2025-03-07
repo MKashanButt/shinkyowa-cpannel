@@ -1,3 +1,7 @@
+@php
+    $sno = ($customerAccounts->currentPage() - 1) * $customerAccounts->perPage();
+@endphp
+
 @extends('template')
 @section('content')
     <section class="main-customer-accounts">
@@ -27,7 +31,7 @@
                 <tbody>
                     @foreach ($customerStats as $key => $stat)
                         <tr>
-                            <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}.</td>
+                            <td>{{ str_pad($sno + $key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $stat['customer']->customer_name }}</td>
                             <td>{{ $stat['customer']->customer_company }}</td>
                             <td>{{ $buying ? $stat['customer']->currency . number_format($stat['buying']) : '' }}</td>
