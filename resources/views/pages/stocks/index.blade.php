@@ -1,5 +1,5 @@
 @php
-    $count = 1;
+    $sno = ($data->currentPage() - 1) * $data->perPage();
 @endphp
 
 @extends('template')
@@ -35,9 +35,8 @@
             <h1>Search Stock Id:</h1>
             <form action="/search/stockid" method="POST">
                 @csrf
-                @method('POST')
-                <input type="search" name="searchByStockId" id="search" placeholder="Search By Stock Id"
-                    value="{{ Request::get('searchByStockId') ? Request::get('searchByStockId') : '' }}">
+                <input type="search" name="search" id="search" placeholder="Search By Stock Id or Chassis..."
+                    value="{{ Request::get('search') ? Request::get('search') : '' }}">
                 <button>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 512 512">
                         <path d="M256 80a176 176 0 10176 176A176 176 0 00256 80z" fill="none" stroke="currentColor"
@@ -67,13 +66,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $item)
+                    @foreach ($data as $key => $item)
                         <tr>
-                            @if ($count < 10)
-                                <td>0{{ $count++ }}.</td>
-                            @else
-                                <td>{{ $count++ }}.</td>
-                            @endif
+                            <td>{{ str_pad($sno + $key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                             <td><img src="{{ asset('storage/' . $item['thumbnail']) }}" alt=""
                                     onerror="this.src='https://placehold.co/200x100'"></td>
                             <td>{{ $item['stock_id'] }}</td>
