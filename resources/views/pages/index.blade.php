@@ -1,9 +1,3 @@
-@php
-    $countStock = 1;
-    $countDealer = 1;
-    $countVehicle = 1;
-@endphp
-
 @extends('template')
 @section('content')
     <section class="dashboard">
@@ -135,13 +129,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($stocks as $item)
+                        @foreach ($stocks as $key => $item)
                             <tr>
-                                @if ($countStock < 10)
-                                    <td>0{{ $countStock++ }}.</td>
-                                @else
-                                    <td>{{ $countStock++ }}.</td>
-                                @endif
+                                <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                                 <td><img src="{{ asset('storage/' . $item['thumbnail']) }}" alt=""
                                         onerror="this.src='https://placehold.co/200x100'"></td>
                                 <td>{{ $item['stock_id'] }}</td>
@@ -194,11 +184,7 @@
                     <tbody>
                         @foreach ($dealers as $accounts)
                             <tr>
-                                @if ($countDealer < 10)
-                                    <td>0{{ $countDealer++ }}.</td>
-                                @else
-                                    <td>{{ $countDealer++ }}.</td>
-                                @endif
+                                <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                                 <td>{{ $accounts['customer_name'] }}</td>
                                 <td>{{ $accounts['customer_company'] }}</td>
                                 <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying']) : '' }}
@@ -274,11 +260,7 @@
                     <tbody>
                         @foreach ($newVehicles as $customerVehicle)
                             <tr>
-                                @if ($countVehicle < 10)
-                                    <td>0{{ $countVehicle++ }}.</td>
-                                @else
-                                    <td>{{ $countVehicle++ }}.</td>
-                                @endif
+                                <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                                 <td>{{ $customerVehicle['stock_id'] }}</td>
                                 <td>{{ $customerVehicle['vehicle'] }}</td>
                                 <td>{{ $customerVehicle['chassis'] }}</td>
