@@ -1,5 +1,5 @@
 @php
-    $count = 1;
+    $sno = ($data->currentPage() - 1) * $data->perPage();
 @endphp
 
 @extends('template')
@@ -27,13 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $item)
+                    @foreach ($data as $key => $item)
                         <tr>
-                            @if ($count < 10)
-                                <td>0{{ $count++ }}.</td>
-                            @else
-                                <td>{{ $count++ }}.</td>
-                            @endif
+                            <td>{{ str_pad($sno + $key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $item['stock_id'] }}</td>
                             <td>{{ $item['destination'] }}</td>
                             <td>{{ $item['full_name'] }}</td>

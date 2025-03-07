@@ -1,5 +1,5 @@
 @php
-    $count = 1;
+    $sno = ($users->currentPage() - 1) * $users->perPage();
 @endphp
 
 @extends('template')
@@ -36,13 +36,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($users as $key => $user)
                         <tr>
-                            @if ($count < 10)
-                                <td>0{{ $count++ }}.</td>
-                            @else
-                                <td>{{ $count++ }}.</td>
-                            @endif
+                            <td>{{ str_pad($sno + $key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ ucwords($user['name']) }}</td>
                             <td>{{ ucwords($user['role']) }}</td>
                             <td class="actions">
@@ -64,6 +60,15 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if ($users != [])
+                <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            {{ $users->links('components.pagination') }}
+                        </td>
+                    </tr>
+                </tfoot>
+                @endif
                 </tbody>
             </table>
         </div>

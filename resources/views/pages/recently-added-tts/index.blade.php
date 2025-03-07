@@ -1,6 +1,3 @@
-@php
-    $count = 1;
-@endphp
 @extends('template')
 @section('content')
     <section class="recently-added-tts">
@@ -21,13 +18,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($records as $record)
+                    @foreach ($records as $key => $record)
                         <tr>
-                            @if ($count < 10)
-                                <td>0{{ $count++ }}.</td>
-                            @else
-                                <td>{{ $count++ }}.</td>
-                            @endif
+                            <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $record['customer_email'] }}</td>
                             <td>{{ '$' . number_format($record['in_usd']) }}</td>
                             <td>{{ '¥' . number_format($record['in_yen']) }}</td>
