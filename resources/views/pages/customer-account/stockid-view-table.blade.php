@@ -1,6 +1,3 @@
-@php
-    $count = 1;
-@endphp
 @extends('template')
 @section('content')
     <section class="stockid-filter-table">
@@ -22,35 +19,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        @if ($count < 10)
-                            <td>0{{ $count++ }}.</td>
-                        @else
-                            <td>{{ $count++ }}.</td>
-                        @endif
-                        <td><img src="{{ env('VEHICLE_IMG_API') . $record['thumbnail'] }}" alt=""
-                                class="vehicle-image"></td>
-                        <td>{{ $record['stock_id'] }}</td>
-                        <td>{{ $record['make'] . ' ' . $record['model'] . ' ' . $record['year'] }}</td>
-                        <td>
-                            <form action="/search/email" method="POST">
-                                @csrf
-                                <input type="hidden" name="searchByEmail" value="{{ $record['customer_email'] }}">
-                                <button class="email-btn">{{ $record['customer_email'] }}</button>
-                            </form>
-                        </td>
-                        <td>{{ $record['fob'] }}</td>
-                        <td>
-                            <button class="{{ $record['status'] == 'reserved' ? 'danger' : 'primary' }}"
-                                disabled>{{ $record['status'] }}</button>
-                        </td>
-                        <td>
-                            <a href="/agent-customers-account/{{ $record['agent'] }}">
-                                <button class="agent-btn">{{ $record['agent'] }}</button>
-                            </a>
-                        </td>
-                        <td>{{ $record['in_yen'] == 0 ? 'None' : $record['in_yen'] }}</td>
-                    </tr>
+                    @if (isset($record['message']))
+                        <tr>
+                            <td colspan="9" style="text-align: center">{{ $record['message'] }}</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>01.</td>
+                            <td><img src="{{ env('VEHICLE_IMG_API') . $record['thumbnail'] }}" alt=""
+                                    class="vehicle-image"></td>
+                            <td>{{ $record['stock_id'] }}</td>
+                            <td>{{ $record['make'] . ' ' . $record['model'] . ' ' . $record['year'] }}</td>
+                            <td>
+                                <form action="/search/email" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="searchByEmail" value="{{ $record['customer_email'] }}">
+                                    <button class="email-btn">{{ $record['customer_email'] }}</button>
+                                </form>
+                            </td>
+                            <td>{{ $record['fob'] }}</td>
+                            <td>
+                                <button class="{{ $record['status'] == 'reserved' ? 'danger' : 'primary' }}"
+                                    disabled>{{ $record['status'] }}</button>
+                            </td>
+                            <td>
+                                <a href="/agent-customers-account/{{ $record['agent'] }}">
+                                    <button class="agent-btn">{{ $record['agent'] }}</button>
+                                </a>
+                            </td>
+                            <td>{{ $record['in_yen'] == 0 ? 'None' : $record['in_yen'] }}</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
