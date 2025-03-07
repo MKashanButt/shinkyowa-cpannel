@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\TTUploaded;
-use Exception;
-use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPUnit\Framework\returnSelf;
 
 class TTController extends Controller
 {
