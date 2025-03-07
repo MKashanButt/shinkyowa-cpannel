@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class ApiController extends Controller
 {
@@ -67,6 +68,40 @@ class ApiController extends Controller
         $availableStock = DB::table('stocks')
             ->where('stock_id', $stockId)
             ->whereNotIn('status', ['reserved', 'not_available'])
+            ->exists();
+
+        // Get stock info
+        $stockInfo = Stocks::where('stock_id', $stockId)->first(['make', 'model', 'year', 'chassis']);
+
+        // Prepare message and HTML
+        $msg = $availableStock ? '' : 'Stock ID is not present or reserved';
+        if ($msg == '') {
+            $vehicle_name = $stockInfo['make'] . ' ' . $stockInfo['model'] . ' ' . $stockInfo['year'];
+            $html = "
+                <p id='stockid-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
+                <input type='text' name='vehicle' id='vehicle' value='$vehicle_name' hx-swap-oob='true'>
+                <input type='text' name='chassis' id='chassis' value='{$stockInfo['chassis']}' hx-swap-oob='true'>
+            ";
+        } else {
+            $html = "
+                <p id='stockid-find-message' class='error-text' hx-swap-oob='true'>$msg</p>
+            ";
+        }
+
+        // Return HTML response
+        return response()->make($html, 200, [
+            'Content-Type' => 'text/html',
+        ]);
+    }
+
+    public function findPresentStockId(Request $request)
+    {
+        $stockId = $request->input('stockId');
+
+        // Check if stock ID is available
+        $availableStock = DB::table('stocks')
+            ->where('stock_id', $stockId)
+            ->whereNotIn('status', ['reserved'])
             ->exists();
 
         // Get stock info
@@ -186,25 +221,35 @@ class ApiController extends Controller
         ]);
     }
 
-    public function searchByStockId(Request $request)
+    public function searchByStockId(Request $request): View
     {
         $request->validate([
-            'searchByStockId' => 'required|string|max:255'
+            'search' => 'required|string|max:255'
         ]);
 
-        $record = Stocks::where('stock_id', $request->input('searchByStockId'))
+        $byStockId = Stocks::where('stock_id', $request->input('search'))
             ->select('thumbnail', 'stock_id', 'customer_email', 'make', 'model', 'year', 'fob', 'status')
-            ->first()
-            ->toArray();
+            ->first();
+        $byChassis = Stocks::where('chassis', $request->input('search'))
+            ->select('thumbnail', 'stock_id', 'customer_email', 'make', 'model', 'year', 'fob', 'status')
+            ->first();
 
-        if ($record['status'] == 'reserved') {
-            $agent = CustomerAccounts::where('customer_email', $record['customer_email'])->select('agent')->first()->toArray();
-            $payment = CustomerPayments::where('stock_id', $record['stock_id'])->sum('in_yen');
-            $record = array_merge($record, $agent, ['in_yen' => $payment]);
+        if ($byStockId || $byChassis) {
+            $record = $byStockId ? $byStockId : $byChassis;
+            $record = $record->toArray();
+            if ($record['status'] == 'reserved') {
+                $agent = CustomerAccounts::where('customer_email', $record['customer_email'])->select('agent')->first()->toArray();
+                $payment = CustomerPayments::where('stock_id', $record['stock_id'])->sum('in_yen');
+                $record = array_merge($record, $agent, ['in_yen' => $payment]);
+            } else {
+                $agent = ["agent" => ''];
+                $payment = ["in_yen" => 0];
+                $record = array_merge($record, $agent, $payment);
+            }
         } else {
-            $agent = ["agent" => ''];
-            $payment = ["in_yen" => 0];
-            $record = array_merge($record, $agent, $payment);
+            $record = [
+                "message" => "no record found"
+            ];
         }
 
         return view('pages.customer-account.stockid-view-table', [
