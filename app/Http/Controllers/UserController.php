@@ -16,9 +16,9 @@ class UserController extends Controller
             $users = User::where('role', '=', 'manager')
                 ->where('name', '!=', Auth::user()->name)
                 ->orderBy('id', 'DESC')
-                ->get();
+                ->paginate(8);
             if ($users) {
-                $users = User::all();
+                $users = User::paginate(8);
             }
         } else {
             $users = User::where('manager', '=', Auth::user()->name)
