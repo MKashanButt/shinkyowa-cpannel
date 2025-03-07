@@ -86,7 +86,7 @@ class CustomerVehicleController extends Controller
         $customerVehicles->vehicle = $request->input('vehicle');
         $customerVehicles->chassis = $request->input('chassis');
         $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
-        $customerVehicles->amount = $FILTERED_AMMOUNT;
+        $customerVehicles->amount = trim($FILTERED_AMMOUNT);
         $customerVehicles->customer_email = $request->input('customer_email');
         $customerVehicles->status = $request->input('status');
 
@@ -97,13 +97,6 @@ class CustomerVehicleController extends Controller
             $stocks->status = 'reserved';
             $stocks->customer_email = $request->input('customer_email');
             $stocks->save();
-        }
-
-        $customerAccount = CustomerAccounts::where('customer_email', $request->input('customer_email'))->first();
-        $customerBuying = $customerAccount->buying;
-        if ($customerAccount) {
-            $customerAccount->buying = (int) $customerBuying + (int) $FILTERED_AMMOUNT;
-            $customerAccount->save();
         }
 
         return redirect()->back()->with('success', 'Vehicle Uploaded');
@@ -123,16 +116,8 @@ class CustomerVehicleController extends Controller
     public function destroy($id)
     {
         $stockid = CustomerVehicles::where('id', $id)->pluck('stock_id');
-        $email = CustomerVehicles::where('id', $id)->pluck('customer_email');
 
         CustomerVehicles::where('id', $id)->delete();
-
-        $removalbuying = CustomerPayments::where('stock_id', $stockid)->pluck('payment');
-        $sumOfRemovalBuying = $removalbuying->sum();
-        $previousbuying = CustomerAccounts::where('customer_email', $email)->pluck('buying');
-        $sumOfPreviousBuying = $previousbuying->sum();
-
-        $buying = $sumOfPreviousBuying - $sumOfRemovalBuying;
 
         CustomerPayments::where('stock_id', $stockid)->update([
             'stock_id' => 'not allocated'
@@ -140,10 +125,6 @@ class CustomerVehicleController extends Controller
 
         Stocks::where('stock_id', $stockid)->update([
             'status' => 'available'
-        ]);
-
-        CustomerAccounts::where('customer_email', $email)->update([
-            "buying" => $buying
         ]);
 
         return redirect()->back();
