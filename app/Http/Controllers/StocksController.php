@@ -298,20 +298,22 @@ class StocksController extends Controller
         return redirect()->back()->with('success', 'Image removed successfully.');
     }
 
-    public function destroy(string $id)
+    public function destroy(Stocks $stock): RedirectResponse
     {
+        $id = $stock->id;
+
         try {
-            $stock = Stocks::where('stock_id', $id)->firstOrFail();
+            $stock = Stocks::findOrFail($id);
 
             DB::beginTransaction();
 
             if ($stock->thumbnail) {
-                Storage::delete('public/' . $stock->thumbnail);
+                Storage::delete('storage/' . $stock->thumbnail);
             }
 
             if (!empty($stock->stock_images)) {
                 foreach ($stock->stock_images as $image) {
-                    Storage::delete('public/' . $image);
+                    Storage::delete('storage/' . $image);
                 }
             }
 
