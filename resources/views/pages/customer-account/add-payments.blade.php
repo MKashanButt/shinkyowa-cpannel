@@ -70,7 +70,7 @@
                         value={{ isset($payment->payment_date) ? $payment->payment_date : '' }}>
                 </div>
                 <div class="item">
-                    <label for="in_usd">Amount In Usd:</label>
+                    <label for="in_usd">Amount:</label>
                     <input type="text" name="in_usd" id="in_usd" required
                         value="{{ isset($payment->in_usd) ? number_format($payment->in_usd) : '' }}">
                 </div>

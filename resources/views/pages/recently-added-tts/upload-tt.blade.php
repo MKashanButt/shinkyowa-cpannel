@@ -40,8 +40,9 @@
                 <div class="container">
                     <div class="item">
                         <label for="stock_id">Stock Id:</label>
-                        <input type="text" name="stock_id" id="stock_id" hx-trigger="blur" hx-post="/find-stock-id"
-                            hx-target="this" required value="{{ isset($record->stock_id) ? $record->stock_id : '' }}">
+                        <input type="text" name="stock_id" id="stock_id" hx-trigger="blur"
+                            hx-post="/find-stock-id-present" hx-target="this" required
+                            value="{{ isset($record->stock_id) ? $record->stock_id : '' }}">
                         <p id="stockid-find-message" class="error-text"></p>
                     </div>
                     <div class="item">
@@ -67,7 +68,7 @@
                             value="{{ isset($payment->customer_email) ? $payment->customer_email : '' }}">
                     </div>
                     <div class="item">
-                        <label for="in_usd">Amount In Usd:</label>
+                        <label for="in_usd">Amount:</label>
                         <input type="text" name="in_usd" id="in_usd" required
                             value="{{ isset($record->in_usd) ? number_format($record->in_usd) : '' }}">
                     </div>
