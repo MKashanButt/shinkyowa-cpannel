@@ -237,6 +237,7 @@
                             <th>Description</th>
                             <th>Customer Email</th>
                             <th>Payment Date</th>
+                            <th>Recieved Payment</th>
                             <th>Payment In Yen</th>
                             <th>Recieved Date</th>
                             @if (Auth::user()->role != 'agent' && Auth::user()->role != 'customer')
@@ -255,9 +256,10 @@
                                 <td>{{ $customerPayment->stock_id }}</td>
                                 <td>{{ $customerPayment->description }}</td>
                                 <td>{{ $customerPayment->customer_email }}</td>
-                                <td>{{ $customerPayment->payment_date }}</td>
+                                <td>{{ $customerPayment->payment_date->format('Y-m-d') }}</td>
+                                <td>{{ $customerAccount->currency . number_format((int) $customerPayment->in_usd) }}</td>
                                 <td>{{ '¥' . number_format((int) $customerPayment->in_yen) }}</td>
-                                <td>{{ $customerPayment->payment_recieved_date }}</td>
+                                <td>{{ $customerPayment->payment_recieved_date->format('Y-m-d') }}</td>
                                 @if (Auth::user()->role != 'agent' && Auth::user()->role != 'customer')
                                     <td class="actions">
                                         <div class="stage">
