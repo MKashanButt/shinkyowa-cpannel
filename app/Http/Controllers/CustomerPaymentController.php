@@ -22,35 +22,42 @@ class CustomerPaymentController extends Controller
 
     public function store(Request $request)
     {
-        $customerVehicle = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
+        $stockId = $request->input('stockId'); // Use consistently
+
+        $customerVehicle = CustomerVehicles::where('stock_id', $stockId)->first();
 
         if (!$customerVehicle) {
             return redirect()->back()->with("progress", "Please Add Vehicle First");
         }
 
-        $USD_FILTERED_AMMOUNT = ltrim($request->input('in_usd'), "$");
-        $USD_FILTERED_AMMOUNT = str_replace(',', '', $USD_FILTERED_AMMOUNT);
+        // ✅ Clean and convert amounts properly
+        $USD_FILTERED_AMOUNT = (float) str_replace(',', '', ltrim($request->input('in_usd'), "$"));
+        $YEN_FILTERED_AMOUNT = (float) str_replace(',', '', ltrim($request->input('in_yen'), "$"));
+        $EXCHANGE_RATE_FILTERED_AMOUNT = (float) str_replace(',', '', ltrim($request->input('exchange_rate'), "$"));
 
-        $YEN_FILTERED_AMMOUNT = ltrim($request->input('in_yen'), "$");
-        $YEN_FILTERED_AMMOUNT = str_replace(',', '', $YEN_FILTERED_AMMOUNT);
-
-        $EXCHANGE_RATE_FILTERED_AMMOUNT = ltrim($request->input('exchange_rate'), "$");
-        $EXCHANGE_RATE_FILTERED_AMMOUNT = str_replace(',', '', $EXCHANGE_RATE_FILTERED_AMMOUNT);
-
+        // ✅ Create the CustomerPayments record
         $customer_payment = new CustomerPayments;
-        $customer_payment->stock_id = $request->input('stockId');
+        $customer_payment->stock_id = $stockId;
         $customer_payment->description = $request->input('description');
         $customer_payment->customer_email = $request->input('customer_email');
         $customer_payment->payment_date = $request->input('paymentDate');
-        $customer_payment->in_usd = $USD_FILTERED_AMMOUNT;
-        $customer_payment->in_yen = $YEN_FILTERED_AMMOUNT;
-        $customer_payment->exchange_rate = $EXCHANGE_RATE_FILTERED_AMMOUNT;
+        $customer_payment->in_usd = $USD_FILTERED_AMOUNT;
+        $customer_payment->in_yen = $YEN_FILTERED_AMOUNT;
+        $customer_payment->exchange_rate = $EXCHANGE_RATE_FILTERED_AMOUNT;
         $customer_payment->payment_recieved_date = $request->input('paymentReceivedDate');
-
         $customer_payment->save();
+
+        // ✅ Fetch previous payment properly
+        $previousPayment = (float) CustomerVehicles::where('stock_id', $stockId)->value('payment');
+
+        // ✅ Update payment properly
+        CustomerVehicles::where('stock_id', $stockId)->update([
+            "payment" => $previousPayment + $USD_FILTERED_AMOUNT,
+        ]);
 
         return redirect()->back()->with('success', 'Customer Payment Added');
     }
+
 
     public function find($id)
     {
