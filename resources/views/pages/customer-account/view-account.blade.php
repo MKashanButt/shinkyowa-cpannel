@@ -2,6 +2,7 @@
     $paymentCount = 1;
     $vehicleCount = 1;
 @endphp
+{{-- @dd($customerVehicles) --}}
 @extends('template')
 @section('content')
     <section class="single-customer-account">
@@ -28,13 +29,13 @@
                 <p><span>City:</span> {{ $customerAccount->city }}</p>
                 <p><span>Country:</span> {{ $customerAccount->country }}</p>
                 <p><span>Buying:</span>
-                    {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying) : '' }}
+                    {{ number_format($cnf) }}
                 </p>
                 <p><span>Deposit:</span>
-                    {{ $customerAccount->buying ? $customerAccount->currency . number_format(intval($customerAccount->deposit)) : '' }}
+                    {{ number_format($totalCustomerPayments) }}
                 </p>
                 <p><span>Remaining:</span>
-                    {{ $customerAccount->buying ? $customerAccount->currency . number_format($customerAccount->buying - intval($customerAccount->deposit)) : '' }}
+                    {{ number_format($cnf - $totalCustomerPayments) }}
                 </p>
             </div>
         </div>
@@ -179,19 +180,25 @@
                                 @if (Auth::user()->role != 'customer')
                                     <td class="actions">
                                         <div class="stage">
-                                            <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button
-                                                    class="image-btn">View
-                                                    Images</button></a>
-                                            <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button
-                                                    class="docs-btn">View
-                                                    Docs</button></a>
+                                            <a href="/customer-account/images/{{ $customerVehicle->stock_id }}">
+                                                <button class="image-btn">View
+                                                    Images</button>
+                                            </a>
+                                            @if ($customerVehicle->docPresent)
+                                                <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}">
+                                                    <button class="docs-btn">View
+                                                        Docs</button>
+                                                </a>
+                                            @endif
                                             @if (Auth::user()->role == 'admin')
-                                                <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
-                                                        class="danger">Delete</button></a>
+                                                <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}">
+                                                    <button class="danger">Delete</button>
+                                                </a>
                                             @endif
                                             @if (Auth::user()->role != 'agent')
-                                                <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
-                                                        class="primary">Edit</button></a>
+                                                <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}">
+                                                    <button class="primary">Edit</button>
+                                                </a>
                                             @endif
                                         </div>
                                     </td>

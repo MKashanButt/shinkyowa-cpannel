@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
+use App\Models\Docs;
 use App\Models\Stocks;
 use App\Models\TTUploaded;
 use App\Models\User;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Exists;
+use Illuminate\View\View;
 
 class CustomerAccountController extends Controller
 {
@@ -308,30 +310,46 @@ class CustomerAccountController extends Controller
         return redirect()->back();
     }
 
-    public function find($id)
+    /** 
+     * Retrieve Customer Account Details with related payments
+
+     * @param string $id Customer Id (Format SKI-)
+     * @return \Illuminate\View\View The view displaying the customer account
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException When Customer Account would not be found
+     */
+
+    public function find(string $id): View
     {
-        $customerAccount = CustomerAccounts::where('customer_id', $id)->first();
-        $customerPayments = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
-        $customerPaymentsArray = CustomerPayments::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get()->toArray();
-        $customerVehicles = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get();
-        $customerVehiclesArray = CustomerVehicles::where('customer_email', $customerAccount->customer_email)->orderBy('id', 'DESC')->get()->toArray();
+        $account = CustomerAccounts::where('customer_id', $id)->firstOrFail();
 
-        $customerVehicleIds = array_column($customerVehiclesArray, 'id');
-        $customerPaymentsIds = array_column($customerPaymentsArray, 'id');
+        $payments = CustomerPayments::where('customer_email', $account->customer_email)
+            ->orderByDesc('id')
+            ->get();
+        $vehicles = CustomerVehicles::where('customer_email', $account->customer_email)
+            ->orderByDesc('id')
+            ->get();
 
-        $cnf = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('amount');
-        $payment = CustomerVehicles::whereIn('id', $customerVehicleIds)->sum('payment');
 
-        $totalCustomerPayments = CustomerPayments::whereIn('id', $customerPaymentsIds)->sum('in_yen');
+        $vehicles = $vehicles->map(function ($vehicle): Object|Null {
+            $vehicle->docPresent = Docs::where('stock_id', $vehicle->stock_id)->exists();
+            return $vehicle;
+        });
+
+        // Optimized database queries by fetching all required data total in one query
+        $total = CustomerVehicles::where('customer_email', $account->customer_email)
+            ->selectRaw('COALESCE(SUM(amount),0) AS cnf, COALESCE(SUM(payment),0) AS totalPayment')
+            ->first();
+
+        $totalCustomerPayments = $payments->sum('in_yen');
 
         return view('pages.customer-account.view-account', [
             "title" => "Customer Account",
             "stylesheet" => "single-customer-account.css",
-            "customerAccount" => $customerAccount,
-            "customerPayments" => $customerPayments,
-            "customerVehicles" => $customerVehicles,
-            "cnf" => $cnf,
-            "payment" => $payment,
+            "customerAccount" => $account,
+            "customerPayments" => $payments,
+            "customerVehicles" => $vehicles,
+            "cnf" => $total->cnf,
+            "payment" => $total->totalPayment,
             "totalCustomerPayments" => $totalCustomerPayments
         ]);
     }
