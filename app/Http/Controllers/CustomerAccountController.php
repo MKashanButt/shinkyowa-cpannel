@@ -329,7 +329,6 @@ class CustomerAccountController extends Controller
             ->orderByDesc('id')
             ->get();
 
-
         $vehicles = $vehicles->map(function ($vehicle): Object|Null {
             $vehicle->docPresent = Docs::where('stock_id', $vehicle->stock_id)->exists();
             return $vehicle;
