@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import './sidebar.css';
-@import './topbar.css';
-@import './customer-header.css';
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import "./sidebar.css";
+@import "./topbar.css";
+@import "./customer-header.css";
 
 :root {
-    --black: #1E1E1E;
-    --blue: #11254A;
+    --black: #1e1e1e;
+    --blue: #11254a;
     --red: #902126;
-    --primary: #2E9264;
-    --progress: #E16B16;
+    --primary: #2e9264;
+    --progress: #e16b16;
 }
 
 * {
@@ -81,7 +81,6 @@ a {
 }
 
 @keyframes bounce {
-
     0%,
     100% {
         transform: translateY(0);
@@ -101,7 +100,6 @@ a {
 }
 
 @keyframes pulse {
-
     0%,
     100% {
         transform: scale(1);
@@ -206,7 +204,6 @@ button {
     align-items: center;
     justify-content: center;
     padding: 15px;
-    background: var(--primary);
     color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -214,7 +211,7 @@ button {
 }
 
 .done {
-    background-color: #2E9264;
+    background-color: #2e9264;
 }
 
 .progress {
