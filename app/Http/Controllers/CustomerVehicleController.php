@@ -6,7 +6,10 @@ use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\Stocks;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerVehicleController extends Controller
 {
@@ -32,38 +35,40 @@ class CustomerVehicleController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    /**
+     * Update Customer Vehicle Details
+     * 
+     * @param Request $request fetching from form input
+     * On return redirecting back to the form page with success message
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException When Customer Account would not be found
+     */
+
+    public function update(Request $request): RedirectResponse
     {
-        $PREVIOUS_BUYING = CustomerAccounts::where('customer_email', $request->input('cemail'))->pluck('buying');
-        $FILTERED_AMMOUNT = ltrim($request->input('amount'), "$");
-        $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
+        try {
+            // Running a DB::transaction to avoid data inconsistencies. Rolling back if any errors found
+            DB::transaction(function () use ($request): void {
+                $data = $request->validate([
+                    "vehicle" => ["required", "string", "max:100"],
+                    "chassis" => ["required", "string", "max:100"],
+                    "fob_or_cnf" => ["required", "string", "in:FOB,CNF"],
+                    "amount" => ["required", "string"],
+                    "customer_email" => ["required", "string"],
+                    "status" => ["required", "string", "in:reserved, available"],
+                ]);
 
-        $customerVehicles = new CustomerVehicles;
+                $FILTERED_AMMOUNT = ltrim($request->input('amount'), "$");
+                $FILTERED_AMMOUNT = str_replace(',', '', $FILTERED_AMMOUNT);
 
-        $customerVehicles->where('stock_id', $request->input('stockId'))->update([
-            "stock_id" => $request->input('stockId'),
-            "vehicle" => $request->input('vehicle'),
-            "chassis" => $request->input('chassis'),
-            "fob_or_cnf" => $request->input('fob-cnf'),
-            "amount" => $FILTERED_AMMOUNT,
-            "customer_email" => $request->input('cemail'),
-            "status" => $request->input('status'),
-        ]);
+                $data["amount"] = $FILTERED_AMMOUNT;
 
-        $customerAccount = CustomerAccounts::where('customer_email', $request->input('cemail'))->first();
-        $customerBuying = $customerAccount->buying;
+                CustomerVehicles::where("stock_id", $request->input("stockId"))->update($data);
+            });
 
-        if ($PREVIOUS_BUYING[0] < ($customerBuying + $FILTERED_AMMOUNT)) {
-            $customerAccount->update([
-                'buying' => $customerBuying + ($FILTERED_AMMOUNT - $PREVIOUS_BUYING[0])
-            ]);
-        } elseif ($PREVIOUS_BUYING[0] > ($customerBuying + $FILTERED_AMMOUNT)) {
-            $customerAccount->update([
-                'buying' => $customerBuying - ($PREVIOUS_BUYING[0] - $FILTERED_AMMOUNT)
-            ]);
+            return redirect()->back()->with('success', 'Vehicle Uploaded');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
-
-        return redirect()->back()->with('success', 'Vehicle Uploaded');
     }
 
     public function render_form($email =  null)
@@ -85,7 +90,7 @@ class CustomerVehicleController extends Controller
         $customerVehicles->stock_id = $request->input('stockId');
         $customerVehicles->vehicle = $request->input('vehicle');
         $customerVehicles->chassis = $request->input('chassis');
-        $customerVehicles->fob_or_cnf = $request->input('fob-cnf');
+        $customerVehicles->fob_or_cnf = $request->input('fob_or_cnf');
         $customerVehicles->amount = trim($FILTERED_AMMOUNT);
         $customerVehicles->customer_email = $request->input('customer_email');
         $customerVehicles->status = $request->input('status');
