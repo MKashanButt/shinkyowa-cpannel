@@ -4,8 +4,14 @@
         <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer Vehicle'" />
         @if (session('success'))
             <div x-data='{show: true}'>
-                <div class="alert" x-show='show' x-init='setTimeout(() => show = false, 3000)'>
+                <div class="alert done" x-show='show' x-init='setTimeout(() => show = false, 3000)'>
                     <p>{{ session('success') }}</p>
+                </div>
+            </div>
+        @elseif(session('error'))
+            <div x-data='{show: true}'>
+                <div class="alert danger" x-show='show' x-init='setTimeout(() => show = false, 3000)'>
+                    <p>{{ session('error') }}</p>
                 </div>
             </div>
         @endif
@@ -58,7 +64,7 @@
                     </div>
                     <div class="item amount">
                         <label for="amount">Amount:</label>
-                        <select name="fob-cnf" id="fob-cnf">
+                        <select name="fob_or_cnf" id="fob-cnf">
                             @isset($vehicle->status)
                                 <option selected value="{{ isset($vehicle) ? $vehicle->fob_or_cnf : '' }}">
                                     {{ $vehicle->fob_or_cnf }}</option>
