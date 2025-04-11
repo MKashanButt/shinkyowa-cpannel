@@ -65,9 +65,8 @@ class ApiController extends Controller
         $stockId = $request->input('stockId');
 
         // Check if stock ID is available
-        $availableStock = DB::table('stocks')
-            ->where('stock_id', $stockId)
-            ->whereNotIn('status', ['reserved', 'not_available'])
+        $availableStock = Stocks::where('stock_id', $stockId)
+            ->whereNot('status', 'reserved')
             ->exists();
 
         // Get stock info
