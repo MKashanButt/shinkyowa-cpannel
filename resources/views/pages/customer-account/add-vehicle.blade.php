@@ -77,15 +77,13 @@
                     </div>
                     <div class="item">
                         <label for="cemail">Customer Email:</label>
-                        @isset($email)
-                            <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
-                                hx-post='/check-email-availability' hx-target='this' required value="{{ $email }}"
-                                readonly>
-                        @endisset
-                        @if (!isset($email))
+                        @if (isset($email))
                             <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
                                 hx-post='/check-email-availability' hx-target='this' required
                                 value="{{ isset($vehicle->customer_email) ? $vehicle->customer_email : '' }}">
+                        @else
+                            <input type="text" name="customer_email" id="cemail" hx-trigger='keyup, blur'
+                                hx-post='/check-email-availability' hx-target='this' required>
                         @endif
                         <p id="email-find-message"></p>
                     </div>
