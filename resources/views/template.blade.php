@@ -14,6 +14,9 @@
     <link href="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css"
         rel="stylesheet">
 
+    {{-- Toaster --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     @isset($stylesheet)
         <link rel="stylesheet" href="{{ asset('css/' . $stylesheet) }}">
     @endisset
@@ -45,6 +48,10 @@
     <!-- App JS -->
     <script src="{{ asset('js/app.js') }}"></script>
 
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <!-- FilePond Plugins & Core -->
     <script
         src="https://cdn.jsdelivr.net/npm/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js">
@@ -57,6 +64,25 @@
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
     </script>
+    <script>
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            positionClass: "toast-top-right",
+            timeOut: 4000
+        };
+
+        @php
+            $toast = session('toastr');
+        @endphp
+
+        @if (is_array($toast))
+            toastr["{{ $toast['type'] ?? 'info' }}"](`{!! $toast['message'] ?? '' !!}`);
+        @elseif (is_string($toast))
+            toastr.info(`{!! $toast !!}`);
+        @endif
+    </script>=
+
 </body>
 
 </html>
