@@ -151,12 +151,15 @@
                                             <button class="done">View</button>
                                         </a>
                                         @if (Auth::user()->role != 'agent')
-                                            <a href="/stocks/edit/{{ $item['id'] }}">
+                                            <a href="{{ route('stocks.edit', $item) }}" target="_blank">
+
                                                 <button class="primary">Edit</button>
                                             </a>
-                                            <a href="/stocks/destroy/{{ $item['id'] }}">
+                                            <form action="{{ route('stocks.destroy', $item) }} " method="POST">
+                                                @method('DELETE')
+                                                @csrf
                                                 <button class="danger">Delete</button>
-                                            </a>
+                                            </form>
                                         @endif
                                     </div>
                                 </td>
