@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\TTUploaded;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class TTController extends Controller
 {
@@ -131,5 +133,14 @@ class TTController extends Controller
         } else {
             return redirect()->back()->with('error', 'Error Uploading TT.');
         }
+    }
+
+    public function destroy(TTUploaded $tt): RedirectResponse
+    {
+        $tt->delete();
+        return back()->with('toastr', [
+            'type' => 'success',
+            'message' => 'TT Deleted'
+        ]);
     }
 }
