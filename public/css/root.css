@@ -289,4 +289,5 @@ label {
     justify-content: center;
     font-size: 13px;
     text-transform: uppercase;
+    cursor: pointer;
 }
