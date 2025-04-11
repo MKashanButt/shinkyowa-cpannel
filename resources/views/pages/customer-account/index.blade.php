@@ -84,8 +84,12 @@
                         @endif
                         <td></td>
                     </tr>
+                    <tr>
+                        <td colspan="10">
+                            {{ $customerAccounts->links('components.pagination') }}
+                        </td>
+                    </tr>
                 </tfoot>
-                {{ $customerAccounts->links() }}
                 </tbody>
             </table>
         </div>
