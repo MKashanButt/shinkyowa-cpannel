@@ -355,23 +355,32 @@ class CustomerAccountController extends Controller
 
     public function agent_customers_account(string $name)
     {
-        $agent_customers_account = CustomerAccounts::where('agent', $name)
-            ->orderBy('id', 'DESC')
-            ->get()
-            ->toArray();
-        $agent_customers_account_second = CustomerAccounts::where('agent', $name)
+        // Get customer accounts for the agent
+        $customerAccounts = CustomerAccounts::where('agent', $name)
             ->orderBy('id', 'DESC')
             ->get();
 
-        $buying = $agent_customers_account_second->sum('buying');
-        $deposit = $agent_customers_account_second->sum('deposit');
+        // Calculate stats (consistent with index() approach)
+        $buying = CustomerVehicles::whereIn('customer_email', $customerAccounts->pluck('customer_email'))->sum('amount');
+        $deposit = CustomerPayments::whereIn('customer_email', $customerAccounts->pluck('customer_email'))->sum('in_usd');
+
+        // Prepare customer stats if needed (like in index())
+        $customerStats = $customerAccounts->map(function ($customer) {
+            return [
+                "customer" => $customer,
+                "buying" => CustomerVehicles::where('customer_email', $customer->customer_email)->sum('amount'),
+                "deposit" => CustomerPayments::where('customer_email', $customer->customer_email)->sum('in_usd'),
+            ];
+        });
+
         return view('pages.customer-account.agent-customers-account', [
             'title' => $name . ' | Customer Account',
             'stylesheet' => 'customer-account.css',
-            'customerAccounts' => $agent_customers_account,
+            'customerAccounts' => $customerAccounts,
+            'customerStats' => $customerStats, // Added for consistency
             'agent' => $name,
-            "buying" => $buying,
-            "deposit" => $deposit,
+            'buying' => $buying,
+            'deposit' => $deposit,
         ]);
     }
 

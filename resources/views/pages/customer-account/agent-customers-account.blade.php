@@ -1,5 +1,6 @@
 @php
-    $count = 1;
+    // Initialize serial number counter
+    $sno = 1;
 @endphp
 
 @extends('template')
@@ -22,45 +23,42 @@
                         <th class="buying">Buying</th>
                         <th class="deposit">Deposit</th>
                         <th class="remaining">Remaining</th>
-                        @if (Auth::user()->user != 'agent')
+                        @if (Auth::user()->role != 'agent')
                             <th class="agent">Agent</th>
                         @endif
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($customerAccounts as $accounts)
+                    @foreach ($customerStats as $stat)
                         <tr>
-                            @if ($count < 10)
-                                <td>0{{ $count++ }}.</td>
-                            @else
-                                <td>{{ $count++ }}.</td>
-                            @endif
-                            <td>{{ $accounts['customer_name'] }}</td>
-                            <td>{{ $accounts['customer_company'] }}</td>
-                            <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying']) : '' }}
+                            <td>{{ str_pad($sno++, 2, '0', STR_PAD_LEFT) }}</td>
+                            <td>{{ $stat['customer']->customer_name }}</td>
+                            <td>{{ $stat['customer']->customer_company }}</td>
+                            <td>{{ $stat['buying'] ? $stat['customer']->currency . number_format($stat['buying']) : '' }}
                             </td>
-                            <td>{{ $accounts['deposit'] ? $accounts['currency'] . number_format($accounts['deposit']) : '' }}
+                            <td>{{ $stat['deposit'] ? $stat['customer']->currency . number_format($stat['deposit']) : '' }}
                             </td>
-                            <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying'] - $accounts['deposit']) : '' }}
+                            <td>{{ $stat['buying'] ? $stat['customer']->currency . number_format($stat['buying'] - $stat['deposit']) : '' }}
                             </td>
-                            @if (Auth::user()->user != 'agent')
+                            @if (Auth::user()->role != 'agent')
                                 <td>
-                                    {{ $accounts['agent'] }}
+                                    <button class="agent-btn">{{ $stat['customer']->agent }}</button>
                                 </td>
                             @endif
                             <td class="actions">
                                 <div class="stage">
-                                    <a href="/customer-account/{{ $accounts['customer_id'] }}">
+                                    <a href="/customer-account/{{ $stat['customer']->customer_id }}">
                                         <button class="account-btn">View Account</button>
                                     </a>
                                     @if (Auth::user()->role == 'admin')
-                                        <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
-                                            <button class="danger">Delete</button>
+                                        <a href="/customer-account/destroy/{{ $stat['customer']->customer_id }}">
+                                            <button class="danger"
+                                                onclick="confirm('Are you sure you want to delete {{ ucwords($stat['customer']->customer_name) }} Account?')">Delete</button>
                                         </a>
                                     @endif
                                     @if (Auth::user()->role != 'agent')
-                                        <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
+                                        <a href="/customer-account/edit/{{ $stat['customer']->customer_id }}">
                                             <button class="primary">Edit</button>
                                         </a>
                                     @endif
@@ -71,19 +69,11 @@
                 </tbody>
                 <tfoot>
                     <tr class="total-row">
-                        <td></td>
-                        <td></td>
-                        <td>Total:</td>
-                        <td>
-                            {{ '$' . number_format($buying) }}
-                        </td>
-                        <td>
-                            {{ '$' . number_format($deposit) }}
-                        </td>
-                        <td>
-                            {{ '$' . number_format($buying - $deposit) }}
-                        </td>
-                        @if (Auth::user()->user != 'agent')
+                        <td colspan="3">Total:</td>
+                        <td>{{ '$' . number_format($buying) }}</td>
+                        <td>{{ '$' . number_format($deposit) }}</td>
+                        <td>{{ '$' . number_format($buying - $deposit) }}</td>
+                        @if (Auth::user()->role != 'agent')
                             <td></td>
                         @endif
                         <td></td>
@@ -93,3 +83,7 @@
         </div>
     </section>
 @endsection
+
+<script>
+    $('table').scrollTableBody();
+</script>
