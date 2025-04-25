@@ -52,11 +52,13 @@ class UserController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-        $managers = Managers::all()->toArray();
+        $managers = User::where('role', 'manager')
+            ->where('name', '!=', Auth::user()->name)
+            ->orderBy('id', 'DESC')
+            ->get();
 
         return view('pages.users.user-credentials', [
             "title" => "User Accounts",
-            "stylesheet" => "users.css",
             "user" => $user,
             "managers" => $managers,
             "stylesheet" => "user-credentials.css",
@@ -103,7 +105,8 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('pages.users.index');
+        return redirect()->route('users')
+            ->with('success', 'User Updated');
     }
 
     public function destroy($id)
