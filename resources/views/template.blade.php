@@ -81,7 +81,7 @@
         @elseif (is_string($toast))
             toastr.info(`{!! $toast !!}`);
         @endif
-    </script>=
+    </script>
 
 </body>
 
