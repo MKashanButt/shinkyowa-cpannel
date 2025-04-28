@@ -30,6 +30,7 @@
                     <tr>
                         <th>S.No</th>
                         <th>Stock Id</th>
+                        <th>Vessel Name</th>
                         <th>ETA</th>
                         <th>ETD</th>
                         <th>Actions</th>
