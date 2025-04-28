@@ -30,6 +30,7 @@ class ShipmentController extends Controller
 
         $data = $request->validate([
             'stock_id' => 'required',
+            'vessel_name' => 'required',
             'eta' => 'required',
             'etd' => 'required',
         ]);
@@ -51,6 +52,7 @@ class ShipmentController extends Controller
     {
         $data = $request->validate([
             'stock_id' => 'required',
+            'vessel_name' => 'required'
             'eta' => 'required',
             'etd' => 'required',
         ]);
