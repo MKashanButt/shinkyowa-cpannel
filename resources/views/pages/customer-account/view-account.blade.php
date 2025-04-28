@@ -39,97 +39,6 @@
                 </p>
             </div>
         </div>
-        {{-- <div class="tab ledger" x-data='{open: false}' x-cloak>
-            <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Account Ledger
-                <p>
-                    <a href="/export-pdf/{{ $customerAccount->customer_id }}">
-                        Download Pdf
-                    </a>
-                </p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="icon">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-            </button>
-            <div class="info" id="customer-vehicle-tab" x-show='open' @click.outside='open= false'>
-                <table class="customer-vehicle" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Stock Id</th>
-                            <th>Vehicle</th>
-                            <th>Chassis</th>
-                            <th>CNF</th>
-                            <th>Amount</th>
-                            <th>Remaining</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($customerVehicles as $customerVehicle)
-                            <tr>
-                                @if ($vehicleCount < 10)
-                                    <td>0{{ $vehicleCount++ }}.</td>
-                                @else
-                                    <td>{{ $vehicleCount++ }}.</td>
-                                @endif
-                                <td>{{ $customerVehicle->stock_id }}</td>
-                                <td>{{ $customerVehicle->vehicle }}</td>
-                                <td>{{ $customerVehicle->chassis }}</td>
-                                <td>{{ $customerAccount->currency . number_format($customerVehicle->amount) }}</td>
-                                <td>{{ $customerVehicle->payment ? $customerAccount->currency . number_format($customerVehicle->payment) : '' }}
-                                </td>
-                                <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
-                                </td>
-                                @if ($customerVehicle->amount - $customerVehicle->payment == 0 || $customerVehicle->amount - $customerVehicle->payment < 0)
-                                    <td><button class="done">Cleared</button></td>
-                                @else
-                                    <td><button class="progress">Pending</button></td>
-                                @endif
-                                <td class="actions">
-                                    <div class="stage">
-                                        <a href="/customer-account/images/{{ $customerVehicle->stock_id }}"><button
-                                                class="image-btn">View
-                                                Images</button></a>
-                                        <a href="/customer-account/docs/{{ $customerVehicle->stock_id }}"><button
-                                                class="docs-btn">View
-                                                Docs</button></a>
-                                        @if (Auth::user()->role == 'admin')
-                                            <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}"><button
-                                                    class="danger">Delete</button></a>
-                                        @endif
-                                        @if (Auth::user()->role != 'agent')
-                                            <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}"><button
-                                                    class="primary">Edit</button></a>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td>
-                                {{ '$' . number_format($cnf) }}
-                            </td>
-                            <td>
-                                {{ '$' . number_format($payment) }}
-                            </td>
-                            <td>
-                                {{ '$' . number_format($cnf - $payment) }}
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div> --}}
         <div class="tab" x-data='{open: false}' x-cloak>
             <button @click='open=!open' x-bind:class="open ? 'active-customer-tab' : ''">Customer Vehicles
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -148,6 +57,7 @@
                             <th>CNF</th>
                             <th>Amount</th>
                             <th>Remaining</th>
+                            <th>Shipment</th>
                             <th>Status</th>
                             @if (Auth::user()->role != 'customer')
                                 <th>Actions</th>
@@ -169,6 +79,14 @@
                                 <td>{{ $customerVehicle->payment ? $customerAccount->currency . number_format($customerVehicle->payment) : '' }}
                                 </td>
                                 <td>{{ $customerAccount->currency . number_format($customerVehicle->amount - $customerVehicle->payment) }}
+                                </td>
+                                <td>
+                                    @if ($customerVehicle->shipment)
+                                        ETA: {{ $customerVehicle->shipment->eta->format('Y-m-d') }}
+                                        ETD: {{ $customerVehicle->shipment->etd->format('Y-m-d') }}
+                                    @else
+                                        <span class="no-shipment">No Shipment</span>
+                                    @endif
                                 </td>
                                 @if (
                                     $customerVehicle->amount - $customerVehicle->payment == 0 ||

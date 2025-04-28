@@ -6,6 +6,7 @@ use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
 use App\Models\CustomerVehicles;
 use App\Models\Docs;
+use App\Models\Shipment;
 use App\Models\Stocks;
 use App\Models\TTUploaded;
 use App\Models\User;
@@ -325,16 +326,22 @@ class CustomerAccountController extends Controller
         $payments = CustomerPayments::where('customer_email', $account->customer_email)
             ->orderByDesc('id')
             ->get();
+
         $vehicles = CustomerVehicles::where('customer_email', $account->customer_email)
             ->orderByDesc('id')
             ->get();
 
-        $vehicles = $vehicles->map(function ($vehicle): Object|Null {
+        $vehicles = $vehicles->map(function ($vehicle) {
+            // Check if docs exist for this vehicle
             $vehicle->docPresent = Docs::where('stock_id', $vehicle->stock_id)->exists();
+
+            // Fetch shipment data for this vehicle (filtered by stock_id)
+            $vehicle->shipment = Shipment::where('stock_id', $vehicle->stock_id)->first();
+
             return $vehicle;
         });
 
-        // Optimized database queries by fetching all required data total in one query
+        // Optimized database queries for totals
         $total = CustomerVehicles::where('customer_email', $account->customer_email)
             ->selectRaw('COALESCE(SUM(amount),0) AS cnf, COALESCE(SUM(payment),0) AS totalPayment')
             ->first();

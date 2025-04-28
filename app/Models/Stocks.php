@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Stocks extends Model
 {
@@ -33,4 +34,9 @@ class Stocks extends Model
         'stock_images' => 'array',
         'features' => 'array',
     ];
+
+    public function shipment(): HasOne
+    {
+        return $this->hasOne(Shipment::class);
+    }
 }

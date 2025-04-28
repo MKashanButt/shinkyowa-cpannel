@@ -2,13 +2,13 @@
     <section x-data="{
         closed: false,
         closedIcon: `<svg xmlns='http: //www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='icon'>
-                                                                                                    <path stroke - linecap = 'round' stroke-linejoin = 'round' d = 'M3.75 9h16.5m-16.5 6.75h16.5' / >
-                                                                                                </svg>`,
+                                                                                                                                                                        <path stroke - linecap = 'round' stroke-linejoin = 'round' d = 'M3.75 9h16.5m-16.5 6.75h16.5' / >
+                                                                                                                                                                    </svg>`,
         openIcon: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5'
-                                                                                                stroke='currentColor' class='icon'>
-                                                                                                <path stroke-linecap='round' stroke-linejoin='round' d='M6 18 18 6M6 6l12 12' />
-                                                                                                </svg>
-                                                                                                `
+                                                                                                                                                                    stroke='currentColor' class='icon'>
+                                                                                                                                                                    <path stroke-linecap='round' stroke-linejoin='round' d='M6 18 18 6M6 6l12 12' />
+                                                                                                                                                                    </svg>
+                                                                                                                                                                    `
     }" x-cloak x-bind:class="closed ? 'sidebar-closed' : 'sidebar-alpine-container'"
         @click.outside="closed=true" @click="closed=false">
         <aside x-bind:class="closed ? 'closed' : ''">
@@ -53,6 +53,24 @@
                                     <circle cx="17" cy="17" r="2" />
                                 </svg>
                                 Stocks
+                            </li>
+                        </a>
+                    @endif
+                    @if (Auth::user()->role != 'doc_uploader')
+                        <a href="{{ route('shipment.index') }}">
+                            <li class="{{ Request::is('stocks') ? 'active-url' : '' }}" @click="closed=false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="icon">
+                                    <path d="M12 10.189V14" />
+                                    <path d="M12 2v3" />
+                                    <path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6" />
+                                    <path
+                                        d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76" />
+                                    <path
+                                        d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                                </svg>
+                                Shipment
                             </li>
                         </a>
                     @endif
