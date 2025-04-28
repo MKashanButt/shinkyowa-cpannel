@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
             $table->string('stock_id', 20);
+            $table->string('vessel_name');
             $table->date('eta')->nullable();
             $table->date('etd')->nullable();
             $table->timestamps();
