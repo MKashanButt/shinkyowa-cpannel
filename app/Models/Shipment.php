@@ -12,6 +12,7 @@ class Shipment extends Model
 
     protected $fillable = [
         'stock_id',
+        'vessel_name',
         'eta',
         'etd',
     ];
