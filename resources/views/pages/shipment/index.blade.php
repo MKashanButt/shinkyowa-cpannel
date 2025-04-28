@@ -40,6 +40,7 @@
                         <tr>
                             <td>{{ str_pad($sno + $key + 1, 2, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ ucwords($item['stock_id']) }}</td>
+                            <td>{{ ucwords($item['vessel_name']) }}</td>
                             <td>{{ $item['eta'] }}</td>
                             <td>{{ $item['etd'] }}</td>
                             <td class="actions">
