@@ -26,7 +26,6 @@ class Stocks extends Model
         'category',
         'country',
         'features',
-        'thumbnail',
         'stock_images'
     ];
 
