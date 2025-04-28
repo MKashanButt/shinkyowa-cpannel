@@ -15,6 +15,10 @@
                 <input type="text" name="stock_id" id="stock_id" value="{{ $data->stock_id }}">
             </div>
             <div class="field">
+                <label for="vessel_name">Vessel Name</label>
+                <input type="text" name="vessel_name" id="vessel_name" value="{{ $data->vessel_name }}">
+            </div>
+            <div class="field">
                 <label for="eta">Eta</label>
                 <input type="date" name="eta" id="eta" value="{{ $data->eta }}">
             </div>
