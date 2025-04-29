@@ -82,8 +82,12 @@
                                 </td>
                                 <td>
                                     @if ($customerVehicle->shipment)
-                                        ETA: {{ $customerVehicle->shipment->eta->format('Y-m-d') }}
-                                        ETD: {{ $customerVehicle->shipment->etd->format('Y-m-d') }}
+                                        <b>Vessel Name</b>:
+                                        {{ !$customerVehicle->shipment->vessel_name ? 'None' : $customerVehicle->shipment->vessel_name }}
+                                        <br />
+                                        <b>ETA:</b> {{ $customerVehicle->shipment->eta->format('d-m-Y') }}
+                                        <br />
+                                        <b>ETD:</b> {{ $customerVehicle->shipment->etd->format('d-m-Y') }}
                                     @else
                                         <span class="no-shipment">No Shipment</span>
                                     @endif
