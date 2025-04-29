@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Managers;
+use App\Models\TextPassword;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -104,6 +105,10 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        TextPassword::where('email', $user->email)->update([
+            'password' => $password
+        ]);
 
         return redirect()->route('users')
             ->with('success', 'User Updated');

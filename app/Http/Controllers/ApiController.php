@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomerAccounts;
 use App\Models\CustomerPayments;
+use App\Models\CustomerVehicles;
 use App\Models\Stocks;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -167,10 +168,19 @@ class ApiController extends Controller
         $buying = $customerAccounts->sum('buying');
         $deposit = $customerAccounts->sum('deposit');
 
+        $customerStats = $customerAccounts->map(function ($customer) {
+            return [
+                "customer" => $customer,
+                "buying" => CustomerVehicles::where('customer_email', $customer->customer_email)->sum('amount'),
+                "deposit" => CustomerPayments::where('customer_email', $customer->customer_email)->sum('in_usd'),
+            ];
+        });
+
         return view('pages.customer-account.index', [
             "title" => 'Customer Account',
             "stylesheet" => "customer-account.css",
             "customerAccounts" => $customerAccounts,
+            "customerStats" => $customerStats,
             "buying" => $buying,
             "deposit" => $deposit,
         ]);

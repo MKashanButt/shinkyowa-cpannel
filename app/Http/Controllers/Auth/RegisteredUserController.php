@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Managers;
 use App\Models\Roles;
+use App\Models\TextPassword;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Events\Registered;
@@ -65,6 +66,11 @@ class RegisteredUserController extends Controller
             }
 
             $user->save();
+
+            TextPassword::create([
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
 
             if ($request->role == 'manager') {
                 $managers = Managers::create([
