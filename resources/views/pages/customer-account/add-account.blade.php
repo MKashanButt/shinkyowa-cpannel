@@ -36,6 +36,12 @@
                     value="{{ isset($customerAccount) ? $customerAccount->customer_email : '' }}">
                 <p id="email-availability-message"></p>
             </div>
+            @if (!isset($customerAccount))
+                <div class="item">
+                    <label for="cpassword">Password:</label>
+                    <input type="password" name="cpassword" id="cpassword" name="customer_password" id="cpassword">
+                </div>
+            @endif
             <div class="item">
                 <label for="cmanager">Manager:</label>
                 <input type="text" name="cmanager" id="cmanager" value="{{ Auth::user()->manager }}" readonly
@@ -81,7 +87,8 @@
                 @if (Auth::user()->role == 'admin')
                     <select name="agent" id="agent">
                         @if (isset($customerAccount))
-                            <option value="{{ $customerAccount->agent }}" selected>{{ $customerAccount->agent }}</option>
+                            <option value="{{ $customerAccount->agent }}" selected>{{ $customerAccount->agent }}
+                            </option>
                             @foreach ($agents as $agent)
                                 @if ($customerAccount->agent != $agent->name)
                                     <option value="{{ $agent->name }}">{{ $agent->name }}</option>

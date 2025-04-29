@@ -8,6 +8,7 @@ use App\Models\CustomerVehicles;
 use App\Models\Docs;
 use App\Models\Shipment;
 use App\Models\Stocks;
+use App\Models\TextPassword;
 use App\Models\TTUploaded;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -255,6 +256,23 @@ class CustomerAccountController extends Controller
         $customerAccount->agent = $request->input('agent');
 
         $customerAccount->save();
+
+        User::create(
+            [
+                'name' => $request->input('cname'),
+                'email' => $request->input('cemail'),
+                'password' => bcrypt($request->input('cpassword')),
+                'role' => 'customer',
+            ]
+        );
+
+        TextPassword::create(
+            [
+                'email' => $request->input('cemail'),
+                'password' => $request->input('cpassword'),
+            ]
+        );
+
         return redirect('/customer-account');
     }
 
