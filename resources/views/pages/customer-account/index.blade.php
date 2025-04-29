@@ -50,13 +50,11 @@
                                     <a href="/customer-account/{{ $stat['customer']->customer_id }}">
                                         <button class="account-btn">View Account</button>
                                     </a>
-                                    @if (Auth::user()->role == 'admin')
+                                    @if (Auth::user()->role != 'agent')
                                         <a href="/customer-account/destroy/{{ $stat['customer']->customer_id }}">
                                             <button class="danger"
                                                 onclick="confirm('Are you sure you want to delete {{ ucwords($stat['customer']->customer_name) }} Account?')">Delete</button>
                                         </a>
-                                    @endif
-                                    @if (Auth::user()->role != 'agent')
                                         <a href="/customer-account/edit/{{ $stat['customer']->customer_id }}">
                                             <button class="primary">Edit</button>
                                         </a>
