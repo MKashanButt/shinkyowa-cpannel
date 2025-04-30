@@ -21,7 +21,7 @@ class ShipmentController extends Controller
     public function create(): View
     {
         $title = "Add Shipment";
-        $stylesheet = "users.css";
+        $stylesheet = "add-customer.css";
         return view('pages.shipment.create', compact('title', 'stylesheet'));
     }
 
@@ -44,7 +44,7 @@ class ShipmentController extends Controller
     {
         $data = Shipment::findOrFail($id);
         $title = "Edit Shipment";
-        $stylesheet = "users.css";
+        $stylesheet = "user-credentials.css";
         return view('pages.shipment.edit', compact('data', 'title', 'stylesheet'));
     }
 
