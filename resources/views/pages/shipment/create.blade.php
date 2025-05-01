@@ -15,11 +15,11 @@
             </div>
             <div class="item">
                 <label for="eta">Eta</label>
-                <input type="date" name="eta" id="eta">
+                <input type="text" name="eta" id="eta">
             </div>
             <div class="item">
                 <label for="etd">Etd</label>
-                <input type="date" name="etd" id="etd">
+                <input type="text" name="etd" id="etd">
             </div>
             <button class="primary" style="top: 100px">Add</button>
         </form>
