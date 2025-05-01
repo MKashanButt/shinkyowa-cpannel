@@ -11,11 +11,11 @@
             </div>
             <div class="item">
                 <label for="vessel_name">Vessel Name</label>
-                <input type="text" name="vessel_name" id="vessel_name">
+                <input type="date" name="vessel_name" id="vessel_name">
             </div>
             <div class="item">
                 <label for="eta">Eta</label>
-                <input type="text" name="eta" id="eta">
+                <input type="date" name="eta" id="eta">
             </div>
             <div class="item">
                 <label for="etd">Etd</label>
