@@ -58,6 +58,7 @@ class TTController extends Controller
 
     public function proceed_store(Request $request)
     {
+        dd($request);
         $customerVehicle = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
 
         if (!$customerVehicle) {
