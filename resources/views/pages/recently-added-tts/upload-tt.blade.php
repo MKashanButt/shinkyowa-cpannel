@@ -41,7 +41,7 @@
                     <div class="item">
                         <label for="stock_id">Stock Id:</label>
                         <input type="text" name="stock_id" id="stock_id" hx-trigger="blur"
-                            hx-post="/find-stock-id-present" hx-target="this" required
+                            hx-post="/find-stock-id-present" hx-target="this"
                             value="{{ isset($record->stock_id) ? $record->stock_id : '' }}">
                         <p id="stockid-find-message" class="error-text"></p>
                     </div>
