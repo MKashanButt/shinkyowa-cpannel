@@ -52,13 +52,12 @@ class TTController extends Controller
             'title' => 'Proceding Payment | Shinkyowa International',
             'payment' => $record,
             'stylesheet' => 'customer-payments.css',
-            "actionUrl" => '/recently-added-tt/proceed-payments/',
+            'actionUrl' => '/recently-added-tt/proceed-payments/',
         ]);
     }
 
-    public function proceed_store(Request $request)
+    public function proceed_store(Request $request, $id)
     {
-        dd($request);
         $customerVehicle = CustomerVehicles::where('stock_id', $request->input('stockId'))->first();
 
         if (!$customerVehicle) {
@@ -86,7 +85,7 @@ class TTController extends Controller
 
         $customer_payment->save();
 
-        TTUploaded::findOrFail($request->input('id'))->delete();
+        TTUploaded::findOrFail($id)->delete();
 
         return redirect()->route("recently-added-tts")->with('success', 'Customer Payment Added');
     }

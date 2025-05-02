@@ -40,6 +40,7 @@
                 </div>
             </div>
             <form action="{{ $actionUrl }}" method="POST">
+                @method('POST')
                 @csrf
                 @isset($payment)
                     <input type="hidden" name="id" value="{{ $payment->id }}">
