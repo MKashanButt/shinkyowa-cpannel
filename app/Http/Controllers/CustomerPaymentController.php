@@ -26,10 +26,6 @@ class CustomerPaymentController extends Controller
 
         $customerVehicle = CustomerVehicles::where('stock_id', $stockId)->first();
 
-        if (!$customerVehicle) {
-            return redirect()->back()->with("progress", "Please Add Vehicle First");
-        }
-
         // ✅ Clean and convert amounts properly
         $USD_FILTERED_AMOUNT = (float) str_replace(',', '', ltrim($request->input('in_usd'), "$"));
         $YEN_FILTERED_AMOUNT = (float) str_replace(',', '', ltrim($request->input('in_yen'), "$"));
