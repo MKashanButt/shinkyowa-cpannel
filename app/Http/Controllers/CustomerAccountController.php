@@ -341,7 +341,7 @@ class CustomerAccountController extends Controller
     {
         $account = CustomerAccounts::where('customer_id', $id)->firstOrFail();
 
-        $payments = CustomerPayments::where('customer_email', $account->customer_email')
+        $payments = CustomerPayments::where('customer_email', $account->customer_email)
             ->get();
 
         $vehicles = CustomerVehicles::where('customer_email', $account->customer_email)
