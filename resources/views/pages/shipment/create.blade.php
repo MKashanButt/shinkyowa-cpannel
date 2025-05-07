@@ -38,7 +38,7 @@
             </div>
             <div class="item">
                 <label for="vessel_name">Vessel Name</label>
-                <input type="date" name="vessel_name" id="vessel_name">
+                <input type="text" name="vessel_name" id="vessel_name">
             </div>
             <div class="item">
                 <label for="eta">Eta</label>
