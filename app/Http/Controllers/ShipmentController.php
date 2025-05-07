@@ -35,7 +35,12 @@ class ShipmentController extends Controller
             'etd' => 'required',
         ]);
 
-        Shipment::create($data);
+        $inputStockId = $request->input('stock_id');
+        
+        foreach($inputStockId as $stockId){
+            $data['stock_id'] = $stockId;
+            Shipment::create($data);
+        }
 
         return redirect()->route('shipment.index')->with('success', 'Shipment created successfully.');
     }

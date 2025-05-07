@@ -7,7 +7,34 @@
             @csrf
             <div class="item">
                 <label for="stockid">Stock Id</label>
-                <input type="text" name="stock_id" id="stock_id">
+                <input type="text" name="stock_id[]" id="stock_id">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
+            </div>
+            <div class="item">
+                <input type="text" name="stock_id[]">
             </div>
             <div class="item">
                 <label for="vessel_name">Vessel Name</label>
