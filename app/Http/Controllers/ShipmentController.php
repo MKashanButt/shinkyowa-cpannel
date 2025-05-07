@@ -36,9 +36,11 @@ class ShipmentController extends Controller
         ]);
 
         $inputStockId = $request->input('stock_id');
-        
+
         foreach($inputStockId as $stockId){
-            $data['stock_id'] = $stockId;
+            if($stockId){
+                $data['stock_id'] = $stockId;
+            }
             Shipment::create($data);
         }
 
