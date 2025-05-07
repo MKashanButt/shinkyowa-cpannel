@@ -46,7 +46,7 @@
             </div>
             <div class="item">
                 <label for="etd">Etd</label>
-                <input type="text" name="etd" id="etd">
+                <input type="date" name="etd" id="etd">
             </div>
             <button class="primary" style="top: 100px">Add</button>
         </form>
