@@ -1,3 +1,8 @@
+@php
+    $title = 'Update Status';
+    $stylesheet = 'customer-payments.css';
+@endphp
+
 @extends('template')
 @section('content')
     <div class="container">
