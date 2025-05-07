@@ -18,8 +18,8 @@
                 <label for="payment_status">Status:</label>
                 <select name="payment_status">
                     <option value="">Select Status</option>
-                    <option value="debit">Debit</option>
-                    <option value="credit">Credit</option>
+                    <option value="pending">Pending</option>
+                    <option value="cleared">Cleared</option>
                 </select>
             </div>
             <button>
