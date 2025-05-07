@@ -39,6 +39,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/customer-vehicle/update', 'update')->name('customer-vehicle.edit');
         Route::get('/customer-account/images/{stockid}', 'findImages')->name('customer-account.images');
         Route::get('/customer-vehicle/destroy/{id}', 'destroy')->name('customer-vehicle.destroy');
+
+        Route::get('/customer-vehicle/update-status/{stockid}', 'update_status_form')
+            ->name('vehicle.update-status-form');
+        Route::post('/customer-vehicle/update-status', 'update_status')
+            ->name('vehicle.store-status');
     });
 
     Route::controller(CustomerPaymentController::class)->group(function () {
@@ -76,7 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/tt/add-tt', 'store_form')->name('tt.add-form');
         Route::post('/tt/add-tt/store', 'store')->name('tt.store');
         Route::get('/recently-added-tt/proceed-payments/{id}', 'proceed_form')->name('tt.proceed_form');
-        Route::post('/recently-added-tt/proceed-payments/{$id}', 'proceed_store')->name('tt.proceed_store');
+        Route::post('/recently-added-tt/proceed-payments', 'proceed_store')->name('tt.proceed_store');
         Route::get('/recently-added-tt/destroy/{tt}', 'destroy')->name('tt.destroy');
     });
 

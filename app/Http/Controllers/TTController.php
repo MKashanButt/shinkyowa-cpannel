@@ -52,7 +52,7 @@ class TTController extends Controller
             'title' => 'Proceding Payment | Shinkyowa International',
             'payment' => $record,
             'stylesheet' => 'customer-payments.css',
-            'actionUrl' => '/recently-added-tt/proceed-payments/',
+            'actionUrl' => route('tt.proceed_store'),
         ]);
     }
 
@@ -85,7 +85,8 @@ class TTController extends Controller
 
         $customer_payment->save();
 
-        TTUploaded::findOrFail($id)->delete();
+        $tt = TTUploaded::findOrFail($id);
+        $tt->delete();
 
         return redirect()->route("recently-added-tts")->with('success', 'Customer Payment Added');
     }

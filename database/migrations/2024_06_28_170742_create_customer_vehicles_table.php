@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('vehicle', 100);
             $table->string('customer_email', 100);
             $table->string('status', 15);
+            $table->enum('payment_status',[
+                'cleared',
+                'pending'
+            ] );
             $table->timestamps();
         });
     }

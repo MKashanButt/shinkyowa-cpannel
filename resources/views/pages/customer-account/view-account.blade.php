@@ -116,6 +116,9 @@
                                                 <a href="/customer-vehicle/destroy/{{ $customerVehicle->id }}">
                                                     <button class="danger">Delete</button>
                                                 </a>
+                                                <a href="{{ route('vehicle.update-status-form', $customerVehicle->stock_id) }}">
+                                                    <button class="primary">Update Status</button>
+                                                </a>
                                             @endif
                                             @if (Auth::user()->role != 'agent')
                                                 <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}">

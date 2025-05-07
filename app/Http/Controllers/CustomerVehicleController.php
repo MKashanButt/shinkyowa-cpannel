@@ -118,6 +118,24 @@ class CustomerVehicleController extends Controller
         ]);
     }
 
+    public function update_status_form(string $stockid){
+        return view('pages.customer-account.update-status', compact('stockid'));
+    }
+
+    public function update_status(Request $request){
+        $validated = $request->validate([
+            'stock_id' => ['required', 'string'],
+            'payment_status' => ['required', 'string'],
+        ]);
+
+        CustomerVehicles::where('stock_id', $validated['stock_id'])
+        ->update([
+            'payment_status' => $validated['payment_status'],
+        ]);
+
+        return redirect()->back();
+    }
+
     public function destroy($id)
     {
         $stockid = CustomerVehicles::where('id', $id)->pluck('stock_id');
