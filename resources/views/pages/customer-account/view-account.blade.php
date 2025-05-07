@@ -92,12 +92,20 @@
                                         <span class="no-shipment">No Shipment</span>
                                     @endif
                                 </td>
-                                @if (
-                                    $customerVehicle->amount - $customerVehicle->payment == 0 ||
-                                        $customerVehicle->amount - $customerVehicle->payment < 0)
-                                    <td><button class="done">Cleared</button></td>
+                                @if(!$customerVehicle->payment_status)
+                                    @if (
+                                        $customerVehicle->amount - $customerVehicle->payment == 0 ||
+                                            $customerVehicle->amount - $customerVehicle->payment < 0)
+                                        <td><button class="done">Cleared</button></td>
+                                    @else
+                                        <td><button class="progress">Pending</button></td>
+                                    @endif
                                 @else
-                                    <td><button class="progress">Pending</button></td>
+                                    @if ($customerVehicle->payment_status == 'cleared')
+                                        <td><button class="done">Cleared</button></td>
+                                    @else
+                                        <td><button class="progress">Pending</button></td>
+                                    @endif
                                 @endif
                                 @if (Auth::user()->role != 'customer')
                                     <td class="actions">
