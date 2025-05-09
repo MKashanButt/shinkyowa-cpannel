@@ -74,6 +74,16 @@
                             </li>
                         </a>
                     @endif
+                    @if (Auth::user()->role != 'doc_uploader')
+                        <a href="{{ route('urgent-payment.index') }}">
+                            <li class="{{ Request::is('urgent-payment') ? 'active-url' : '' }}" @click="closed=false">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
+                                </svg>
+                                Urgent Payments
+                            </li>
+                        </a>
+                    @endif
                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'doc_uploader')
                         <div x-data='{open: false, active: false}' x-cloak>
                             <li @click="open = !open; active = !active" @click.outside="open = false; active = false"
@@ -235,17 +245,24 @@
                     @endif
                     @if (Auth::user()->role != 'doc_uploader')
                         <li class="{{ Request::is('shipment') ? 'active-url' : '' }}" @click="closed=false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="icon">
-                                    <path d="M12 10.189V14" />
-                                    <path d="M12 2v3" />
-                                    <path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6" />
-                                    <path
-                                        d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76" />
-                                    <path
-                                        d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
-                                </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="icon">
+                                <path d="M12 10.189V14" />
+                                <path d="M12 2v3" />
+                                <path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6" />
+                                <path
+                                    d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76" />
+                                <path
+                                    d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                            </svg>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role != 'doc_uploader')
+                        <li class="{{ Request::is('urgent-payment') ? 'active-url' : '' }}" @click="closed=false">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
+                            </svg>
                         </li>
                     @endif
                     @if (Auth::user()->role != 'doc_uploader')
