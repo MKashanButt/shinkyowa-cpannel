@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerVehicleController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\UrgentPaymentController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\TTController;
 use App\Http\Controllers\UserController;
@@ -73,7 +74,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('stocks', StocksController::class);
     Route::delete('stocks/{id}/deleteImage/{image_name}', [StocksController::class, 'deleteImage'])->name('stocks.deleteImage');
+    
     Route::resource('shipment', ShipmentController::class);
+    Route::resource('urgent-payment', UrgentPaymentController::class);
 
     Route::controller(TTController::class)->group(function () {
         Route::get('/recently-added-tts', 'recently_added')->name('recently-added-tts');
