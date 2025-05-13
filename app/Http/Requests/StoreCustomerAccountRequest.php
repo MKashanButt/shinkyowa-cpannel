@@ -11,7 +11,7 @@ class StoreCustomerAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return ;
+        return !Auth::user()->role == 'customer';
     }
 
     /**
@@ -22,7 +22,19 @@ class StoreCustomerAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cid' => ['required', 'string', 'unique'],
+            'cname' => ['required', 'string'],
+            'ccompany' => ['required', 'string'],
+            'cphone' => ['required', 'string'],
+            'cwhatsapp' => ['required', 'string'],
+            'cemail' => ['required', 'string'],
+            'cpassword' => ['required', 'string'],
+            'ccurrency' => ['required', 'string', "max:1"],
+            'cdescription' => ['required', 'string'],
+            'caddress' => ['required', 'string'],
+            'ccity' => ['required', 'string'],
+            'ccountry' => ['required', 'string'],
+            'agent' => ['nullable', 'string'],
         ];
     }
 }
