@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    @if
+    @if($error)
         <p>{{ $error }}</p>
     @endif
     <div class="container">
