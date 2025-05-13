@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\View\View;
+use App\Http\Requests\StoreCustomerAccountRequest;
+use Exception;
 
 class CustomerAccountController extends Controller
 {
@@ -257,33 +259,34 @@ class CustomerAccountController extends Controller
                 'agent' => Auth::user()->role == 'admin' 
                     ? $request->input('agent') 
                     : Auth::user()->name,
+                'manager' => Auth::user()->manager,
             ]);
-        } catch(Exception $e)
-        {
 
-        }
+            User::create(
+                [
+                    'name' => $request->input('cname'),
+                    'email' => $request->input('cemail'),
+                    'password' => bcrypt($request->input('cpassword')),
+                    'role' => 'customer',
+                ]
+            );
 
-        $credentials = [
-                'name' => $request->input('cname'),
-                'email' => $request->input('cemail'),
-                'password' => bcrypt($request->input('cpassword')),
-                'role' => 'customer',
-        ];
+            TextPassword::create(
+                [            
+                    'email' => $request->input('cemail'),
+                    'password' => $request->input('cpassword'),
+                ]
+            );
 
-        $textCredentials = [            
-            'email' => $request->input('cemail'),
-            'password' => $request->input('cpassword'),
-        ];
-
-        if(
-            $customerAccount->save() 
-            && User::create($credentials) 
-            && TextPassword::create($textCredential))
-        {
             return redirect('/customer-account');
-        }
 
-        return redirect()->back();
+        } catch(Exception $errors)
+        {
+             return redirect()
+                ->back()
+                ->withErrors($errors->getMessage())
+                ->withInput();
+        }
     }
 
     public function edit_account($id)
