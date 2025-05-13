@@ -243,7 +243,7 @@ class CustomerAccountController extends Controller
     public function store(Request $request)
     {
         try{
-            CustomerAccount::create([
+            CustomerAccounts::create([
                 'customer_id' => $request->input('cid'),
                 'customer_name' => $request->input('cname'),
                 'customer_company' => $request->input('ccompany'),
