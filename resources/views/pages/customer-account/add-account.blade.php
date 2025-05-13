@@ -1,5 +1,8 @@
 @extends('template')
 @section('content')
+    @if
+        <p>{{ $error }}</p>
+    @endif
     <div class="container">
         <x-breadcrumbs :page="'Sale'" :subpage="'Customer Accounts'" :category="'Add Customer'" />
         <h2>Add Customer Account</h2>
