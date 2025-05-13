@@ -240,40 +240,50 @@ class CustomerAccountController extends Controller
 
     public function store(Request $request)
     {
-        $customerAccount = new CustomerAccounts;
-        $customerAccount->customer_id = $request->input('cid');
-        $customerAccount->customer_name = $request->input('cname');
-        $customerAccount->customer_company = $request->input('ccompany');
-        $customerAccount->customer_phone = $request->input('cphone');
-        $customerAccount->customer_whatsapp = $request->input('cwhatsapp');
-        $customerAccount->customer_email = $request->input('cemail');
-        $customerAccount->agent_manager = $request->input('cmanager');
-        $customerAccount->currency = $request->input('ccurrency');
-        $customerAccount->description = $request->input('cdescription');
-        $customerAccount->address = $request->input('caddress');
-        $customerAccount->city = $request->input('ccity');
-        $customerAccount->country = $request->input('ccountry');
-        $customerAccount->agent = $request->input('agent');
+        try{
+            CustomerAccount::create([
+                'customer_id' => $request->input('cid'),
+                'customer_name' => $request->input('cname'),
+                'customer_company' => $request->input('ccompany'),
+                'customer_phone' => $request->input('cphone'),
+                'customer_whatsapp' => $request->input('cwhatsapp'),
+                'customer_email' => $request->input('cemail'),
+                'agent_manager' => Auth::user()->manager,
+                'currency' => $request->input('ccurrency'),
+                'description' => $request->input('cdescription'),
+                'address' => $request->input('caddress'),
+                'city' => $request->input('ccity'),
+                'country' => $request->input('ccountry'),
+                'agent' => Auth::user()->role == 'admin' 
+                    ? $request->input('agent') 
+                    : Auth::user()->name,
+            ]);
+        } catch(Exception $e)
+        {
 
-        $customerAccount->save();
+        }
 
-        User::create(
-            [
+        $credentials = [
                 'name' => $request->input('cname'),
                 'email' => $request->input('cemail'),
                 'password' => bcrypt($request->input('cpassword')),
                 'role' => 'customer',
-            ]
-        );
+        ];
 
-        TextPassword::create(
-            [
-                'email' => $request->input('cemail'),
-                'password' => $request->input('cpassword'),
-            ]
-        );
+        $textCredentials = [            
+            'email' => $request->input('cemail'),
+            'password' => $request->input('cpassword'),
+        ];
 
-        return redirect('/customer-account');
+        if(
+            $customerAccount->save() 
+            && User::create($credentials) 
+            && TextPassword::create($textCredential))
+        {
+            return redirect('/customer-account');
+        }
+
+        return redirect()->back();
     }
 
     public function edit_account($id)

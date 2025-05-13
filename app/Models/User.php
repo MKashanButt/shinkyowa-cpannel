@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
         return TTUploaded::where('viewed', false)->count();
     }
+
+    public function hasRole(string $role){
+        return $this->role == $role;
+    }
 }

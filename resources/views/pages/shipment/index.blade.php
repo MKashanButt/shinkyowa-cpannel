@@ -10,8 +10,8 @@
                 <p>{{ session('success') }}</p>
             </div>
         @endif
-        <section class="header">
-            @if(Auth::user()->role == 'admin')
+        @if(Auth::user()->role == 'agent')
+            <section class="header">
                 <a href="{{ route('shipment.create') }}">
                     <div class="content">
                         <span>
@@ -24,8 +24,8 @@
                         </span>
                     </div>
                 </a>
-            @endif
-        </section>
+            </section>
+         @endif
         <div class="container">
             <table cellspacing="0">
                 <thead>
@@ -35,7 +35,9 @@
                         <th>Vessel Name</th>
                         <th>ETA</th>
                         <th>ETD</th>
-                        <th>Actions</th>
+                        @if (Auth::user()->role == 'agent')
+                            <th>Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -46,9 +48,9 @@
                             <td>{{ ucwords($item['vessel_name']) }}</td>
                             <td>{{ $item['eta']->format('d-m-Y') }}</td>
                             <td>{{ $item['etd']->format('d-m-Y') }}</td>
-                            <td class="actions">
-                                <div class="stage">
-                                    @if (Auth::user()->role == 'admin')
+                            @if (Auth::user()->role == 'agent')
+                                <td class="actions">
+                                    <div class="stage">
                                         <a href="{{ route('shipment.edit', $item) }}">
                                             <button class="primary">Edit</button>
                                         </a>
@@ -57,9 +59,9 @@
                                             @method('DELETE')
                                             <button class="danger" type="submit">Delete</button>
                                         </form>
-                                    @endif
-                                </div>
-                            </td>
+                                    </div>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                     @if ($data != [])

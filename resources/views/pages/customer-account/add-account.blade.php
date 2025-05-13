@@ -42,11 +42,13 @@
                     <input type="password" name="cpassword" id="cpassword" name="customer_password" id="cpassword">
                 </div>
             @endif
-            <div class="item">
-                <label for="cmanager">Manager:</label>
-                <input type="text" name="cmanager" id="cmanager" value="{{ Auth::user()->manager }}" readonly
-                    value="{{ isset($customerAccount) ? $customerAccount->agent_manager : '' }}">
-            </div>
+            @if(Auth::user()->role == 'agent')  
+                <div class="item">
+                    <label for="cmanager">Manager:</label>
+                    <input type="text" name="cmanager" id="cmanager" value="{{ Auth::user()->manager }}" readonly
+                        value="{{ isset($customerAccount) ? $customerAccount->agent_manager : '' }}">
+                </div>
+            @endif
             <div class="item">
                 <label for="ccurrency">Currency:</label>
                 <select name="ccurrency" id="ccurrency" required>
