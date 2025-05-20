@@ -242,7 +242,7 @@ class CustomerAccountController extends Controller
 
     public function store(Request $request)
     {
-        try{
+        try {
             CustomerAccounts::create([
                 'customer_id' => $request->input('cid'),
                 'customer_name' => $request->input('cname'),
@@ -256,8 +256,8 @@ class CustomerAccountController extends Controller
                 'address' => $request->input('caddress'),
                 'city' => $request->input('ccity'),
                 'country' => $request->input('ccountry'),
-                'agent' => Auth::user()->role == 'admin' 
-                    ? $request->input('agent') 
+                'agent' => Auth::user()->role == 'admin'
+                    ? $request->input('agent')
                     : Auth::user()->name,
                 'manager' => Auth::user()->manager,
             ]);
@@ -272,17 +272,15 @@ class CustomerAccountController extends Controller
             );
 
             TextPassword::create(
-                [            
+                [
                     'email' => $request->input('cemail'),
                     'password' => $request->input('cpassword'),
                 ]
             );
 
             return redirect('/customer-account');
-
-        } catch(Exception $errors)
-        {
-             return redirect()
+        } catch (Exception $errors) {
+            return redirect()
                 ->back()
                 ->withErrors($errors->getMessage())
                 ->withInput();

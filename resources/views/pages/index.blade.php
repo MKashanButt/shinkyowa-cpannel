@@ -50,7 +50,7 @@
                 </div>
             </div>
         @endif
-        @if (Auth::user()->role != 'admin')
+        @if (Auth::user()->role != 'admin' && Auth::user()->role != 'doc_uploader')
             <div class="counter">
                 <div class="item">
                     <h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -168,159 +168,161 @@
                     </tbody>
                 </table>
             </div>
-            <div class="main-customer-accounts">
-                <table cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th class="sno">S.No</th>
-                            <th class="cname">Customer Name</th>
-                            <th class="ccompany">Customer Company</th>
-                            <th class="buying">Buying</th>
-                            <th class="deposit">Deposit</th>
-                            <th class="remaining">Remaining</th>
-                            @if (Auth::user()->user != 'agent')
-                                <th class="agent">Agent</th>
-                            @endif
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($dealers as $accounts)
+            @if (Auth::user()->role != 'doc_uploader')
+                <div class="main-customer-accounts">
+                    <table cellspacing="0">
+                        <thead>
                             <tr>
-                                <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
-                                <td>{{ $accounts['customer_name'] }}</td>
-                                <td>{{ $accounts['customer_company'] }}</td>
-                                <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying']) : '' }}
+                                <th class="sno">S.No</th>
+                                <th class="cname">Customer Name</th>
+                                <th class="ccompany">Customer Company</th>
+                                <th class="buying">Buying</th>
+                                <th class="deposit">Deposit</th>
+                                <th class="remaining">Remaining</th>
+                                @if (Auth::user()->user != 'agent')
+                                    <th class="agent">Agent</th>
+                                @endif
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dealers as $accounts)
+                                <tr>
+                                    <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                                    <td>{{ $accounts['customer_name'] }}</td>
+                                    <td>{{ $accounts['customer_company'] }}</td>
+                                    <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format($accounts['buying']) : '' }}
+                                    </td>
+                                    <td>{{ $accounts['deposit'] ? $accounts['currency'] . number_format($accounts['deposit']) : '' }}
+                                    </td>
+                                    <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format((int) $accounts['buying'] - (int) $accounts['deposit']) : '' }}
+                                    </td>
+                                    @if (Auth::user()->user != 'agent')
+                                        <td>
+                                            <a href="/agent-customers-account/{{ $accounts['agent'] }}">
+                                                <button class="agent-btn">{{ $accounts['agent'] }}</button>
+                                            </a>
+                                        </td>
+                                    @endif
+                                    <td class="actions">
+                                        <div class="stage">
+                                            <a href="/customer-account/{{ $accounts['customer_id'] }}">
+                                                <button class="account-btn">View Account</button>
+                                            </a>
+                                            @if (Auth::user()->role == 'admin')
+                                                <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
+                                                    <button class="danger">Delete</button>
+                                                </a>
+                                            @endif
+                                            @if (Auth::user()->role != 'agent')
+                                                <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
+                                                    <button class="primary">Edit</button>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td>
+                                    {{ '$' . number_format($buying) }}
                                 </td>
-                                <td>{{ $accounts['deposit'] ? $accounts['currency'] . number_format($accounts['deposit']) : '' }}
+                                <td>
+                                    {{ '$' . number_format($deposit) }}
                                 </td>
-                                <td>{{ $accounts['buying'] ? $accounts['currency'] . number_format((int) $accounts['buying'] - (int) $accounts['deposit']) : '' }}
+                                <td>
+                                    {{ '$' . number_format($buying - $deposit) }}
                                 </td>
                                 @if (Auth::user()->user != 'agent')
-                                    <td>
-                                        <a href="/agent-customers-account/{{ $accounts['agent'] }}">
-                                            <button class="agent-btn">{{ $accounts['agent'] }}</button>
-                                        </a>
-                                    </td>
+                                    <td></td>
                                 @endif
-                                <td class="actions">
-                                    <div class="stage">
-                                        <a href="/customer-account/{{ $accounts['customer_id'] }}">
-                                            <button class="account-btn">View Account</button>
-                                        </a>
-                                        @if (Auth::user()->role == 'admin')
-                                            <a href="/customer-account/destroy/{{ $accounts['customer_id'] }}">
-                                                <button class="danger">Delete</button>
-                                            </a>
-                                        @endif
-                                        @if (Auth::user()->role != 'agent')
-                                            <a href="/customer-account/edit/{{ $accounts['customer_id'] }}">
-                                                <button class="primary">Edit</button>
-                                            </a>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td>
-                                {{ '$' . number_format($buying) }}
-                            </td>
-                            <td>
-                                {{ '$' . number_format($deposit) }}
-                            </td>
-                            <td>
-                                {{ '$' . number_format($buying - $deposit) }}
-                            </td>
-                            @if (Auth::user()->user != 'agent')
                                 <td></td>
-                            @endif
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div id="customer-vehicle-tab">
-                <table class="customer-vehicle" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Stock Id</th>
-                            <th>Vehicle</th>
-                            <th>Chassis</th>
-                            <th>CNF</th>
-                            <th>Amount</th>
-                            <th>Remaining</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($newVehicles as $customerVehicle)
-                            <tr>
-                                <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
-                                <td>{{ $customerVehicle['stock_id'] }}</td>
-                                <td>{{ $customerVehicle['vehicle'] }}</td>
-                                <td>{{ $customerVehicle['chassis'] }}</td>
-                                <td>{{ $customerVehicle['currency'] . number_format($customerVehicle['amount']) }}</td>
-                                <td>{{ $customerVehicle['payment'] ? $customerVehicle['currency'] . number_format($customerVehicle['payment']) : '' }}
-                                </td>
-                                <td>{{ $customerVehicle['currency'] . number_format($customerVehicle['amount'] - $customerVehicle['payment']) }}
-                                </td>
-                                @if (
-                                    $customerVehicle['amount'] - $customerVehicle['payment'] == 0 ||
-                                        $customerVehicle['amount'] - $customerVehicle['payment'] < 0)
-                                    <td><button class="done">Cleared</button></td>
-                                @else
-                                    <td><button class="progress">Pending</button></td>
-                                @endif
-                                <td class="actions">
-                                    <div class="stage">
-                                        <a href="/customer-account/images/{{ $customerVehicle['stock_id'] }}"><button
-                                                class="image-btn">View
-                                                Images</button></a>
-                                        <a href="/customer-account/docs/{{ $customerVehicle['stock_id'] }}"><button
-                                                class="docs-btn">View
-                                                Docs</button></a>
-                                        @if (Auth::user()->role == 'admin')
-                                            <a href="/customer-vehicle/destroy/{{ $customerVehicle['id'] }}"><button
-                                                    class="danger">Delete</button></a>
-                                        @endif
-                                        @if (Auth::user()->role != 'agent')
-                                            <a href="/customer-vehicle/edit/{{ $customerVehicle['stock_id'] }}"><button
-                                                    class="primary">Edit</button></a>
-                                        @endif
-                                    </div>
-                                </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td>
-                                {{ '$' . number_format($cnf) }}
-                            </td>
-                            <td>
-                                {{ '$' . number_format($payment) }}
-                            </td>
-                            <td>
-                                {{ '$' . number_format($cnf - $payment) }}
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                        </tfoot>
+                    </table>
+                </div>
+                <div id="customer-vehicle-tab">
+                    <table class="customer-vehicle" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Stock Id</th>
+                                <th>Vehicle</th>
+                                <th>Chassis</th>
+                                <th>CNF</th>
+                                <th>Amount</th>
+                                <th>Remaining</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($newVehicles as $customerVehicle)
+                                <tr>
+                                    <td>{{ str_pad($key + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                                    <td>{{ $customerVehicle['stock_id'] }}</td>
+                                    <td>{{ $customerVehicle['vehicle'] }}</td>
+                                    <td>{{ $customerVehicle['chassis'] }}</td>
+                                    <td>{{ $customerVehicle['currency'] . number_format($customerVehicle['amount']) }}</td>
+                                    <td>{{ $customerVehicle['payment'] ? $customerVehicle['currency'] . number_format($customerVehicle['payment']) : '' }}
+                                    </td>
+                                    <td>{{ $customerVehicle['currency'] . number_format($customerVehicle['amount'] - $customerVehicle['payment']) }}
+                                    </td>
+                                    @if (
+                                        $customerVehicle['amount'] - $customerVehicle['payment'] == 0 ||
+                                            $customerVehicle['amount'] - $customerVehicle['payment'] < 0)
+                                        <td><button class="done">Cleared</button></td>
+                                    @else
+                                        <td><button class="progress">Pending</button></td>
+                                    @endif
+                                    <td class="actions">
+                                        <div class="stage">
+                                            <a href="/customer-account/images/{{ $customerVehicle['stock_id'] }}"><button
+                                                    class="image-btn">View
+                                                    Images</button></a>
+                                            <a href="/customer-account/docs/{{ $customerVehicle['stock_id'] }}"><button
+                                                    class="docs-btn">View
+                                                    Docs</button></a>
+                                            @if (Auth::user()->role == 'admin')
+                                                <a href="/customer-vehicle/destroy/{{ $customerVehicle['id'] }}"><button
+                                                        class="danger">Delete</button></a>
+                                            @endif
+                                            @if (Auth::user()->role != 'agent')
+                                                <a href="/customer-vehicle/edit/{{ $customerVehicle['stock_id'] }}"><button
+                                                        class="primary">Edit</button></a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td>
+                                    {{ '$' . number_format($cnf) }}
+                                </td>
+                                <td>
+                                    {{ '$' . number_format($payment) }}
+                                </td>
+                                <td>
+                                    {{ '$' . number_format($cnf - $payment) }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            @endif
         </div>
     </section>
 @endsection
