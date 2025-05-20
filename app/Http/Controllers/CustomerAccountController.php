@@ -186,19 +186,26 @@ class CustomerAccountController extends Controller
         $stocks = Stocks::orderBy('id', 'DESC')
             ->limit(6)
             ->get();
-
-        return view('pages.index', [
-            "title" => "Dashboard",
-            "stylesheet" => "dashboard.css",
-            "data" => $data,
-            "stocks" => $stocks,
-            "dealers" => $dealers,
-            "buying" => $buying,
-            "deposit" => $deposit,
-            "newVehicles" => $newVehicles,
-            "cnf" => $cnf,
-            "payment" => $payment,
-        ]);
+        if (Auth::user()->role != 'doc_uploader') {
+            return view('pages.index', [
+                "title" => "Dashboard",
+                "stylesheet" => "dashboard.css",
+                "data" => $data,
+                "stocks" => $stocks,
+                "dealers" => $dealers,
+                "buying" => $buying,
+                "deposit" => $deposit,
+                "newVehicles" => $newVehicles,
+                "cnf" => $cnf,
+                "payment" => $payment,
+            ]);
+        } else {
+            return view('pages.index', [
+                "title" => "Dashboard",
+                "stylesheet" => "dashboard.css",
+                "stocks" => $stocks,
+            ]);
+        }
     }
 
     public function index()
