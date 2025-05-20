@@ -150,7 +150,7 @@
                                             target="__blank">
                                             <button class="done">View</button>
                                         </a>
-                                        @if (Auth::user()->role != 'agent' || Auth::user()->role != ' doc_uploader')
+                                        @if (Auth::user()->role != 'agent' && Auth::user()->role != 'doc_uploader')
                                             <a href="{{ route('stocks.edit', $item) }}" target="_blank">
 
                                                 <button class="primary">Edit</button>
