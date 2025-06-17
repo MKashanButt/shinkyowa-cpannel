@@ -17,6 +17,8 @@ class CustomerAccounts extends Model
         'customer_whatsapp',
         'description',
         'address',
+        'city',
+        'country',
         'buying',
         'deposit',
         'remaining',
