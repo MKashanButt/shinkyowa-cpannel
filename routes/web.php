@@ -17,11 +17,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', CustomerAccountRedirect::class])
+Route::middleware(['auth', 'verified'])
     ->group(function () {
         Route::controller(CustomerAccountController::class)
             ->group(function () {
-                Route::get('/', 'dashboard')->name('dashboard');
+                Route::get('/', 'dashboard')
+                    ->middleware(CustomerAccountRedirect::class)->name('dashboard');
 
                 Route::get('/customer-account', 'index')->name('customer-accounts');
                 Route::get('/customer-account/edit/{id}', 'edit_account')->name('customer-accounts.edit-form');
