@@ -59,9 +59,7 @@
                             <th>Remaining</th>
                             <th>Shipment</th>
                             <th>Status</th>
-                            @if (Auth::user()->role != 'customer')
-                                <th>Actions</th>
-                            @endif
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,7 +105,6 @@
                                         <td><button class="progress">Pending</button></td>
                                     @endif
                                 @endif
-                                @if (Auth::user()->role != 'customer')
                                     <td class="actions">
                                         <div class="stage">
                                             <a href="/customer-account/images/{{ $customerVehicle->stock_id }}">
@@ -128,14 +125,13 @@
                                                     <button class="primary">Update Status</button>
                                                 </a>
                                             @endif
-                                            @if (Auth::user()->role != 'agent')
+                                            @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
                                                 <a href="/customer-vehicle/edit/{{ $customerVehicle->stock_id }}">
                                                     <button class="primary">Edit</button>
                                                 </a>
                                             @endif
                                         </div>
                                     </td>
-                                @endif
                             </tr>
                         @endforeach
                     </tbody>
