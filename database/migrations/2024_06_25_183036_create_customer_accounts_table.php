@@ -17,13 +17,18 @@ return new class extends Migration
             $table->string('customer_name', 100);
             $table->string('customer_company', 200);
             $table->string('customer_phone', 15);
+            $table->string('customer_whatsapp', 15);
             $table->text('description')->nullable();
+            $table->text('address');
+            $table->text('city');
+            $table->text('country');
             $table->text('buying')->nullable();
             $table->text('deposit')->nullable();
             $table->text('remaining')->nullable();
             $table->string('agent_manager', 100);
             $table->integer('agent_id')->nullable();
             $table->string('customer_email', 100)->nullable();
+            $table->text('currency');
             $table->timestamps();
         });
     }
