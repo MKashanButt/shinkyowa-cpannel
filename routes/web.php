@@ -12,11 +12,12 @@ use App\Http\Controllers\StocksController;
 use App\Http\Controllers\TTController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleDocsController;
+use App\Http\Middleware\CustomerAccountRedirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', CustomerAccountRedirect::class])->group(function () {
     Route::controller(CustomerAccountController::class)->group(function () {
         Route::get('/', 'dashboard')->name('dashboard');
 
@@ -74,7 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('stocks', StocksController::class);
     Route::delete('stocks/{id}/deleteImage/{image_name}', [StocksController::class, 'deleteImage'])->name('stocks.deleteImage');
-    
+
     Route::resource('shipment', ShipmentController::class);
     Route::resource('urgent-payment', UrgentPaymentController::class);
 
